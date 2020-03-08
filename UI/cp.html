@@ -26,6 +26,9 @@
          <button type="button" id="createNew" class="btn btn-warning">確認</button>
     </div>
   </div>
+
+  <script src="./js/jquery.js"></script>
+
     <script type="text/javascript">
       let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
       scanner.addListener('scan', function (content) {
@@ -43,8 +46,9 @@
         console.error(e);
       });
 
-      document.getElementById("createNew").href = "rollcall.html";
-  
+      $("#createNew").click(function(){
+          location.href = "rollcall.html";
+      })
     </script>
    
 </body>
