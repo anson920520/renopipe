@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <title>RenoPipe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/rollcall.css">
+</head>
+<body>
+<div class="screen-base">
+        <div class="screen">
+          <div class="top-nav">
+            <div class="avatar-user-page avatar3"></div>
+            <a href="login.html"><i class="fa fa-chevron-left menu-icon" aria-hidden="true"></i></a>
+            <i class="logo-text2">Point A C1 </i>
+            <i class="fa fa-ellipsis-v bell-icon" aria-hidden="true"></i>
+            <div class="user-page">
+              <div class="container2">
+                <a class="list-title2">經理 張誠彥</a>
+              </div>
+              <p style="text-align: center;" id="time"></p>
+              <hr/>
+             <!-- <div class="container"> 
+                <textarea rows="7" id="name2" placeholder="Tell her that…"></textarea>
+              </div>!-->
+             <!--rollcall section-->
+             <h1 style="text-align: center;">機手</h1>
+             <hr/>
+             <ul style="position: relative;z-index:999;">
+                    <li>
+                    <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                    <h4>林瑋財</h4>
+                    <input id="check-1" type="checkbox"/>
+                    <label for="check-1"><i class="fa fa-check"></i></label>
+                    </li>
+                    <li>
+                    <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                    <h4>曹伶強</h4>
+                    <input id="check-2" type="checkbox"/>
+                    <label for="check-2"><i class="fa fa-check"></i></label>
+                    </li>
+                    <li>
+                        <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                        <h4>劉錦共</h4>
+                        <input id="check-3" type="checkbox"/>
+                        <label for="check-3"><i class="fa fa-check"></i></label>
+                        </li>
+            </ul>
+            <hr/>
+            <h1 style="text-align: center;">雜工</h1>
+            <hr/>
+            <ul style="position: relative;z-index:999;">
+                   <li>
+                   <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                   <h4>何文鳳</h4>
+                   <input id="check-4" type="checkbox"/>
+                   <label for="check-4"><i class="fa fa-check"></i></label>
+                   </li>
+                   <li>
+                   <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                   <h4>葉煥東</h4>
+                   <input id="check-5" type="checkbox"/>
+                   <label for="check-5"><i class="fa fa-check"></i></label>
+                   </li>
+                   <li>
+                   <div class="circle"><img src="https://image.flaticon.com/icons/svg/206/206899.svg"/></div>
+                   <h4>聶國富</h4>
+                   <input id="check-6" type="checkbox"/>
+                   <label for="check-6"><i class="fa fa-check"></i></label>
+                   </li>
+           </ul>
+                <!--rollcall section end-->
+                <fieldset>
+                <label class="nudge">工作描述:</label>
+                <textarea style="border:solid 1px lightgray" id="w3mission" cols="39" placeholder="工作描述...">
+                    
+                  </textarea>
+                </fieldset>
+                <br/>
+
+                <label class="nudge">圖片上傳:</label>
+                <div style="text-align: center;">
+                <div id="wrapper">
+                    <form action="upload_file.php" method="post" enctype="multipart/form-data">
+                     <input class="btn btn-warning"  type="file" id="upload_file" name="upload_file[]" value="圖片上傳" onchange="preview_image();" multiple/>
+                   
+                    </form>
+                    <br/>
+                    <div id="image_preview"></div>
+                   </div>
+                  </div>
+                
+              <fieldset>
+                <label class="nudge">特殊情況</label>
+                <input type="radio" id="Relax" value="under_13" name="user_age" checked="checked">            
+                <label for="Relax" class="light">交通阻塞</label><br>
+                <input type="radio" id="Important" value="over_13" name="user_age">             
+                <label for="Important" class="light">抗議</label><br>  
+              </fieldset>
+              <br/>
+              <div class="buttons">
+                <button class="left">重置</button>
+                <button class="right">提交記錄</button>
+              </div>
+             </div>
+           </div>
+        </div>
+      </div>
+    </body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+
+<script>
+  $('label').click(function() {
+    $(this).parent('li').toggleClass('active');
+    });
+
+//get today
+var d = new Date();
+
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output = d.getFullYear() + '/' +
+    (month<10 ? '0' : '') + month + '/' +
+    (day<10 ? '0' : '') + day;
+
+    $("#time").html(output);
+
+
+
+    function preview_image() 
+      {
+      var total_file=document.getElementById("upload_file").files.length;
+      for(var i=0;i<total_file;i++)
+      {
+        $('#image_preview').append("<img style='height:100px;width:100px' src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
+      }
+      }
+</script>
