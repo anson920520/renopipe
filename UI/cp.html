@@ -30,6 +30,12 @@
   <script src="./js/jquery.js"></script>
 
     <script type="text/javascript">
+
+      let video = $("#preview");
+      video.setAttribute('autoplay','');
+      video.setAttribute('muted','');
+      video.setAttribute('playsinline','');
+
       let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
       scanner.addListener('scan', function (content) {
         alert(content);
