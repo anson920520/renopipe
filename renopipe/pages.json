@@ -11,8 +11,24 @@
 			"style": {
 				"navigationStyle":"custom"
 			}
+		},
+		{
+			"path": "pages/record/selectsite",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/record/create",
+			"style": {
+				"navigationStyle":"custom"
+			}
 		}
 	    
+        ,{
+            "path" : "pages/record/create",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

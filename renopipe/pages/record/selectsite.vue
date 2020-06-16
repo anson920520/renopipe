@@ -10,82 +10,26 @@
 			<!--title!-->
 			<view class="title-padding">
 				<div class="main">
-					<p class="title">工作歷史紀錄</p>
-				
-					<div class="btn-color customize-btn" @click="toCreate"> + 新增記錄</div>
+					<p class="title">掃描QR code或選擇地盤</p>
 				</div>
 				<hr class="hr-line"/>
 			</view>
 			
 			<!--body!-->
+			
+			<!--cam!-->
+			<view style="height:19.3rem;">
+				<scan @getCode="getScanCode"/>
+			</view>
+			<!--手動選擇地盤!-->
 			<view class="body-padding">
 				<div class="main">
 					<select>
-						<option>地盤檢索</option>
+						<option>手動選擇地盤</option>
 					</select>
-					<select>
-						<option>工作種類檢索</option>
-					</select>
-					<select>
-						<option>日期檢索</option>
-					</select>
+					<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
 				</div>
 			</view>
-			<!--table!-->
-			<view class=" body-padding">
-					<view class="box scoll">
-						<table class="" id="t01">
-						  <tr id="header">
-							<th>創建日期</th>
-							<th>上班人數</th> 
-							<th>地盤</th>
-							<th>工作種類</th>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							 <td>2020-04-12</td>
-							 <td>15</td>
-							 <td>大埔道</td>
-							 <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						</table>
-					</view>
-				</view>
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -93,27 +37,32 @@
 		</view>
 	</view>
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
-				
+				val:""
 			}
 		},
 		onLoad() {
 			
 		},
+		mounted() {
+			
+		},
 		methods:{
 			toCreate() {
 					uni.navigateTo({
-						url: "/pages/record/selectsite"
+						url: "/pages/record/create"
 					})
+			},
+			//获取扫码控件
+			getScanCode(val){
+				console.log(val)
 			},
 		}
 	}
 </script>
-
 <style lang="scss" scoped>
 	body{
 		font-family: Abel;
@@ -153,6 +102,7 @@
 	.btn-color{
 		background:#3A75BB;
 		color: #fff;
+		width:5rem;
 	}
 	
 	.main{
@@ -161,7 +111,7 @@
 	}
 	
 	.customize-btn{
-		padding:0.3rem;
+		padding:0.7rem;
 	}
 	
 	.hr-line{
@@ -183,7 +133,8 @@
 	}
 	
 	select{
-		padding:0.2rem;
+		padding:0.6rem;
+		width:12rem;
 	}
 
 	table {
@@ -231,6 +182,13 @@
 		min-height: 100vh;
 		// border: solid black 1px;
 		flex-direction: column;
+	}
+	
+	.word-in-btn{
+		padding: 0px;
+		display: flex;
+		justify-content: center;
+		font-size: 0.9rem;
 	}
 
 </style>

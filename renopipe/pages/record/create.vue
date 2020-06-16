@@ -5,21 +5,22 @@
 			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
 		</view>
 		<view class="">
-			<!--logo section!-->
-			<view class="logoBox"></view>
 			<!--title!-->
 			<view class="title-padding">
 				<div class="main">
-					<p class="title">工作歷史紀錄</p>
-				
-					<div class="btn-color customize-btn" @click="toCreate"> + 新增記錄</div>
+					<p class="title">創建新工作紀錄</p>
+					<!--return btn!-->
+					<div class="btn-color customize-btn" @click="toHome"> 返回</div>
 				</div>
 				<hr class="hr-line"/>
 			</view>
 			
 			<!--body!-->
 			<view class="body-padding">
-				<div class="main">
+				<p>工頭名稱: 張志強</p>
+				<p>日期: 2020-06-21 SS:MM:HHHH</p>
+				<p>地盤: 西營盤 - POINTA1</p>
+				<!--<div class="main">
 					<select>
 						<option>地盤檢索</option>
 					</select>
@@ -29,63 +30,70 @@
 					<select>
 						<option>日期檢索</option>
 					</select>
+				</div>!-->
+				<div class="hr">
+					<div class="blue-divider"></div>
 				</div>
 			</view>
-			<!--table!-->
-			<view class=" body-padding">
-					<view class="box scoll">
-						<table class="" id="t01">
-						  <tr id="header">
-							<th>創建日期</th>
-							<th>上班人數</th> 
-							<th>地盤</th>
-							<th>工作種類</th>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							 <td>2020-04-12</td>
-							 <td>15</td>
-							 <td>大埔道</td>
-							 <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						</table>
-					</view>
+			
+			<!--worker-list!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">工人列表</p>
+				</div>
+			</view>
+			
+			<view class="body-padding mt20">
+				<div class="tagpad">
+					<div class="jobTag">電工</div>
+				</div>
+				<view class="border box scoll">
+					<div class="worker-main">
+						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
+						<div class="worker-info-area">
+							<b>飛龍</b>
+						</div>
+						<div class="chk-box-area">
+							<checkbox-group>
+							    <label>
+							        <checkbox value="cb" />
+							    </label>
+							</checkbox-group>
+						</div>
+					</div>
+					<hr/>
+					<div class="worker-main">
+						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
+						<div class="worker-info-area">
+							<b>飛龍</b>
+						</div>
+						<div class="chk-box-area">
+							<checkbox-group>
+							    <label>
+							        <checkbox value="cb" />
+							    </label>
+							</checkbox-group>
+						</div>
+					</div>
+					<hr/>
+					<div class="worker-main">
+						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
+						<div class="worker-info-area">
+							<b>飛龍</b>
+						</div>
+						<div class="chk-box-area">
+							<checkbox-group>
+							    <label>
+							        <checkbox value="cb" />
+							    </label>
+							</checkbox-group>
+						</div>
+					</div>
 				</view>
+			</view>
+			
+			<!--work type!-->
+		
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -107,7 +115,7 @@
 		methods:{
 			toCreate() {
 					uni.navigateTo({
-						url: "/pages/record/selectsite"
+						url: "/pages/index/index"
 					})
 			},
 		}
@@ -160,6 +168,12 @@
 		justify-content: space-between;
 	}
 	
+	.worker-main{
+		display: flex;
+		justify-content: space-between;
+		padding:10px
+	}
+	
 	.customize-btn{
 		padding:0.3rem;
 	}
@@ -176,9 +190,14 @@
 	.scoll{
 		overflow-x: scroll;
 		overflow: -moz-scrollbars-vertical; 
-		height:20rem;
+		height:11rem;
 	}
 	h3{
+		color:gray;
+	}
+	
+	p{
+		line-height: 1.5rem;
 		color:gray;
 	}
 	
@@ -232,5 +251,53 @@
 		// border: solid black 1px;
 		flex-direction: column;
 	}
-
+	
+	.blue-divider{
+		border-bottom: 1px solid #5F98EC;
+		display: flex;
+		justify-content: center;
+		width:100%;
+	}
+	.hr{
+		padding: 0 8rem 0 8rem;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	.border{
+		border: 1px solid #E8E8E8;
+		background: #F7F7F7;
+	}
+	b{
+		font-size: 1.5rem;
+	}
+	.worker-info-area{
+		padding:1rem;
+	}
+	.chk-box-area{
+		padding:1.2rem;
+	}
+	.worker-icon{
+		height:50px;
+		width: 50px;
+	}
+	
+	hr{
+		color: #E8E8E8;
+		border: solid 1px;
+	}
+	
+	.mt20{
+		margin-top: 20px;
+	}
+	
+	.jobTag{
+		background:#007AFF;
+		color:#FFF;
+		display:flex;
+		justify-content: center;
+	}
+	
+	.tagpad{
+		padding:0 13rem 0 0;
+	}
 </style>
