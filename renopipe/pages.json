@@ -24,10 +24,11 @@
 				"navigationStyle":"custom"
 			}
 		}
-	    
         ,{
-            "path" : "pages/record/create",
-            "style" : {}
+            "path" : "pages/record/complete",
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
     ],
 	"globalStyle": {

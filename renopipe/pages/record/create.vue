@@ -6,7 +6,7 @@
 		</view>
 		<view class="">
 			<!--title!-->
-			<view class="title-padding">
+			<view class="title-padding mt25">
 				<div class="main">
 					<p class="title">創建新工作紀錄</p>
 					<!--return btn!-->
@@ -48,6 +48,7 @@
 					<div class="jobTag">電工</div>
 				</div>
 				<view class="border box scoll">
+					<!--only need one worker-main when for loop!-->
 					<div class="worker-main">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
@@ -89,11 +90,88 @@
 							</checkbox-group>
 						</div>
 					</div>
+					
 				</view>
+				<div class="hr">
+					<div class="blue-divider"></div>
+				</div>
 			</view>
 			
-			<!--work type!-->
-		
+			<!-- Work Type!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">工作類型列表</p>
+				</div>
+			</view>
+			
+			<view class="body-padding mt20">
+				<view class="border box scoll">
+					<!--only need one worker-main when for loop!-->
+					<div class="worker-main">
+						<div class="worktype-info-area">
+							<p class="worktype">In-Situ Concetre</p>
+						</div>
+						<div class="chk-box-area">
+							<checkbox-group>
+							    <label>
+							        <checkbox value="cb" />
+							    </label>
+							</checkbox-group>
+						</div>
+					</div>
+					<hr/>
+					<div class="worker-main">
+						<div class="worktype-info-area">
+							<p class="worktype">Trials Pits & Insecption Pits</p>
+						</div>
+						<div class="chk-box-area">
+							<checkbox-group>
+							    <label>
+							        <checkbox value="cb" />
+							    </label>
+							</checkbox-group>
+						</div>
+					</div>					
+				</view>
+				<div class="hr">
+					<div class="blue-divider"></div>
+				</div>
+			</view>
+			
+			<!--work description!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">工作描述</p>
+				</div>
+			</view>
+			
+			<view class="body-padding mt20">
+				<div class="textarea-padding">
+					<textarea placeholder="請輸入工作描述..."></textarea>
+				</div>
+				
+				<div class="hr">
+					<div class="blue-divider"></div>
+				</div>
+			</view>
+			
+			<!--photo upload!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">圖片上傳</p>
+				</div>
+			</view>
+				
+			<view>
+				<!--Upload section!-->
+			</view>
+				
+			<!--submit button!-->
+			<view class="submit-padding">
+				<button type="primary" @click="submit">+ 創建新記錄</button>
+			</view>
+				
+				
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -106,16 +184,21 @@
 	export default {
 		data() {
 			return {
-				
+
 			}
 		},
 		onLoad() {
 			
 		},
 		methods:{
-			toCreate() {
+			toHome() {
 					uni.navigateTo({
 						url: "/pages/index/index"
+					})
+			},
+			submit() { //this shall be change to API for Create new record
+					uni.navigateTo({
+						url: "/pages/record/complete"
 					})
 			},
 		}
@@ -131,6 +214,9 @@
 		background: #5F98EC;
 	}
 	
+	.mt25{
+		margin-top: 25px;
+	}
 	/*header的button的css*/
 	.menu-btn{
 		width:0.9rem;
@@ -281,6 +367,14 @@
 		width: 50px;
 	}
 	
+	.worktype-info-area{
+		padding:1.3rem 0.5rem;
+	}
+	
+	.worktype{
+		font-size:1.2rem;
+	}
+	
 	hr{
 		color: #E8E8E8;
 		border: solid 1px;
@@ -299,5 +393,14 @@
 	
 	.tagpad{
 		padding:0 13rem 0 0;
+	}
+	
+	.textarea-padding{
+		width: 100%;
+		border:solid 1px #E8E8E8;
+	}
+	
+	.submit-padding{
+		padding:0.5rem;
 	}
 </style>
