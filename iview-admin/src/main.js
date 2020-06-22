@@ -42,7 +42,7 @@ AMap.initAMapApiLoader({
 });
 
 // window.baseURL = 'https://acarepro.online/'; //正式 
-window.baseURL = 'https://acarepro.online/acarepro-backstage-api/'; // 测试
+window.baseURL = 'http://119.8.42.40:8080/'; // 测试
 
 
 

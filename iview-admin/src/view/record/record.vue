@@ -1,15 +1,274 @@
+<style lang="less" scoped>
+.previewWrap {
+  width: 100px;
+  height: 100px;
+  /* border: solid red 1px; */
+  overflow: hidden;
+}
+.previewImg {
+  width: auto;
+  height: 100px;
+}
+.recordBox {
+  >div {
+    flex:3.33;
+    // border: solid black 1px;
+    padding: 10px;
+    font-size: 17px;
+  }
+}
+.bigImgWrap {
+  width: 400px;
+  height: 330px;
+  // border: solid red 1px;
+  overflow:hidden;
+  >img {
+    width:auto;
+    height: 100%;
+  }
+}
+.recordSmallImgWrap {
+  margin: 10px 0;
+}
+.imgRela {
+  position: relative;
+  width: 320px;
+  height: 80px;
+  overflow: hidden;
+  // border: solid green 1px;
+}
+.imgAbso {
+  transition:0.3s;
+  position: absolute;
+  width: 400px;
+  height: 80px;
+  left: 0;
+  top: 0;
+  // border: solid blue 1px;
+  >.smallImgWrap {
+    width:80px;
+    height: 80px;
+    overflow: hidden;
+    border: solid #CCC 1px;
+    // display: inline-block;
+    box-sizing: border-box;
+    >img {
+      width:auto;
+      height: 100%;
+      
+    }
+  }
+}
+.imgAct {
+  border: solid red 1px !important;
+}
+.lefttopIcon {
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+.recordDetailUl>li {
+  margin: 20px 0;
+}
+.centerItem {
+  flex-direction: column;
+}
+
+.allWorker {
+  height: 380px;
+  border: solid #CCC 1px;
+  width: 80%;
+  margin: auto;
+  padding: 5px;
+  overflow: auto;
+  >li {
+    padding: 20px 0;
+    border-bottom: solid #CCC 1px;
+  }
+  >li:last-child{
+    border: none !important;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background: #F0F0F0;
+}
+::-webkit-scrollbar-track {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  border-radius:6px;
+  background: #CCC;
+}
+</style>
+
 <template>
   <div>
-    record
+    <div class="sb al">
+      <div></div>
+      <Button type="info" class="editBtn" >導出CSV</Button>
+    </div>
+    <!-- 表格展示 -->
+    <Table :columns="columns" :data="dataList" @on-row-click="showDetail">
+      <template slot-scope="{row}" slot="operation">
+        <div>
+          <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
+          <Button size="small" type="error" @click="Delete(row)">刪除</Button>
+        </div>
+      </template>
+
+      <template slot="preview" slot-scope="{row}">
+        <div class="previewWrap ju al">
+          <img :src="row.preview" class="previewImg">
+        </div>
+      </template>
+
+    </Table>
+
+    <!-- 顯示詳細 -->
+    <Modal v-model="showBox" :width="1300">
+      <div class="recordBox ju">
+        <!-- 左邊圖片 -->
+        <div>
+          <div class="bigImgWrap  ju al">
+            <img class="bigImg" :src="current.images[currentImg]" >
+          </div>
+          <div class="recordSmallImgWrap al ju">
+            <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
+            <div class="imgRela">
+              <div class="imgAbso al" :style="{width:absWidth+'px',left:left+'px'}">
+                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i"><img :src="item" ></div>
+              </div>
+            </div>
+            <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
+          </div>
+        </div>
+
+        <!-- 中間詳細信息 -->
+        <div class="centerItem sb">
+          <ul class="recordDetailUl">
+            <li><span>地盤:</span><span>地盤信息....</span></li>
+            <li><span>創建者:</span><span>張三</span></li>
+            <li><span>創建日期</span><span>2020-06-21</span></li>
+            <li><span>工作描述:</span></li>
+            <li><span>工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述</span></li>
+          </ul>
+          <Button class="addBtn" type="info">下載圖片</Button>
+        </div>
+
+        <!-- 右邊工人列表 -->
+        <div class="recordRight">
+          <div class="ju al">
+            <span>總共上班人數 </span>
+            <span style="color: red;font-size:18px;"> 23人</span>
+          </div>
+          <ul class="allWorker">
+            <li class="sb" v-for="(item,i) in 30" :key="i">
+              <span>張小明</span>
+              <span>電工</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      showBox: false,
+      columns: [
+        { title: "創建日期", key:"createAt" },
+        { title: "圖片預覽", slot:"preview" },
+        { title: "創建者", key:"creator" },
+        { title: "人數", key:"number" },
+        { title: "地盤", key:"place" },
+        { title: "工作種類", key:"type" },
+        { title: "工作描述", key:"description" },
+        { title: "操作", slot:"operation" },
+      ],
+      dataList: [
+        {
+          createAt: "2020-06-22",
+          preview:"http://img4.imgtn.bdimg.com/it/u=2418182758,4197200092&fm=26&gp=0.jpg", 
+          creator: "張三",
+          number: "23",
+          place:"address.....",
+          type:"工作種類...",
+          description:"工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述",
+          images:[
+            "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
+            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
+            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+          ]
+        },
 
+        {
+          createAt: "2020-06-22",
+          preview:"http://img4.imgtn.bdimg.com/it/u=2418182758,4197200092&fm=26&gp=0.jpg", 
+          creator: "李四",
+          number: "23",
+          place:"address.....",
+          type:"工作種類...",
+          description:"工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述",
+          images:[
+            "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
+            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
+            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
+            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+          ]
+        },
+      ],
+      current:{
+        images:[
+          "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
+          "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
+          "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
+          "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+          "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
+          "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+        ]
+      },
+      absWidth:1000,
+      left:0,
+      currentImg:0
+    }
+  },
+  mounted () {
+    this.createImgDOM()
+  },
+  methods:{
+    showDetail(e) {
+      this.showBox = true
+      this.current = e
+    },
+
+    createImgDOM () {
+      let oAbs = document.getElementsByClassName('imgAbso');
+      this.absWidth = this.current.images.length*80
+    },
+    preNext (boo) {
+      if (boo) {
+        //向左滑動
+        this.left += 320
+        if (this.left > 0) {
+          this.left = 0
+        }
+      } else {
+        if (this.absWidth > (Math.abs(this.left) + 320)) {
+          this.left -= 320
+        }
+      }
+    },
+  }
 }
 </script>
 
-<style>
-
-</style>
