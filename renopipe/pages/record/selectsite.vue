@@ -19,6 +19,7 @@
 			
 			<!--cam!-->
 			<view  class="qrWrap">
+				<qrcode-stream @decode="onDecode"></qrcode-stream>
 				<!-- <scan @getCode="getScanCode"/> -->
 			</view>
 			<!--手動選擇地盤!-->
@@ -37,6 +38,7 @@
 		</view>
 	</view>
 </template>
+
 <script>
 	export default {
 		data() {
@@ -60,6 +62,10 @@
 			getScanCode(val){
 				console.log(val)
 			},
+			//
+			 onDecode (decodedString) {
+			   // ...
+			}
 		}
 	}
 </script>
