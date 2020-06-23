@@ -109,16 +109,19 @@
 		},
 		methods:{
 			toHome () {
-				if (!this.username.trim() || !this.password.trim()) {
-					uni.showToast({
-						title: "請填寫賬號密碼",
-						icon: 'none'
-					})
-				} else {
-					uni.navigateTo({
-						url: "/pages/index/index"
-					})
-				}
+				uni.navigateTo({
+					url: "/pages/index/index"
+				})
+				// if (!this.username.trim() || !this.password.trim()) {
+				// 	uni.showToast({
+				// 		title: "請填寫賬號密碼",
+				// 		icon: 'none'
+				// 	})
+				// } else {
+				// 	uni.navigateTo({
+				// 		url: "/pages/index/index"
+				// 	})
+				// }
 			},
 		}
 	}
