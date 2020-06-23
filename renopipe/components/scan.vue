@@ -22,7 +22,19 @@
 				// #endif
 			};
 		},
+		props:{
+			left:{
+				default: 0
+			},
+			top: {
+				default:0
+			},
+			height: {
+				default:0
+			}
+		},
 		created() {
+			let that = this
 			var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;//状态栏
 			var height = statusBarHeight + 44 +104+'px';
 			var pages = getCurrentPages();
@@ -30,11 +42,11 @@
 			// #ifdef APP-PLUS
 			var currentWebview = page.$getAppWebview();
 			this.barcode = plus.barcode.create('barcode', this.barcode, {
-				top: '0',
-				left: '0px',
+				top: that.top + "px",
+				left: that.left 'px',
 				width: '100%',
-				height: height,//这里可以设置扫码框的高度
-				position: 'static'
+				height: this.height,//这里可以设置扫码框的高度
+				position: 'fixed'
 			});
 			this.barcode.onmarked = this.onmarked;
 			currentWebview.append(this.barcode);

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import scan from './components/scan.vue'
 
+// import plus from "plus"
+
 Vue.config.productionTip = false
 Vue.component('scan',scan)
 

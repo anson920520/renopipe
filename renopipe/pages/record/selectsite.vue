@@ -4,7 +4,7 @@
 		<view class="nav-background">
 			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
 		</view>
-		<view class="">
+		<view class="selectsiteWrap">
 			<!--logo section!-->
 			<view class="logoBox"></view>
 			<!--title!-->
@@ -18,8 +18,8 @@
 			<!--body!-->
 			
 			<!--cam!-->
-			<view style="height:19.3rem;">
-				<scan @getCode="getScanCode"/>
+			<view  class="qrWrap">
+				<!-- <scan @getCode="getScanCode"/> -->
 			</view>
 			<!--手動選擇地盤!-->
 			<view class="body-padding">
@@ -190,5 +190,13 @@
 		justify-content: center;
 		font-size: 0.9rem;
 	}
-
+	.qrWrap {
+		width: 100%;
+		height: 750upx;
+		border: solid red 1px;
+	}
+	.selectsiteWrap {
+		// border: solid green 1px;
+		// flex:1;
+	}
 </style>
