@@ -8,6 +8,7 @@
     <Table :columns="columns" :data="dataList" >
       <template slot-scope="{row}" slot="operation">
         <div>
+          
           <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
           <Button size="small" class="noBorder" type="error" @click="Delete(row)">刪除</Button>
         </div>
@@ -112,6 +113,8 @@
         </FormItem> -->
       </Form>
     </Modal>
+
+    
   </div>
 </template>
 
@@ -292,6 +295,7 @@ export default {
         this.loading = true
       })
     },
+    
   },
 }
 </script>

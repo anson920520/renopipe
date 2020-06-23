@@ -17,6 +17,7 @@ import VueCookie from 'vue-cookie'
 import qs from 'qs';
 import axios from 'axios'
 import AMap from "vue-amap"
+import QR from "qrcodejs2"
 
 Vue.use(VueCookie)
 
@@ -64,6 +65,7 @@ Vue.config.productionTip = false
  */
 Vue.prototype.$config = config
 Vue.prototype.$qs = qs;
+Vue.prototype.$QR = QR;
 Vue.prototype.$cookie = VueCookie;
 Vue.prototype.$axios = axios;
 /**
