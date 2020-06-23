@@ -21,7 +21,7 @@
       title="新增地盤">
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
         <FormItem label="地盤地址" prop="address">
-          <Input type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
         <!-- <FormItem label="地盤編號" prop="uuid">
@@ -29,11 +29,11 @@
         </FormItem> -->
 
         <FormItem label="地盤經度" prop="lo">
-          <Input type="text" style="width: 250px;" v-model="addForm.lo" placeholder="請輸入地盤經度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.lo" placeholder="請輸入地盤經度" />
         </FormItem>
 
         <FormItem label="地盤緯度" prop="la">
-          <Input type="text" style="width: 250px;" v-model="addForm.la" placeholder="請輸入地盤緯度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.la" placeholder="請輸入地盤緯度" />
         </FormItem>
         <div id="placeMap"></div>
       </Form>
@@ -46,7 +46,7 @@
       title="编辑地盤">
       <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
         <FormItem label="地盤地址" prop="address">
-          <Input type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
         <!-- <FormItem label="地盤編號" prop="uuid">
@@ -54,11 +54,11 @@
         </FormItem> -->
 
         <FormItem label="地盤經度" prop="lo">
-          <Input type="text" style="width: 250px;" v-model="editForm.lo" placeholder="請輸入地盤經度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.lo" placeholder="請輸入地盤經度" />
         </FormItem>
 
         <FormItem label="地盤緯度" prop="la">
-          <Input type="text" style="width: 250px;" v-model="editForm.la" placeholder="請輸入地盤緯度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.la" placeholder="請輸入地盤緯度" />
         </FormItem>
         <div id="placeMap2"></div>
       </Form>
@@ -148,6 +148,13 @@ export default {
     this.createMap()
   },
   methods: {
+    keydown () {
+      if (this.showAdd) {
+        this.okAdd()
+      } else if (this.editForm) {
+        this.okEdit()
+      }
+    },
     showTable () {
       this.$axios({
         url:"site",

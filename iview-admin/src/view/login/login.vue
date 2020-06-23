@@ -37,7 +37,7 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
-      const that = this
+      // const that = this
       // userName = 'superadmin'
       // // password = 'admin'
       // this.handleLogin({ userName, password }).then(res => {
@@ -50,6 +50,7 @@ export default {
       // })
       this.$router.push({
         path: '/service_page'
+        // name:"home"
       })
       // let load = this.$Message.loading({
       //   content: "登录中...",
