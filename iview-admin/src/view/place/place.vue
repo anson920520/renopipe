@@ -8,6 +8,7 @@
     <Table :columns="columns" :data="dataList" >
       <template slot-scope="{row}" slot="operation">
         <div>
+          <Button size="small" type="info" class="createQRBtn noBorder" @click="createQR(row)">生成二維碼</Button>
           <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
           <Button size="small" class="noBorder" type="error" @click="Delete(row)">刪除</Button>
         </div>
@@ -63,6 +64,14 @@
         <div id="placeMap2"></div>
       </Form>
     </Modal>
+
+    <div class="qrBox" v-if="showQR">
+      <div id="qr" class="ju"></div>
+      <div class="qrBtnBox sa">
+        <Button type="primary" size="small" @click="saveQR">保存到本地</Button>
+        <Button type="error" size="small" @click="hideQR">關閉</Button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -110,6 +119,8 @@ export default {
       ],
       showAdd: false,
       showEdit: false,
+      showQR: false,
+      qr:{},    //二維碼對象
       rule: {
         address:[
           { required:true, message:"請輸入地盤地址",trigger:"blur" },
@@ -139,6 +150,7 @@ export default {
       addMarker:{},
       editMarker:{},
       loading:true,
+      currant: {},     // 當前數據
     }
   },
   created () {
@@ -307,13 +319,68 @@ export default {
         this.loading = true
       })
     },
+    //生成二維碼
+    createQR (item) {
+      this.current= item
+      this.showQR = false
+      this.$nextTick(() => {
+        this.showQR = true
+        this.$nextTick(() => {
+          this.qr = new this.$QR("qr",{
+            width:200,
+            height: 200,
+            text:item.uuid
+          })
+        })
+      })
+    },
+    hideQR () { this.showQR = false },
+    saveQR () {
+        var img = document.querySelector("#qr>img")
+        // 将图片的src属性作为URL地址
+        var url = img.src
+        // console.log(url)
+        var a = document.createElement('a')
+        var event = new MouseEvent('click')
+
+        a.download = this.current.uuid.slice(0,3) + Date.now()
+        a.href = url
+
+        a.dispatchEvent(event)
+    },
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 #placeMap,#placeMap2{
   width: 100%;
   height: 300px;
+}
+.qrBox {
+  width: 300px;
+  height: 300px;
+  border: solid black 1px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background: white;
+  border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+#qr {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  // border: solid red 1px;
+}
+.qrBtnBox {
+  margin-bottom: 10px;
+}
+.createQRBtn {
+  margin-right: 3px;
 }
 </style>

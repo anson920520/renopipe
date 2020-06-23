@@ -113,8 +113,8 @@
     <Table :columns="columns" :data="dataList" @on-row-click="showDetail">
       <template slot-scope="{row}" slot="operation">
         <div>
-          <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
-          <Button size="small" type="error" @click="Delete(row)">刪除</Button>
+          <Button size="small" class="editBtn" @click.stop.prevent="edit(row)">編輯</Button>
+          <Button size="small" type="error" @click.stop.prevent="Delete(row)">刪除</Button>
         </div>
       </template>
 

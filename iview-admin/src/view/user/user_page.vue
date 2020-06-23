@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sb al">
-      <div></div>
+      <div>未有編輯,刪除api</div>
       <Button type="info" class="addBtn" @click="showAdd=true">新增工人</Button>
     </div>
     <!-- 表格展示 -->

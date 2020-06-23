@@ -131,7 +131,7 @@
           console.log(res)
           if (res.data) {
             this.mapOrder = res.data
-            this.mapLook(0)
+            this.mapLook(1)
           }
           
         }).catch(err => {
