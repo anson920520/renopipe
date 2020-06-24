@@ -1,7 +1,7 @@
 <template>
 	<view class="Wrap sb la">
 		<!--header!-->
-		<Header></Header>
+		<Header class="headerWrap"></Header>
 		<view class="flex10">
 			<!--logo section!-->
 			<view class="logoBox"></view>
@@ -31,59 +31,25 @@
 			</view>
 			<!--table!-->
 			<view class=" body-padding">
-					<view class="box scoll">
-						<table class="" id="t01">
-						  <tr id="header">
-							<th>創建日期</th>
-							<th>上班人數</th> 
-							<th>地盤</th>
-							<th>工作種類</th>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							<td>2020-04-12</td>
-							<td>15</td>
-							<td>大埔道</td>
-							<td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							 <td>2020-04-12</td>
-							 <td>15</td>
-							 <td>大埔道</td>
-							 <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						  <tr>
-							  <td>2020-04-12</td>
-							  <td>15</td>
-							  <td>大埔道</td>
-							  <td>In-Situ Concetre</td>
-						  </tr>
-						</table>
-					</view>
+				<view class="box scoll">
+					<table class="" id="t01">
+					  <tr id="header">
+						<th>創建日期</th>
+						<th>上班人數</th> 
+						<th>地盤</th>
+						<th>工作種類</th>
+					  </tr>
+					  
+					  <tr v-for="(item,i) in dataList" :key="i">
+						<td>{{item.createdAt}}</td>
+						<td>{{item.workers.length}}</td>
+						<td>{{item.site}}</td>
+						<td>In-Situ Concetre</td>
+					  </tr>
+					  
+					</table>
 				</view>
+			</view>
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -96,17 +62,54 @@
 	export default {
 		data() {
 			return {
-				
+				dataList: [],
+				siteList: [],     //地盘
 			}
 		},
 		onLoad() {
-			
+			this.getSite()
+		},
+		computed: {
+			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			getData () {
+				let that = this
+				uni.request({
+					url: that.baseURL + "attendence",
+					method:"GET",
+					success (res) {
+						console.log(res)
+						that.dataList = res.data
+						that.dataList.forEach(item => {
+							that.siteList.forEach(attr => {
+								if (item.siteId == attr.ID) {
+									item.site = attr.name
+								}
+							})
+						})
+					}
+				})
+			},
+			// 獲取所以地盤
+			getSite () {
+				let that = this
+				uni.request({
+					url:that.baseURL + "site",
+					method:"GET",
+					success (res) {
+						console.log(res)
+						if (res.data) {
+							that.siteList = res.data
+							that.getData()
+						}
+					}
+				})
+			},
 			toCreate() {
-					uni.navigateTo({
-						url: "/pages/record/selectsite"
-					})
+				uni.navigateTo({
+					url: "/pages/record/selectsite"
+				})
 			},
 		}
 	}
@@ -174,7 +177,7 @@
 	.scoll{
 		overflow-x: scroll;
 		overflow: -moz-scrollbars-vertical; 
-		height:20rem;
+		// height:20rem;
 	}
 	h3{
 		color:gray;

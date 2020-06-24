@@ -16,8 +16,11 @@
 			<!--body!-->
 			<view class="body-padding">
 				<p>工頭名稱: 張志強</p>
-				<p>日期: 2020-06-21 SS:MM:HHHH</p>
-				<p>地盤: 西營盤 - POINTA1</p>
+				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
+				<picker mode="date" @change="startTime">
+					<view>时间: {{start.name}}</view>
+				</picker>
+				<p>地盤: {{site.name}}</p>
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
@@ -36,47 +39,19 @@
 				</div>
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
-					<div class="worker-main">
+					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
-							<b>飛龍</b>
+							<b>{{item.fullname}}</b>
 						</div>
-						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
-						</div>
+						<view 
+							:class="['checkBox',{ check:item.check }]"
+							@click="chooseWorker(i)">
+							<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+						</view>
 					</div>
 					<hr/>
-					<div class="worker-main">
-						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
-						<div class="worker-info-area">
-							<b>飛龍</b>
-						</div>
-						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
-						</div>
-					</div>
-					<hr/>
-					<div class="worker-main">
-						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
-						<div class="worker-info-area">
-							<b>飛龍</b>
-						</div>
-						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
-						</div>
-					</div>
+					
 					
 				</view>
 				<div class="hr">
@@ -134,7 +109,7 @@
 			
 			<view class="body-padding mt20">
 				<div class="textarea-padding">
-					<textarea placeholder="請輸入工作描述..."></textarea>
+					<textarea v-model="description" placeholder="請輸入工作描述..."></textarea>
 				</div>
 				
 				<div class="hr">
@@ -150,7 +125,7 @@
 				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
-						<image class="upLoadImg" :src="item.src" mode="aspectFill"></image>
+						<image class="upLoadImg" :src="item.base64" mode="aspectFill"></image>
 						<select class="selectType">
 							<option >電工</option>
 							<option >木工</option>
@@ -179,15 +154,72 @@
 		data() {
 			return {
 				imgs:[],
+				description: "",
+				workerList: [],
+				siteList: [],
+				siteId: "",
+				site: {},
+				start: {
+					name: "2020-06-24",
+					timesamp: 0
+				}
 			}
 		},
 		onLoad(val) {
 			this.siteId = Number(val.siteId)
+			this.getWorders()
+			this.getSite()
 		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			startTime (e) {
+				console.log(e)
+			},
+			// 獲取所以地盤
+			getSite () {
+				let that = this
+				uni.request({
+					url:that.baseURL + "site",
+					method:"GET",
+					success (res) {
+						console.log(res)
+						if (res.data) {
+							that.siteList = res.data
+							that.siteList.forEach(item => {
+								if (item.ID == that.siteId) {
+									that.site = item
+								}
+							})
+						}
+					}
+				})
+			},
+			//獲取所有工人
+			getWorders () {
+				let that = this
+				uni.request({
+					url: that.baseURL + "worker",
+					method:"GET",
+					success (res) {
+						console.log("workerList",res)
+						that.workerList = res.data
+						that.workerList.forEach(item => {
+							item.check = false
+						})
+					}
+				})
+			},
+			//勾選工人
+			chooseWorker (i) {
+				// console.log(i)
+				// this.workerList[i].check = !this.workerList[i].check
+				let obj = this.workerList[i]
+				obj.check = !this.workerList[i].check
+				console.log(obj)
+				this.workerList.splice(i,1,obj)
+			},
 			toHome() {
 				uni.navigateTo({
 					url: "/pages/index/index"
@@ -195,15 +227,31 @@
 			},
 			submit() { //this shall be change to API for Create new record
 				let that = this
+				let arr = []        // 已勾選工人
+				that.workerList.forEach(item=> {
+					if (item.check) {
+						arr.push(item.ID)
+					}
+				})
+				let base64 = []
+				that.imgs.forEach(item => {
+					let str = item.base64
+					base64.push(str)
+				})
+				// console.log(base64)
+				
+				// return false
 				uni.request({
 					url:that.baseURL + "attendence",
 					method:"POST",
 					data: {
-						workerIds: [3,5],
+						workerIds: arr,
 						siteId: that.siteId,
 						supervisorId:6,
 						startTimestamp: parseInt(Date.now()/1000) + "",
-						endTimestamp:parseInt(Date.now()/1000) + 86400 + ""
+						endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
+						description: that.description,
+						base64Images: base64
 					},
 					success (res) {
 						console.log("新增",res)
@@ -232,14 +280,27 @@
 				uni.chooseImage({
 					count:9,
 					sourceType:["album","camera"],
-					success (res) {
-						console.log(res)      //已選文件
-						let Files = res.tempFiles
+					success (res1) {
+						console.log(res1)      //已選文件
+						let Files = res1.tempFiles
 						for(let i=0;i<Files.length;i++) {
-							that.imgs.push({
-								src:res.tempFilePaths[i],
-								file: Files[i]
-							})
+							//轉base64格式
+							let reader = new FileReader()
+							reader.readAsDataURL(Files[i])
+							reader.onload = () => {
+								// console.log('file 转 base64结果：' + reader.result)
+								that.imgs.push({
+									src:res1.tempFilePaths[i],
+									file: Files[i],
+									base64: reader.result
+								})
+								
+							}
+							reader.onerror = function (error) {
+								console.log('Error: ', error)
+							}
+							
+							
 						}
 					}
 				})
@@ -468,5 +529,18 @@
 	}
 	.selectType {
 		width: 100%;
+	}
+	.checkBox {
+		border: solid #1296DB 1px;
+		width: 40upx;
+		height: 40upx;
+	}
+	.checkBoxIcon {
+		width: 100%;
+	}
+	.check {
+		background: url("~@/static/img/check2.png");
+		background-position: center;
+		background-size: cover;
 	}
 </style>

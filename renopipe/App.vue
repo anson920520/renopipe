@@ -16,6 +16,7 @@
 	/*每个页面公共css */
 	view {
 		font-size: 30upx;
+		color: gray;
 	}
 	.ju {
 		display: flex;
@@ -38,5 +39,9 @@
 	}
 	.flex10 {
 		flex:10;
+	}
+	.headerWrap {
+		position: sticky;
+		top: 0;
 	}
 </style>

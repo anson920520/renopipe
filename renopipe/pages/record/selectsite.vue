@@ -43,7 +43,7 @@
 	export default {
 		data() {
 			return {
-				val:"",
+				val:"",             //  所選地盤的 ID
 				site:{},
 				siteList: [],
 				
@@ -62,8 +62,15 @@
 				})
 			},
 			onDecode (data) {
-			   console.log('二维码数据',data)
-			   
+				let that= this
+			   // console.log('二维码数据',data)
+			   that.siteList.forEach(item => {
+				   // console.log(item.uuid, data)
+				   
+				   if (item.uuid == data) {
+					   that.val = String(item.ID)
+				   }
+			   })
 			},
 			chooseSite (e) {
 				// console.log(e, this.val)
@@ -79,6 +86,7 @@
 						console.log(res)
 						if (res.data) {
 							that.siteList = res.data
+							that.val = that.siteList[0].ID
 						}
 					}
 				})

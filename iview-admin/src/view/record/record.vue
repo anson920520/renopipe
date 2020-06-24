@@ -132,13 +132,13 @@
         <!-- 左邊圖片 -->
         <div>
           <div class="bigImgWrap  ju al">
-            <img class="bigImg" :src="current.images[currentImg]" >
+            <img class="bigImg" :src="current.images[currentImg].base64Image" >
           </div>
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
             <div class="imgRela">
               <div class="imgAbso al" :style="{width:absWidth+'px',left:left+'px'}">
-                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i"><img :src="item" ></div>
+                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i"><img :src="item.base64Image" ></div>
               </div>
             </div>
             <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
@@ -291,21 +291,13 @@ export default {
     },
     showDetail(e) {
       this.showBox = true
-      // this.current = e  //數據沒有圖片暫不執行此行代碼
+      this.current = e  //數據沒有圖片暫不執行此行代碼
     },
     edit (item){
-      // this.$axios({
-      //   url:"attendence",
-      //   method:"PUT",
-      //   data:item
-      // }).then(res => {
-      //   console.log(res)
-      //   if (res.data) {
-      //     this.dataList = res.data
-      //     this.getSuper()
-          
-      //   }
-      // })
+      console.log(item)
+    },
+    Delete (item) {
+      console.log(item)
     },
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');

@@ -8,6 +8,7 @@
 .nav-background{
 	background: #5F98EC;
 	position: relative;
+	
 }
 .dropMenu {
 	width: 40vw;
@@ -30,11 +31,15 @@
 .show {
 	max-height: 40vh !important;
 }
+.headerWrap {
+	position: sticky;
+	top: 0;
+}
 </style>
 
 
 <template>
-	<view>
+	<view class="headerWrap">
 		<view class="nav-background">
 			<img class="menu-btn op" @click="show=!show" src="@/static/img/hamburger-btn.png" />
 			<view :class="['dropMenu', { show: show }]">
