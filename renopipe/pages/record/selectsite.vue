@@ -1,10 +1,11 @@
 <template>
 	<view class="Wrap sb la">
 		<!--header!-->
-		<view class="nav-background">
+		<Header></Header>
+		<!-- <view class="nav-background">
 			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
-		</view>
-		<view class="selectsiteWrap">
+		</view> -->
+		<view class="selectsiteWrap flex10">
 			<!--logo section!-->
 			<view class="logoBox"></view>
 			<!--title!-->
@@ -19,14 +20,13 @@
 			
 			<!--cam!-->
 			<view  class="qrWrap">
-				<qrcode-stream @decode="onDecode"></qrcode-stream>
-				<!-- <scan @getCode="getScanCode"/> -->
+				<qrcode-stream class="qrView" @decode="onDecode"></qrcode-stream>
 			</view>
 			<!--手動選擇地盤!-->
 			<view class="body-padding">
 				<div class="main">
-					<select>
-						<option>手動選擇地盤</option>
+					<select @change="chooseSite" v-model="val">
+						<option v-for="(item,i) in siteList" :key="i" :value="item.ID">{{item.name}}</option>
 					</select>
 					<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
 				</div>
@@ -43,28 +43,45 @@
 	export default {
 		data() {
 			return {
-				val:""
+				val:"",
+				site:{},
+				siteList: [],
+				
 			}
 		},
 		onLoad() {
-			
+			this.getSite()
 		},
-		mounted() {
-			
+		computed: {
+			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
 			toCreate() {
-					uni.navigateTo({
-						url: "/pages/record/create"
-					})
+				uni.navigateTo({
+					url: "/pages/record/create?siteId=" + this.val
+				})
 			},
-			//获取扫码控件
-			getScanCode(val){
-				console.log(val)
+			onDecode (data) {
+			   console.log('二维码数据',data)
+			   
 			},
-			//
-			 onDecode (decodedString) {
-			   // ...
+			chooseSite (e) {
+				// console.log(e, this.val)
+				
+			},
+			// 獲取所以地盤
+			getSite () {
+				let that = this
+				uni.request({
+					url:that.baseURL + "site",
+					method:"GET",
+					success (res) {
+						console.log(res)
+						if (res.data) {
+							that.siteList = res.data
+						}
+					}
+				})
 			}
 		}
 	}
@@ -199,7 +216,10 @@
 	.qrWrap {
 		width: 100%;
 		height: 750upx;
-		border: solid red 1px;
+	}
+	.qrView {
+		border: solid #CCC 1px;
+		box-sizing: border-box;
 	}
 	.selectsiteWrap {
 		// border: solid green 1px;

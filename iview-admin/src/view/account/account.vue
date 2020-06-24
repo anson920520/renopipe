@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sb al">
-      <div>未有編輯. 刪除api </div>
+      <div></div>
       <Button type="info" class="addBtn" @click="showAdd=true">新增工頭賬戶</Button>
     </div>
     <!-- 表格展示 -->
@@ -212,6 +212,7 @@ export default {
           { validator: validatePassCheck,trigger:"blur"}
         ]
       },
+      current:{},
     }
   },
   created () {
@@ -266,17 +267,49 @@ export default {
       
     },
     okEdit () {
-
+      let that = this
+      that.$refs.editForm.validate(flag => {
+        if (flag) {
+          that.$axios({
+            url:'supervisor/' + that.current.ID,
+            method:"PUT",
+            data: {
+              "fullname": that.editForm.fullname,
+              "cName": that.editForm.cName,
+              "nickname": that.editForm.nickname,
+              "supervisorNo": that.editForm.staffNo,
+              "idNo": that.editForm.idNo,
+              "position": that.editForm.position,
+              "workday": Number(that.editForm.workday),
+              phone: that.editForm.phone
+            },
+          }).then(res => {
+            console.log("add",res)
+            if (res.data) {
+              that.$Message.success('已修改')
+              that.showTable()
+              that.showEdit = false
+            } else {
+              that.$Message.warning("修改失敗")
+            }
+          }).catch(() => {
+            that.$Message.error("修改失敗")
+          })
+        }
+        that.hideLoading()
+      }) 
     },
     edit (item) {
       console.log(item)
+      this.current = item
       this.showEdit = true
       this.editForm.fullname = item.fullname
       this.editForm.cName = item.cName
       this.editForm.nickname = item.nickname
       this.editForm.phone = item.phone
-      this.editForm.staffNo = item.staffNo
+      this.editForm.staffNo = item.supervisorNo
       this.editForm.idNo = item.idNo
+      this.editForm.workday = item.workday
       this.editForm.position = item.position
     },
     keydown () {
@@ -288,6 +321,24 @@ export default {
     },
     Delete (item) {
       console.log(item)
+      let that = this
+      that.$Modal.confirm({
+        title:"提示",
+        content: "確定刪除?",
+        onOk () {
+          that.$axios({
+            url:"supervisor/" + item.ID,
+            method:"DELETE",
+            data: {
+              id: item.ID
+            }
+          }).then(res => {
+            console.log("delete",res)
+            that.$Message.success("已刪除")
+            that.showTable()
+          })
+        }
+      })
     },
     hideLoading() {
       this.loading = false

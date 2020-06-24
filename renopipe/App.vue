@@ -36,4 +36,7 @@
 	.op:active {
 		opacity:0.4;
 	}
+	.flex10 {
+		flex:10;
+	}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sb al">
-      <div>未有編輯,刪除api</div>
+      <div></div>
       <Button type="info" class="addBtn" @click="showAdd=true">新增地盤</Button>
     </div>
     <!-- 表格展示 -->
@@ -220,7 +220,7 @@ export default {
         console.log(flag)
         if (flag) {
           that.$axios({
-            url:"site",
+            url:"site/" + that.current.ID,
             method:"PUT",
             data: {
               "uuid": that.editForm.uuid,
@@ -250,7 +250,7 @@ export default {
       this.editForm.uuid = item.uuid
       this.editForm.la = item.latitude + ""
       this.editForm.lo = item.longitude  + ""
-
+      this.current = item
       setTimeout(() => {
         that.editMap.remove(that.editMarker)
         that.editMarker = new AMap.Marker({
@@ -264,6 +264,25 @@ export default {
     },
     Delete (item) {
       console.log(item)
+      let that = this
+      that.$Modal.confirm({
+        title:"提示",
+        content: "確定刪除?",
+        onOk () {
+          that.$axios({
+            url:"site/" + item.ID,
+            method:"DELETE",
+            data: {
+              id: item.ID
+            }
+          }).then(res => {
+            console.log("delete",res)
+            that.$Message.success("已刪除")
+            that.showTable()
+          })
+        }
+      })
+      
     },
     createMap () {
       let that =this

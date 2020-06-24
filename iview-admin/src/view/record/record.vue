@@ -107,14 +107,14 @@
   <div>
     <div class="sb al">
       <div></div>
-      <Button type="info" class="editBtn" >導出CSV</Button>
+      <Button type="info" class="editBtn" @click="exportData">導出CSV</Button>
     </div>
     <!-- 表格展示 -->
-    <Table :columns="columns" :data="dataList" @on-row-click="showDetail">
+    <Table :columns="columns" ref="recordTable" :data="dataList" @on-row-click="showDetail">
       <template slot-scope="{row}" slot="operation">
         <div>
           <Button size="small" class="editBtn" @click.stop.prevent="edit(row)">編輯</Button>
-          <Button size="small" type="error" @click.stop.prevent="Delete(row)">刪除</Button>
+          <Button size="small" class="noBorder" type="error" @click.stop.prevent="Delete(row)">刪除</Button>
         </div>
       </template>
 
@@ -178,16 +178,28 @@
 <script>
 export default {
   data () {
+    let that = this
     return {
       showBox: false,
       columns: [
-        { title: "創建日期", key:"createAt" },
-        { title: "圖片預覽", slot:"preview" },
-        { title: "創建者", key:"creator" },
-        { title: "人數", key:"number" },
-        { title: "地盤", key:"place" },
-        { title: "工作種類", key:"type" },
-        { title: "工作描述", key:"description" },
+        { title: "創建日期", key:"createdAt" },
+        // { title: "圖片預覽", slot:"preview" },
+        { title: "位置", key:"position" },
+        { title: "開始時間", key:"startedAt" },
+        { title: "結束時間", key:"updatedAt" },
+        { title: "workerId", key:"workerId" },
+        {
+          title: "工頭", key:"supervisor",
+          render:(h,p) => {
+            let str = "暫無"
+            that.superList.forEach(item => {
+              if (item.ID==p.row.supervisorId) {
+                str = item.fullname
+              }
+            })
+            return h('div',str)
+          }
+        },
         { title: "操作", slot:"operation" },
       ],
       dataList: [
@@ -239,18 +251,62 @@ export default {
       },
       absWidth:1000,
       left:0,
-      currentImg:0
+      currentImg:0,
+      superList:[],
     }
   },
+  created () {
+
+    this.showTable()
+  },
   mounted () {
+
     this.createImgDOM()
   },
   methods:{
+    showTable () {
+      this.$axios({
+        url:"attendence",
+        method:"GET"
+      }).then(res => {
+        console.log(res)
+        if (res.data) {
+          this.dataList = res.data
+          this.getSuper()
+          
+        }
+      })
+    },
+    //獲取所有工頭
+    getSuper (item,i) {
+      this.$axios({
+        url:"supervisor",
+        method:"GET"
+      }).then(res => {
+        // console.log(res,123)
+        if (res.data) {
+          this.superList = res.data
+        }
+      })
+    },
     showDetail(e) {
       this.showBox = true
-      this.current = e
+      // this.current = e  //數據沒有圖片暫不執行此行代碼
     },
-
+    edit (item){
+      // this.$axios({
+      //   url:"attendence",
+      //   method:"PUT",
+      //   data:item
+      // }).then(res => {
+      //   console.log(res)
+      //   if (res.data) {
+      //     this.dataList = res.data
+      //     this.getSuper()
+          
+      //   }
+      // })
+    },
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');
       this.absWidth = this.current.images.length*80
@@ -267,6 +323,11 @@ export default {
           this.left -= 320
         }
       }
+    },
+    exportData () {
+      this.$refs.recordTable.exportCsv({
+        filename: "報工記錄"
+      });
     },
   }
 }

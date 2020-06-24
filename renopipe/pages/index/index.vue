@@ -1,10 +1,8 @@
 <template>
 	<view class="Wrap sb la">
 		<!--header!-->
-		<view class="nav-background">
-			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
-		</view>
-		<view class="">
+		<Header></Header>
+		<view class="flex10">
 			<!--logo section!-->
 			<view class="logoBox"></view>
 			<!--title!-->

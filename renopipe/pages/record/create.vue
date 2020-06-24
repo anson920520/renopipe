@@ -1,10 +1,8 @@
 <template>
 	<view class="Wrap sb la">
 		<!--header!-->
-		<view class="nav-background">
-			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
-		</view>
-		<view class="">
+		<Header></Header>
+		<view class="flex10">
 			<!--title!-->
 			<view class="title-padding mt25">
 				<div class="main">
@@ -20,17 +18,6 @@
 				<p>工頭名稱: 張志強</p>
 				<p>日期: 2020-06-21 SS:MM:HHHH</p>
 				<p>地盤: 西營盤 - POINTA1</p>
-				<!--<div class="main">
-					<select>
-						<option>地盤檢索</option>
-					</select>
-					<select>
-						<option>工作種類檢索</option>
-					</select>
-					<select>
-						<option>日期檢索</option>
-					</select>
-				</div>!-->
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
@@ -160,11 +147,18 @@
 				<div class="">
 					<p class="title">圖片上傳</p>
 				</div>
+				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
+				<view class="imgsWrap al">
+					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
+						<image class="upLoadImg" :src="item.src" mode="aspectFill"></image>
+						<select class="selectType">
+							<option >電工</option>
+							<option >木工</option>
+						</select>
+					</view>
+				</view>
 			</view>
 				
-			<view>
-				<!--Upload section!-->
-			</view>
 				
 			<!--submit button!-->
 			<view class="submit-padding">
@@ -184,22 +178,71 @@
 	export default {
 		data() {
 			return {
-
+				imgs:[],
 			}
 		},
-		onLoad() {
-			
+		onLoad(val) {
+			this.siteId = Number(val.siteId)
+		},
+		computed: {
+			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
 			toHome() {
-					uni.navigateTo({
-						url: "/pages/index/index"
-					})
+				uni.navigateTo({
+					url: "/pages/index/index"
+				})
 			},
 			submit() { //this shall be change to API for Create new record
-					uni.navigateTo({
-						url: "/pages/record/complete"
-					})
+				let that = this
+				uni.request({
+					url:that.baseURL + "attendence",
+					method:"POST",
+					data: {
+						workerIds: [3,5],
+						siteId: that.siteId,
+						supervisorId:6,
+						startTimestamp: parseInt(Date.now()/1000) + "",
+						endTimestamp:parseInt(Date.now()/1000) + 86400 + ""
+					},
+					success (res) {
+						console.log("新增",res)
+						if (res.data) {
+							uni.navigateTo({
+								url: "/pages/record/complete"
+							})
+						} else {
+							uni.showToast({
+								title: "創建失敗",
+								icon:"none"
+							})
+						}
+					}, 
+					fail () {
+						uni.showToast({
+							title: "網絡錯誤",
+							icon:"none"
+						})
+					},
+				})
+				
+			},
+			chooseImg () {
+				let that = this
+				uni.chooseImage({
+					count:9,
+					sourceType:["album","camera"],
+					success (res) {
+						console.log(res)      //已選文件
+						let Files = res.tempFiles
+						for(let i=0;i<Files.length;i++) {
+							that.imgs.push({
+								src:res.tempFilePaths[i],
+								file: Files[i]
+							})
+						}
+					}
+				})
 			},
 		}
 	}
@@ -402,5 +445,28 @@
 	
 	.submit-padding{
 		padding:0.5rem;
+	}
+	.uploadBtn {
+		display: inline;
+		padding: 10upx 20upx;
+		background:#007AFF;
+		border-radius:10upx;
+		color: white;
+		margin: 15upx 0;
+	}
+	.imgsWrap {
+		flex-wrap: wrap;
+	}
+	.upLoadImg {
+		width: 100%;
+		height: 230upx;
+		// border: solid red 1px;
+	}
+	.imgBox {
+		width: 33%;
+		border-right: solid 1px white;
+	}
+	.selectType {
+		width: 100%;
 	}
 </style>

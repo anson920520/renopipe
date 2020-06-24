@@ -1,9 +1,7 @@
 <template>
 	<view class="Wrap sb la">
 		<!--header!-->
-		<view class="nav-background">
-			<img class="menu-btn" src="@/static/img/hamburger-btn.png" />
-		</view>
+		<Header></Header>
 		<view class="">
 			<!--logo section!-->
 			<view class="logoboxpad">
@@ -60,6 +58,11 @@
 			getScanCode(val){
 				console.log(val)
 			},
+			toHome () {
+				uni.reLaunch({
+					url:"/pages/index/index"
+				})
+			}
 		}
 	}
 </script>
