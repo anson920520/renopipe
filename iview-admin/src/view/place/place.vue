@@ -89,6 +89,10 @@ export default {
         },
         {
           title: "地盤編號",
+          key: "ID"
+        },
+        {
+          title: "uuid",
           key: "uuid"
         },
         {
@@ -105,7 +109,8 @@ export default {
         },
         {
           title: "操作",
-          slot:"operation"
+          slot:"operation",
+          width:199
         }
       ],
       dataList: [

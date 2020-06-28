@@ -7,8 +7,8 @@
           <div class="indent" @click="mapLook(index)" @mouseover="mouseOver($event)" @mouseleave="mouseLeave($event)">
             <p class="name" style="display: inline">{{item.name}}</p>
             <img v-if="item.store_provider==2" src="../../assets/images/cxj.png" alt="" style="width:50px;float:right">
-            <!-- <p class="phone">门店电话：{{item.store_phone}}</p>
-            <p class="dizhi">门店地址：{{item.store_address}}</p> -->
+            <p class="phone">地盤編號：{{item.ID}}</p>
+            <p class="dizhi">地盤uuid：{{item.uuid}}</p>
             <!-- <p class="grade">
               评分：
               <img src="../../assets/images/grade.png" alt="" style="position: relative;top: 3px;">
