@@ -394,6 +394,7 @@ export default {
   display:flex;
   flex-direction: column;
   justify-content: space-around;
+  z-index:998;
 }
 #qr {
   width: 200px;
