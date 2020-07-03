@@ -81,6 +81,9 @@
 				let that = this
 				uni.request({
 					url:that.baseURL + "site",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					method:"GET",
 					success (res) {
 						console.log(res)

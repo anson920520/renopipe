@@ -18,7 +18,11 @@
 				<p>工頭名稱: 張志強</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
 				<picker mode="date" @change="startTime">
-					<view>时间: {{start.name}}</view>
+					<view>开始时间: {{start.name}}</view>
+				</picker>
+				
+				<picker mode="date" @change="endTime">
+					<view>结束时间: {{end.name}}</view>
 				</picker>
 				<p>地盤: {{site.name}}</p>
 				<div class="hr">
@@ -160,7 +164,11 @@
 				siteId: "",
 				site: {},
 				start: {
-					name: "2020-06-24",
+					name: "",
+					timesamp: 0
+				},
+				end: {
+					name: "",
 					timesamp: 0
 				}
 			}
@@ -169,13 +177,33 @@
 			this.siteId = Number(val.siteId)
 			this.getWorders()
 			this.getSite()
+			let D = new Date()
+			let Y = D.getFullYear()
+			let M = D.getMonth();
+			let d = D.getDate()
+			let str = Y + "-" + (M+1) + "-" + d
+			this.start.name = str
+			this.start.timesamp = new Date(str).getTime()/1000
+			
+			let D1 = new Date(Date.now() + 2592000000)
+			let Y1 = D1.getFullYear()
+			let M1 = D1.getMonth();
+			let d1 = D1.getDate()
+			let str1 = Y1 + "-" + (M1+1) + "-" + d1
+			this.end.name = str1
+			this.end.timesamp = new Date(str1).getTime()/1000
 		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
 			startTime (e) {
-				console.log(e)
+				this.start.name = e.detail.value
+				this.start.timesamp = new Date(e.detail.value).getTime()/1000
+			},
+			endTime (e) {
+				this.end.name = e.detail.value
+				this.end.timesamp = new Date(e.detail.value).getTime()/1000
 			},
 			// 獲取所以地盤
 			getSite () {
@@ -183,6 +211,9 @@
 				uni.request({
 					url:that.baseURL + "site",
 					method:"GET",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					success (res) {
 						console.log(res)
 						if (res.data) {
@@ -202,6 +233,9 @@
 				uni.request({
 					url: that.baseURL + "worker",
 					method:"GET",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					success (res) {
 						console.log("workerList",res)
 						that.workerList = res.data
@@ -226,6 +260,9 @@
 				})
 			},
 			submit() { //this shall be change to API for Create new record
+				uni.showLoading({
+					title:"加载中..."
+				})
 				let that = this
 				let arr = []        // 已勾選工人
 				that.workerList.forEach(item=> {
@@ -235,7 +272,7 @@
 				})
 				let base64 = []
 				that.imgs.forEach(item => {
-					let str = item.base64
+					let str = item.base64.split("base64,")[1]
 					base64.push(str)
 				})
 				// console.log(base64)
@@ -244,6 +281,9 @@
 				uni.request({
 					url:that.baseURL + "attendence",
 					method:"POST",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					data: {
 						workerIds: arr,
 						siteId: that.siteId,
@@ -255,7 +295,7 @@
 					},
 					success (res) {
 						console.log("新增",res)
-						if (res.data) {
+						if (!res.data.error) {
 							uni.navigateTo({
 								url: "/pages/record/complete"
 							})
@@ -272,6 +312,7 @@
 							icon:"none"
 						})
 					},
+					complete () { uni.hideLoading() }
 				})
 				
 			},

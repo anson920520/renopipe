@@ -75,9 +75,15 @@
 		methods:{
 			getData () {
 				let that = this
+				uni.showLoading({
+					title:"加载中..."
+				})
 				uni.request({
 					url: that.baseURL + "attendence",
 					method:"GET",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					success (res) {
 						console.log(res)
 						that.dataList = res.data
@@ -88,15 +94,19 @@
 								}
 							})
 						})
-					}
+					},
+					complete () { uni.hideLoading() }
 				})
 			},
-			// 獲取所以地盤
+			// 獲取所有地盤
 			getSite () {
 				let that = this
 				uni.request({
 					url:that.baseURL + "site",
 					method:"GET",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
 					success (res) {
 						console.log(res)
 						if (res.data) {

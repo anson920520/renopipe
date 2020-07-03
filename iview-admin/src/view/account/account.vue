@@ -9,7 +9,7 @@
       <template slot-scope="{row}" slot="operation">
         <div>
           
-          <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
+          <!-- <Button size="small" class="editBtn" @click="edit(row)">編輯</Button> -->
           <Button size="small" class="noBorder" type="error" @click="Delete(row)">刪除</Button>
         </div>
       </template>
@@ -19,7 +19,7 @@
     <!-- 新增 -->
     <Modal @on-ok="okAdd" v-model="showAdd" :loading="loading" title="新增工頭賬戶" :width='400'>
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="100">
-        <FormItem label="工頭全名" prop="fullname">
+        <!-- <FormItem label="工頭全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.fullname" placeholder="請輸入全名" />
         </FormItem>
 
@@ -31,7 +31,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.nickname" placeholder="請輸入暱稱" />
         </FormItem>
 
-        <FormItem label="聯繫電話" prop="phone">
+        <FormItem label="聯繫電話(用於登錄)" prop="phone">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
@@ -43,25 +43,25 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.idNo" placeholder="請輸入身份證號" />
         </FormItem>
 
-        <FormItem label="position" prop="position">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入position" />
-        </FormItem>
+        <FormItem label="職位" prop="position">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入職位" />
+        </FormItem> -->
 
-        <FormItem label="工作時長" prop="workday">
+        <!-- <FormItem label="工作時長" prop="workday">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.workday" placeholder="請輸入工作時長" />
-        </FormItem>
+        </FormItem> -->
 
-        <!-- <FormItem label="工頭賬戶" prop="username">
-          <Input type="text" style="width: 200px;" v-model="editForm.username" />
+        <FormItem label="聯繫電話" prop="phone">
+          <Input type="text" style="width: 200px;" v-model="addForm.phone" />
         </FormItem>
 
         <FormItem label="密碼" prop="password">
-          <Input type="password" style="width: 200px;" v-model="editForm.password" />
+          <Input type="password" style="width: 200px;" v-model="addForm.password" />
         </FormItem>
 
         <FormItem label="確認密碼" prop="password2">
-          <Input type="password" style="width: 200px;" v-model="editForm.password2" />
-        </FormItem> -->
+          <Input type="password" style="width: 200px;" v-model="addForm.password2" />
+        </FormItem>
       </Form>
     </Modal>
 
@@ -80,7 +80,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.nickname" placeholder="請輸入暱稱" />
         </FormItem>
 
-        <FormItem label="聯繫電話" prop="phone">
+        <FormItem label="聯繫電話(用於登錄)" prop="phone">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
@@ -92,25 +92,25 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
         </FormItem>
 
-        <FormItem label="position" prop="position">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.position" placeholder="請輸入position" />
+        <FormItem label="職位" prop="position">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.position" placeholder="請輸入職位" />
         </FormItem>
 
-        <FormItem label="工作時長" prop="workday">
+        <!-- <FormItem label="工作時長" prop="workday">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.workday" placeholder="請輸入工作時長" />
-        </FormItem>
+        </FormItem> -->
 
         <!-- <FormItem label="工頭賬戶" prop="username">
           <Input type="text" style="width: 200px;" v-model="editForm.username" />
-        </FormItem>
+        </FormItem> -->
 
-        <FormItem label="密碼" prop="password">
+        <FormItem label="密碼" prop="passworda">
           <Input type="password" style="width: 200px;" v-model="editForm.password" />
         </FormItem>
 
-        <FormItem label="確認密碼" prop="password2">
+        <FormItem label="確認密碼" prop="password2a">
           <Input type="password" style="width: 200px;" v-model="editForm.password2" />
-        </FormItem> -->
+        </FormItem>
       </Form>
     </Modal>
 
@@ -134,17 +134,17 @@ export default {
     return {
       showAdd: false,
       showEdit: false,
-      loading:false,
+      loading:true,
       columns: [
         { title: "創建日期", key:"createdAt" },
-        { title: "全名", key:"fullname" },
-        { title: "中文名", key:"cName" },
-        { title: "暱稱", key:"nickname" },
-        { title: "身份證號", key:"idNo" },
+        // { title: "全名", key:"fullname" },
+        // { title: "中文名", key:"cName" },
+        // { title: "暱稱", key:"nickname" },
+        // { title: "身份證號", key:"idNo" },
         { title: "聯繫電話", key:"phone" },
-        { title: "工號", key:"supervisorNo" },
-        { title: "位置", key:"position" },
-        { title: "操作", slot:"operation" },
+        // { title: "工號", key:"supervisorNo" },
+        // { title: "位置", key:"position" },
+        { title: "操作", align: 'right', slot:"operation" },
       ],
       dataList: [
         {createAt: "2020-06-22", username: "abc123456",name: "金毛"},
@@ -160,8 +160,8 @@ export default {
         phone: "",
         // name:"",
         // username: "",
-        // password:"",
-        // password2:"",
+        password:"",
+        password2:"",
       },
       editForm: {
         "fullname": "",
@@ -171,7 +171,9 @@ export default {
         "idNo": "",
         "position": "",
         "workday": '',
-        phone: ""
+        phone: "",
+        password: "",
+        password2: "",
       },
       rule:{
         fullname: [
@@ -186,18 +188,18 @@ export default {
         phone: [
           {required:true, message: "請輸入聯繫電話",trigger:"blur" },
         ],
-        staffNo: [
-          {required:true, message: "請輸入工頭編號",trigger:"blur" },
-        ],
-        idNo: [
-          {required:true, message: "請輸入身份證號",trigger:"blur" },
-        ],
-        position: [
-          {required:true, message: "請輸入position",trigger:"blur" },
-        ],
-        workday: [
-          {required:true, message: "請輸入工作時長",trigger:"blur" },
-        ],
+        // staffNo: [
+        //   {required:true, message: "請輸入工頭編號",trigger:"blur" },
+        // ],
+        // idNo: [
+        //   {required:true, message: "請輸入身份證號",trigger:"blur" },
+        // ],
+        // position: [
+        //   {required:true, message: "請輸入position",trigger:"blur" },
+        // ],
+        // workday: [
+        //   {required:true, message: "請輸入工作時長",trigger:"blur" },
+        // ],
         username: [
           {required:true, message: "請輸入賬戶",trigger:"blur" },
         ],
@@ -237,18 +239,19 @@ export default {
       that.$refs.addForm.validate(flag => {
         if (flag) {
           that.$axios({
-            url:'supervisor',
+            url: window.baseURL.replace("/admin","") + '/signup/supervisor',
             method:"POST",
             data: {
-              "fullname": that.addForm.fullname,
-              "cName": that.addForm.cName,
-              "nickname": that.addForm.nickname,
-              "supervisorNo": that.addForm.staffNo,
-              "idNo": that.addForm.idNo,
-              "position": that.addForm.position,
-              "workday": Number(that.addForm.workday),
-              phone: that.addForm.phone
-            },
+              // "fullname": that.addForm.fullname,
+              // "cName": that.addForm.cName,
+              // "nickname": that.addForm.nickname,
+              // "supervisorNo": that.addForm.staffNo,
+              // "idNo": that.addForm.idNo,
+              // "position": that.addForm.position,
+              // "workday": Number(that.addForm.workday),
+              phone: that.addForm.phone,
+              password: that.addForm.password
+            },  
           }).then(res => {
             console.log("add",res)
             if (res.data) {
@@ -281,7 +284,8 @@ export default {
               "idNo": that.editForm.idNo,
               "position": that.editForm.position,
               "workday": Number(that.editForm.workday),
-              phone: that.editForm.phone
+              phone: that.editForm.phone,
+              password: that.editForm.password
             },
           }).then(res => {
             console.log("add",res)

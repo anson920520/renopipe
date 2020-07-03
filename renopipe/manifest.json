@@ -77,13 +77,16 @@
     },
     "h5" : {
         "devServer" : {
-			"https":false,
-            "port" : 8888
+            "https" : false,
+            "port" : ""
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : true
             }
+        },
+        "router" : {
+            "base" : "/renopipe/"
         }
     }
 }

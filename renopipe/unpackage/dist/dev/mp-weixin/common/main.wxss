@@ -16,6 +16,7 @@
 /*每个页面公共css */
 view {
 	font-size: 30rpx;
+	color: gray;
 }
 .ju {
 	display: -webkit-box;
@@ -51,4 +52,15 @@ view {
 .op:active {
 	opacity:0.4;
 }
+.flex10 {
+	-webkit-box-flex:10;
+	-webkit-flex:10;
+	        flex:10;
+}
+.headerWrap {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
 
+.wrapper[data-v-1f90552a]{position:relative;z-index:0;width:100%;height:100%}.overlay[data-v-1f90552a],.tracking-layer[data-v-1f90552a]{position:absolute;width:100%;height:100%;top:0;left:0}.camera[data-v-1f90552a],.pause-frame[data-v-1f90552a]{display:block;object-fit:cover;width:100%;height:100%}

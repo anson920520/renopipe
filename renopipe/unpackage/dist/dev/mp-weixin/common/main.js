@@ -8,15 +8,27 @@
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var scan = function scan() {__webpack_require__.e(/*! require.ensure | components/scan */ "components/scan").then((function () {return resolve(__webpack_require__(/*! ./components/scan.vue */ 54));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
+var _store = _interopRequireDefault(__webpack_require__(/*! ./vuex/store.js */ 11));
 
+var _vueQrcodeReader = _interopRequireDefault(__webpack_require__(/*! vue-qrcode-reader */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var scan = function scan() {__webpack_require__.e(/*! require.ensure | components/scan */ "components/scan").then((function () {return resolve(__webpack_require__(/*! ./components/scan.vue */ 58));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Header = function Header() {Promise.all(/*! require.ensure | components/Header */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/Header")]).then((function () {return resolve(__webpack_require__(/*! ./components/Header.vue */ 63));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+
+
+
+
+_vue.default.component('Header', Header);
+
+// import plus from "plus"
 
 _vue.default.config.productionTip = false;
 _vue.default.component('scan', scan);
+_vue.default.use(_vueQrcodeReader.default);
 
 _App.default.mpType = 'app';
 
-var app = new _vue.default(_objectSpread({},
+var app = new _vue.default(_objectSpread({
+  store: _store.default },
 _App.default));
 
 createApp(app).$mount();
@@ -62,7 +74,7 @@ var component = Object(_app_HbuilderX_HBuilderX_2_4_1_20191114_full_HBuilderX_pl
   renderjs
 )
 
-component.options.__file = "lwz-project/renopipe/renopipe/App.vue"
+component.options.__file = "App.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),

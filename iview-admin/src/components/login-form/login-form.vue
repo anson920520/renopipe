@@ -1,21 +1,21 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
     <FormItem prop="userName">
-      <Input v-model="form.userName" placeholder="请输入用户名" @on-keyup='enter'>
+      <Input v-model="form.userName" placeholder="請輸入用戶名" @on-keyup='enter'>
         <span slot="prepend">
           <Icon :size="16" type="ios-person"></Icon>
         </span>
       </Input>
     </FormItem>
     <FormItem prop="password">
-      <Input type="password" v-model="form.password" placeholder="请输入密码" @on-keyup='enter'>
+      <Input type="password" v-model="form.password" placeholder="請輸入密碼" @on-keyup='enter'>
         <span slot="prepend">
           <Icon :size="14" type="md-lock"></Icon>
         </span>
       </Input>
     </FormItem>
     <FormItem>
-      <Button @click="handleSubmit" type="primary" long>登录</Button>
+      <Button @click="handleSubmit" type="primary" long>登錄</Button>
     </FormItem>
   </Form>
 </template>
@@ -27,7 +27,7 @@ export default {
       type: Array,
       default: () => {
         return [
-          { required: true, message: '账号不能为空', trigger: 'blur' }
+          { required: true, message: '請輸入賬號', trigger: 'blur' }
         ]
       }
     },
@@ -35,7 +35,7 @@ export default {
       type: Array,
       default: () => {
         return [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
+          { required: true, message: '請輸入密碼', trigger: 'blur' }
         ]
       }
     }
@@ -63,17 +63,14 @@ export default {
       }
     },
     handleSubmit () {
+
+
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          // if(this.form.userName === 'Anson Ng' && this.form.userName === '123456'){
-            this.$emit('on-success-valid', {
-              userName: this.form.userName,
-              password: this.form.password
-            })
-          // }else{
-          //   this.showMsg('用户名或密码不正确')
-          // }
-          
+          this.$emit('on-success-valid', {
+            userName: this.form.userName,
+            password: this.form.password
+          })
         }
       })
     }

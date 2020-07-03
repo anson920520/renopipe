@@ -113,7 +113,7 @@
     <Table :columns="columns" ref="recordTable" :data="dataList" @on-row-click="showDetail">
       <template slot-scope="{row}" slot="operation">
         <div>
-          <Button size="small" class="editBtn" @click.stop.prevent="edit(row)">編輯</Button>
+          <!-- <Button size="small" class="editBtn" @click.stop.prevent="edit(row)">編輯</Button> -->
           <Button size="small" class="noBorder" type="error" @click.stop.prevent="Delete(row)">刪除</Button>
         </div>
       </template>
@@ -148,11 +148,11 @@
         <!-- 中間詳細信息 -->
         <div class="centerItem sb">
           <ul class="recordDetailUl">
-            <li><span>地盤:</span><span>地盤信息....</span></li>
-            <li><span>創建者:</span><span>張三</span></li>
-            <li><span>創建日期</span><span>2020-06-21</span></li>
-            <li><span>工作描述:</span></li>
-            <li><span>工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述</span></li>
+            <li><span>地盤: </span><span>地盤信息....</span></li>
+            <li><span>創建者: </span><span>{{current.supervisors[0].fullname}}</span></li>
+            <li><span>創建日期: </span><span>{{current.createdAt}}</span></li>
+            <li><span>工作描述: </span></li>
+            <li><span>{{current.description}}</span></li>
           </ul>
           <Button class="addBtn" type="info">下載圖片</Button>
         </div>
@@ -164,8 +164,8 @@
             <span style="color: red;font-size:18px;"> 23人</span>
           </div>
           <ul class="allWorker">
-            <li class="sb" v-for="(item,i) in 30" :key="i">
-              <span>張小明</span>
+            <li class="sb" v-for="(item,i) in current.workers" :key="i">
+              <span>{{item.fullname}}</span>
               <span>電工</span>
             </li>
           </ul>
@@ -184,10 +184,10 @@ export default {
       columns: [
         { title: "創建日期", key:"createdAt" },
         // { title: "圖片預覽", slot:"preview" },
-        { title: "位置", key:"position" },
+        { title: "地盤ID", key:"siteId" },
         { title: "開始時間", key:"startedAt" },
         { title: "結束時間", key:"updatedAt" },
-        { title: "workerId", key:"workerId" },
+        { title: "詳請", key:"description" },
         {
           title: "工頭", key:"supervisor",
           render:(h,p) => {
@@ -201,44 +201,9 @@ export default {
           }
         },
         { title: "操作", slot:"operation" },
+        // "data:image/jpeg;base64,
       ],
-      dataList: [
-        {
-          createAt: "2020-06-22",
-          preview:"http://img4.imgtn.bdimg.com/it/u=2418182758,4197200092&fm=26&gp=0.jpg", 
-          creator: "張三",
-          number: "23",
-          place:"address.....",
-          type:"工作種類...",
-          description:"工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述",
-          images:[
-            "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-          ]
-        },
-
-        {
-          createAt: "2020-06-22",
-          preview:"http://img4.imgtn.bdimg.com/it/u=2418182758,4197200092&fm=26&gp=0.jpg", 
-          creator: "李四",
-          number: "23",
-          place:"address.....",
-          type:"工作種類...",
-          description:"工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述",
-          images:[
-            "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-            "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-            "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-          ]
-        },
-      ],
+      dataList: [],
       current:{
         images:[
           "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
@@ -247,12 +212,14 @@ export default {
           "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
           "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
           "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-        ]
+        ],
+        supervisors:[""]
       },
       absWidth:1000,
       left:0,
       currentImg:0,
       superList:[],
+      load:null,
     }
   },
   created () {
@@ -260,8 +227,10 @@ export default {
     this.showTable()
   },
   mounted () {
-
-    this.createImgDOM()
+    this.$Message.loading({
+      content:"獲取記錄中..."
+    })
+    this.load = this.createImgDOM()
   },
   methods:{
     showTable () {
@@ -273,8 +242,10 @@ export default {
         if (res.data) {
           this.dataList = res.data
           this.getSuper()
-          
+          this.load()
         }
+      }).catch(() => {
+        this.load()
       })
     },
     //獲取所有工頭
@@ -291,13 +262,34 @@ export default {
     },
     showDetail(e) {
       this.showBox = true
-      this.current = e  //數據沒有圖片暫不執行此行代碼
+      e.images.forEach(item => {
+        item.base64Image = "data:image/jpeg;base64," + item.base64Image
+      })
+      this.current = e  
     },
     edit (item){
       console.log(item)
     },
     Delete (item) {
       console.log(item)
+      let that = this
+      that.$Modal.confirm({
+        title:"提示",
+        content: "確定刪除?",
+        onOk () {
+          that.$axios({
+            url:"attendence/" + item.ID,
+            method:"DELETE",
+            data: {
+              id: item.ID
+            }
+          }).then(res => {
+            console.log("delete",res)
+            that.$Message.success("已刪除")
+            that.showTable()
+          })
+        }
+      })
     },
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');

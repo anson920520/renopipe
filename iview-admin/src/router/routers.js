@@ -51,9 +51,10 @@ export default [
       }
     ]
   },
+  
   {
     path: '/service_page',
-    name: '地盤總覽', //only ACAREPRO admin can use
+    name: '地盤總覽', 
     // redirect: '/service',
     component: Main,
     meta: {
@@ -72,7 +73,26 @@ export default [
       }
     ]
   },
-
+  {
+    path: '/admin_page',
+    name: 'admin_page', 
+    component: Main,
+    meta: {
+      hideInBread: true,
+      notCache: true
+    },
+    children: [
+      {
+        path: '/admin_page',
+        name: '管理員賬號',
+        meta: {
+          icon: 'ios-book',//MAYBE we can use font awesome?
+          title: '管理員賬號',
+        },
+        component: () => import('@/view/user/admin_page.vue')
+      }
+    ]
+  },
   {
     path: '/place',
     name: '地盤管理', //only ACAREPRO admin can use
@@ -144,21 +164,21 @@ export default [
   },
   {
     path: '/record',
-    name: '報功記錄管理', //only ACAREPRO admin can use
+    name: '報工記錄管理', //only ACAREPRO admin can use
     component: Main,
     meta: {
       hideInBread: true,
       // access: ['superadmin', 'admin'],
       icon: 'ios-person',
-      title: '報功記錄管理'
+      title: '報工記錄管理'
     },
     children: [
       {
         path: '/record_page',
-        name: '報功記錄管理',
+        name: '報工記錄管理',
         meta: {
           icon: 'ios-person',//MAYBE we can use font awesome?
-          title: '報功記錄管理'
+          title: '報工記錄管理'
         },
         component: () => import('@/view/record/record.vue')
       },

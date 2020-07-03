@@ -25,9 +25,25 @@
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
-        <!-- <FormItem label="地盤編號" prop="uuid">
-          <Input type="text" style="width: 250px;" v-model="addForm.uuid" placeholder="請輸入地盤編號" />
-        </FormItem> -->
+        <FormItem label="地盤大編號" prop="siteCode1">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="請輸入地盤大編號" />
+        </FormItem>
+
+        <FormItem label="地盤中編號" prop="siteCode2">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入地盤中編號" />
+        </FormItem>
+
+        <FormItem label="地盤小編號" prop="siteCode3">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="請輸入地盤小編號" />
+        </FormItem>
+
+        <FormItem label="項目編號" prop="proId">
+          <Input type="text" style="width: 250px;" v-model="addForm.proId" placeholder="請輸入項目編號" />
+        </FormItem>
+
+        <FormItem label="地區" prop="region">
+          <Input type="text" style="width: 250px;" v-model="addForm.region" placeholder="請輸入地盤編號" />
+        </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.lo" placeholder="請輸入地盤經度" />
@@ -50,9 +66,25 @@
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
-        <!-- <FormItem label="地盤編號" prop="uuid">
-          <Input type="text" style="width: 250px;" v-model="editForm.uuid" placeholder="請輸入地盤編號" />
-        </FormItem> -->
+        <FormItem label="地盤大編號" prop="siteCode1">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="請輸入地盤大編號" />
+        </FormItem>
+
+        <FormItem label="地盤中編號" prop="siteCode2">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入地盤中編號" />
+        </FormItem>
+
+        <FormItem label="地盤小編號" prop="siteCode3">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="請輸入地盤小編號" />
+        </FormItem>
+
+        <FormItem label="項目編號" prop="proId">
+          <Input type="text" style="width: 250px;" v-model="editForm.proId" placeholder="請輸入項目編號" />
+        </FormItem>
+
+        <FormItem label="地區" prop="region">
+          <Input type="text" style="width: 250px;" v-model="editForm.region" placeholder="請輸入地盤編號" />
+        </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.lo" placeholder="請輸入地盤經度" />
@@ -88,12 +120,20 @@ export default {
           key: "createdAt"
         },
         {
-          title: "地盤編號",
-          key: "ID"
+          title: "編號1",
+          key: "siteCode1"
         },
         {
-          title: "uuid",
-          key: "uuid"
+          title: "編號2",
+          key: "siteCode2"
+        },
+        {
+          title: "編號3",
+          key: "siteCode3"
+        },
+        {
+          title: "項目編號",
+          key: "project"
         },
         {
           title: "地址",
@@ -108,20 +148,32 @@ export default {
           key: "latitude"
         },
         {
+          title: "地盤大編號",
+          key: "siteCode1"
+        },
+        {
+          title: "地盤中編號",
+          key: "siteCode2"
+        },
+        {
+          title: "地盤小編號",
+          key: "siteCode3"
+        },
+        {
+          title: "項目編號",
+          key: "project"
+        },
+        {
+          title: "地區",
+          key: "region"
+        },
+        {
           title: "操作",
           slot:"operation",
           width:199
         }
       ],
-      dataList: [
-        {
-          time: "220-12-12",
-          address: "香港噠噠噠噠噠...",
-          latitude: 22.222,
-          longitude: 133.0022,
-          num: "ajkhdksa"
-        }
-      ],
+      dataList: [ ],
       showAdd: false,
       showEdit: false,
       showQR: false,
@@ -133,6 +185,21 @@ export default {
         uuid:[
           { required:true, message:"請輸入地盤編號",trigger:"blur" },
         ],
+        region:[
+          { required:true, message:"請輸入地區",trigger:"blur" },
+        ],
+        siteCode1:[
+          { required:true, message:"請輸入地盤大編號",trigger:"blur" },
+        ],
+        siteCode2:[
+          { required:true, message:"請輸入地盤中編號",trigger:"blur" },
+        ],
+        siteCode3:[
+          { required:true, message:"請輸入地盤小編號",trigger:"blur" },
+        ],
+        proId:[
+          { required:true, message:"請輸入項目編號",trigger:"blur" },
+        ],
         la:[
           { required:true, message:"請輸入地盤緯度",trigger:"blur" },
         ],
@@ -143,12 +210,22 @@ export default {
       addForm: {
         address: "",
         uuid:"",
+        proId: "",     //項目編號
+        siteCode1: "",
+        siteCode2: "",
+        siteCode3: "",
+        region: "",
         la:"",
         lo:""
       },
       editForm: {
         address: "",
         uuid:"",
+        proId: "",     //項目編號
+        siteCode1: "",
+        siteCode2: "",
+        siteCode3: "",
+        region: "",
         la:"",
         lo:""
       },
@@ -176,19 +253,21 @@ export default {
       this.$axios({
         url:"site",
         method:"GET",
-        header:{
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          'Access-Control-Allow-Methods' : "*"
-        },
+        // headers:{
+        //   "Content-Type": "application/json",
+        //   "Access-Control-Allow-Origin": "*",
+        //   'Access-Control-Allow-Methods' : "*",
+        //   "Authorization": localStorage.getItem('tokan')
+        // },
       }).then(res => {
+
         console.log(res)
-        if (res.data) {
+        if (res.data.Message != 'cannot get authorization token') {
           this.dataList = res.data
         }
         
       }).catch(err => {
-        console.log(err)
+        console.log(err.response)
       })
     },
     okAdd () {
@@ -200,10 +279,14 @@ export default {
             url:"site",
             method:"POST",
             data: {
-              "uuid": that.addForm.uuid,
               "name": that.addForm.address,
               "latitude":Number(that.addForm.la),
-              "longitude": Number(that.addForm.lo)
+              "longitude": Number(that.addForm.lo),
+              siteCode1: that.addForm.siteCode1,
+              siteCode2: that.addForm.siteCode2,
+              siteCode3: that.addForm.siteCode3,
+              project: that.addForm.proId,
+              region: that.addForm.region,
             }
           }).then(res => {
             console.log("add",res)
@@ -228,7 +311,11 @@ export default {
             url:"site/" + that.current.ID,
             method:"PUT",
             data: {
-              "uuid": that.editForm.uuid,
+              siteCode1: that.editForm.siteCode1,
+              siteCode2: that.editForm.siteCode2,
+              siteCode3: that.editForm.siteCode3,
+              project: that.editForm.proId,
+              region: that.editForm.region,
               "name": that.editForm.address,
               "latitude":Number(that.editForm.la),
               "longitude": Number(that.editForm.lo)
@@ -248,11 +335,17 @@ export default {
       })
     },
     edit (item) {
+      
       console.log(item)
       let that = this
       this.showEdit = true
       this.editForm.address = item.name
       this.editForm.uuid = item.uuid
+      this.editForm.siteCode1 = item.siteCode1
+      this.editForm.siteCode2 = item.siteCode2
+      this.editForm.siteCode3 = item.siteCode3
+      this.editForm.proId = item.project
+      this.editForm.region = item.region
       this.editForm.la = item.latitude + ""
       this.editForm.lo = item.longitude  + ""
       this.current = item

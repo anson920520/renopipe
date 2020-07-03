@@ -15,21 +15,18 @@ import '@/assets/icons/iconfont.css'
 import 'v-org-tree/dist/v-org-tree.css'
 import VueCookie from 'vue-cookie'
 import qs from 'qs';
-import axios from 'axios'
+import axios from '@/api/index.js'
 import AMap from "vue-amap"
 import QR from "qrcodejs2"
 
+
+
+
+
 Vue.use(VueCookie)
 
-// Vue.http.options.emulateJSON = true;
-
-
-
-// 实际打包时应该不引入mock 
-/* eslint-disable */
-// if (process.env.NODE_ENV !== 'http://119.3.150.173:7005/') require('@/mock')
 require('@/mock')
-// if (process.env.NODE_ENV !== 'production') require('@/mock')
+
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
@@ -38,18 +35,13 @@ Vue.use(iView, {
 //地图
 Vue.use(AMap);
 AMap.initAMapApiLoader({
-  // key: "4af19d07ff6048f57ee8e8ab674151d7"
   key: "86ec9877e5e95fb2f5bb0e8b5fe52063"
 });
 
-// window.baseURL = 'https://acarepro.online/'; //正式 
-window.baseURL = 'http://119.8.42.40:8080/'; // 测试
-
-
-
-// window.baseURL = 'http://119.3.150.173:7020/'; // 测试
-// window.baseURL = 'http://119.3.150.173:5001/'; //正式
+// window.baseURL = 'http://119.8.42.40:8080/'; // 测试
+window.baseURL = 'http://119.8.42.40:8081/admin'; // 测试
 axios.defaults.baseURL = window.baseURL
+
 
 
 /**
