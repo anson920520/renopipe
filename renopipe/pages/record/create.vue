@@ -70,16 +70,16 @@
 				</div>
 			</view>
 			
-			<view class="body-padding mt20" v-for="(item,i) in workerList.data" :key="i">
+			<view class="body-padding mt20">
 				<div class="tagpad">
-					<div class="jobTag">{{item.position}}</div>
+					<div class="jobTag">電工</div>
 				</div>
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
-					<div class="worker-main al" v-for="(worker,i) in workerList.data.workers" :key="i">
+					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
-							<b>{{worker.cName}}</b>
+							<b>{{item.fullname}}</b>
 						</div>
 						<view 
 							:class="['checkBox',{ check:item.check }]"
@@ -267,17 +267,17 @@
 			getWorders () {
 				let that = this
 				uni.request({
-					url: that.baseURL + "worker?action=byRole",
+					url: that.baseURL + "worker",
 					method:"GET",
 					header:{
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
 						console.log("workerList",res)
-						that.workerList = res
-						/*that.workerList.forEach(item => {
+						that.workerList = res.data
+						that.workerList.forEach(item => {
 							item.check = false
-						})*/
+						})
 					}
 				})
 			},
