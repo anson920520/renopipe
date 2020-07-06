@@ -12,21 +12,32 @@
         <FormItem label="用戶名" prop="address">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model.trim="addForm.username" placeholder="請輸入用戶名" />
         </FormItem>
-
+        <FormItem label="全名" prop="address">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model.trim="addForm.nickname" placeholder="請輸入用全名" />
+        </FormItem>
+        <FormItem label="電話號碼" prop="address">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model.trim="addForm.phone" placeholder="請輸入電話號碼" />
+        </FormItem>
         <FormItem label="密碼" prop="siteCode1">
           <Input type="text" style="width: 250px;" v-model="addForm.pwd" placeholder="請輸入密碼" />
         </FormItem>
-
-        <!-- <FormItem label="確認密碼" prop="siteCode2">
+        <FormItem label="確認密碼" prop="siteCode2">
           <Input type="text" style="width: 250px;" v-model="addForm.pwd2" placeholder="請輸入確認密碼" />
-        </FormItem> -->
+        </FormItem> 
 
       </Form>
     </Modal>
 
     </div>
 
-    <Table :columns="column" :data="dataList"></Table>
+    <Table :columns="column" :data="dataList">
+        <template slot-scope="{row}" slot="operation">
+            <div>
+            <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
+            <Button size="small" class="noBorder" type="error" @click="Delete(row)">刪除</Button>
+            </div>
+        </template>
+    </Table>
 
   </div>
 </template>
@@ -48,7 +59,10 @@ export default {
             loading: true,
             dataList:[],
             column:[
-                {title: "username", key:'phone' },
+                {title: "創建時間", key:'createdAt' },
+                {title: "管理員名稱", key:'fullname' },
+                {title: "電話號碼(登陸用)", key:'phone' },
+                { title: "操作", slot:"operation" }
             ],
         }
     },
@@ -75,7 +89,10 @@ export default {
                 url: window.baseURL.replace('/admin',"/") + "signup/admin",
                 method:"POST",
                 data: {
-                    phone: this.addForm.username,
+                    fullname: this.addForm.username,
+                    nickname: this.addForm.nickname,
+                    phone: this.addForm.phone,
+                    position: this.addForm.username,
                     password: this.addForm.pwd
                 }
             }).then(res => {

@@ -15,38 +15,71 @@
 			
 			<!--body!-->
 			<view class="body-padding">
-				<p>工頭名稱: 張志強</p>
+				<p>工頭名稱: {{username}}</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
 				<picker mode="date" @change="startTime">
-					<view>开始时间: {{start.name}}</view>
+					<view>今日日期: {{start.name}}</view>
 				</picker>
+				時段: &nbsp;&nbsp;
+				<span class="selectpadding">
+					<select style="padding:0rem!important;">
+						<option value="上午">上午</option>
+						<option value="下午">上午</option>
+						<option value="全日">全日</option>
+					</select>
+				</span>
 				
-				<picker mode="date" @change="endTime">
-					<view>结束时间: {{end.name}}</view>
-				</picker>
 				<p>地盤: {{site.name}}</p>
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
 			</view>
 			
+						<!--deatil entry!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">工作記錄基本資料</p>
+				</div>
+			</view>
+
+			<view class="body-padding">
+				<span>工程項目:</span> <input  v-model="projectid" placeholder="">
+			</view>
+
+			<view class="body-padding">
+				副項目:<input  v-model="subcontract" placeholder="">
+			</view>
+
+			<view class="body-padding">
+				判頭:<input  v-model="rporsubCRP" placeholder="">
+			</view>
+
+			<view class="body-padding">
+				機械:<input  placeholder="">
+			</view>
+
+			<div class="hr">
+					<div class="blue-divider"></div>
+			</div>
+
 			<!--worker-list!-->
 			<view class="body-padding">
 				<div class="">
 					<p class="title">工人列表</p>
+					<u>請選擇今天有上班的工人，如果找不到工人，請在工作描述中補充。</u>
 				</div>
 			</view>
 			
-			<view class="body-padding mt20">
+			<view class="body-padding mt20" v-for="(item,i) in workerList.data" :key="i">
 				<div class="tagpad">
-					<div class="jobTag">電工</div>
+					<div class="jobTag">{{item.position}}</div>
 				</div>
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
-					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
+					<div class="worker-main al" v-for="(worker,i) in workerList.data.workers" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
-							<b>{{item.fullname}}</b>
+							<b>{{worker.cName}}</b>
 						</div>
 						<view 
 							:class="['checkBox',{ check:item.check }]"
@@ -63,7 +96,7 @@
 				</div>
 			</view>
 			
-			<!-- Work Type!-->
+			<!-- Work Type
 			<view class="body-padding">
 				<div class="">
 					<p class="title">工作類型列表</p>
@@ -72,7 +105,6 @@
 			
 			<view class="body-padding mt20">
 				<view class="border box scoll">
-					<!--only need one worker-main when for loop!-->
 					<div class="worker-main">
 						<div class="worktype-info-area">
 							<p class="worktype">In-Situ Concetre</p>
@@ -102,8 +134,8 @@
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
-			</view>
-			
+			</view>!-->
+
 			<!--work description!-->
 			<view class="body-padding">
 				<div class="">
@@ -170,7 +202,11 @@
 				end: {
 					name: "",
 					timesamp: 0
-				}
+				},
+				projectid:"",
+				subcontract:"",
+				rporsubCRP:"",
+				username: uni.getStorageSync('username')
 			}
 		},
 		onLoad(val) {
@@ -231,17 +267,17 @@
 			getWorders () {
 				let that = this
 				uni.request({
-					url: that.baseURL + "worker",
+					url: that.baseURL + "worker?action=byRole",
 					method:"GET",
 					header:{
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
 						console.log("workerList",res)
-						that.workerList = res.data
-						that.workerList.forEach(item => {
+						that.workerList = res
+						/*that.workerList.forEach(item => {
 							item.check = false
-						})
+						})*/
 					}
 				})
 			},
@@ -288,9 +324,32 @@
 						workerIds: arr,
 						siteId: that.siteId,
 						supervisorId:6,
-						startTimestamp: parseInt(Date.now()/1000) + "",
-						endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
-						description: that.description,
+						//startTimestamp: parseInt(Date.now()/1000) + "",
+						//endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
+						//description: that.description,
+						/*new fields*/
+						time:"上午",
+						projectid: "J1005",
+						subcontract: "T0042",
+						rporsubCRP: "RP",
+						district:"坪洲",
+						location:"離島坪洲，永東街",
+						workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
+						description:"井位鋤坭執井底坭面勞石矢草鞋落井底及開細电炮打石矢頭，泵水",
+						smr:"",
+						smrref:"",
+						daywork:"",
+						dwref:"",
+						trialpit:"",
+						pipe:"",
+						chamber:"",
+						reinstatement:"",
+						workingrecordcol:"",
+						rockamh:"",
+						other:"",
+						rebate:"",
+						ce:"",
+						remark:"",
 						base64Images: base64
 					},
 					success (res) {
@@ -583,5 +642,14 @@
 		background: url("~@/static/img/check2.png");
 		background-position: center;
 		background-size: cover;
+	}
+	.selectpadding{
+		padding:0.3rem;
+		position: relative;
+    	top: 2px;
+	}
+	input{
+		border:solid 1px lightgray;
+		margin-bottom: 1rem;
 	}
 </style>

@@ -9,7 +9,7 @@
       <template slot-scope="{row}" slot="operation">
         <div>
           
-          <!-- <Button size="small" class="editBtn" @click="edit(row)">編輯</Button> -->
+          <Button size="small" class="editBtn" @click="edit(row)">編輯</Button> 
           <Button size="small" class="noBorder" type="error" @click="Delete(row)">刪除</Button>
         </div>
       </template>
@@ -19,7 +19,7 @@
     <!-- 新增 -->
     <Modal @on-ok="okAdd" v-model="showAdd" :loading="loading" title="新增工頭賬戶" :width='400'>
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="100">
-        <!-- <FormItem label="工頭全名" prop="fullname">
+        <FormItem label="工頭全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.fullname" placeholder="請輸入全名" />
         </FormItem>
 
@@ -45,16 +45,12 @@
 
         <FormItem label="職位" prop="position">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入職位" />
-        </FormItem> -->
-
-        <!-- <FormItem label="工作時長" prop="workday">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.workday" placeholder="請輸入工作時長" />
-        </FormItem> -->
-
-        <FormItem label="聯繫電話" prop="phone">
-          <Input type="text" style="width: 200px;" v-model="addForm.phone" />
         </FormItem>
 
+        <FormItem label="工作時長" prop="workday">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.workday" placeholder="請輸入工作時長" />
+        </FormItem> 
+        
         <FormItem label="密碼" prop="password">
           <Input type="password" style="width: 200px;" v-model="addForm.password" />
         </FormItem>
@@ -137,14 +133,14 @@ export default {
       loading:true,
       columns: [
         { title: "創建日期", key:"createdAt" },
-        // { title: "全名", key:"fullname" },
-        // { title: "中文名", key:"cName" },
-        // { title: "暱稱", key:"nickname" },
+         { title: "全名", key:"fullname" },
+         { title: "中文名", key:"cName" },
+         { title: "暱稱", key:"nickname" },
         // { title: "身份證號", key:"idNo" },
-        { title: "聯繫電話", key:"phone" },
-        // { title: "工號", key:"supervisorNo" },
-        // { title: "位置", key:"position" },
-        { title: "操作", align: 'right', slot:"operation" },
+         { title: "聯繫電話(用作登入)", key:"phone" },
+         //{ title: "工號", key:"supervisorNo" },
+         //{ title: "位置", key:"position" },
+         { title: "操作", align: 'right', slot:"operation" },
       ],
       dataList: [
         {createAt: "2020-06-22", username: "abc123456",name: "金毛"},
@@ -158,8 +154,8 @@ export default {
         "position": "",
         "workday": '',
         phone: "",
-        // name:"",
-        // username: "",
+        name:"",
+        username: "",
         password:"",
         password2:"",
       },
@@ -242,15 +238,15 @@ export default {
             url: window.baseURL.replace("/admin","") + '/signup/supervisor',
             method:"POST",
             data: {
-              // "fullname": that.addForm.fullname,
-              // "cName": that.addForm.cName,
-              // "nickname": that.addForm.nickname,
-              // "supervisorNo": that.addForm.staffNo,
-              // "idNo": that.addForm.idNo,
-              // "position": that.addForm.position,
-              // "workday": Number(that.addForm.workday),
-              phone: that.addForm.phone,
-              password: that.addForm.password
+               "fullname": that.addForm.fullname,
+               "cName": that.addForm.cName,
+               "nickname": that.addForm.nickname,
+               "supervisorNo": that.addForm.staffNo,
+               "idNo": that.addForm.idNo,
+               "position": that.addForm.position,
+               "workday": Number(that.addForm.workday),
+               "phone": that.addForm.phone,
+               "password": that.addForm.password
             },  
           }).then(res => {
             console.log("add",res)

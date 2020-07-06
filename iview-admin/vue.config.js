@@ -38,11 +38,16 @@ module.exports = {
   // 打包时不生成.map文件
   productionSourceMap: true,
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
-  devServer: {
-    proxy: 'http://119.3.150.173:5001/',
-    disableHostCheck: true,
-    port: 8083
-  },
+   devServer: { // 环境配置
+        host: '0.0.0.0',
+        public:'172.20.3.3:8080',
+        port: 8080,
+        https: false,
+        hotOnly: false,
+        disableHostCheck:true,
+        open: true // 配置自动启动浏览器
+     
+    },
   configureWebpack: {
     externals: {
       'AMap': 'AMap' // 高德地图配置

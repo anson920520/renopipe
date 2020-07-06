@@ -43,7 +43,7 @@
 		<view class="nav-background">
 			<img class="menu-btn op" @click="show=!show" src="@/static/img/hamburger-btn.png" />
 			<view :class="['dropMenu', { show: show }]">
-				<view class="menuList ju al">你好, 張志強</view>
+				<view class="menuList ju al">你好, {{username}}</view>
 				<view class="menuList op ju al" @click="toIndex">我的報工記錄</view>
 				<view class="menuList ju al op" @click="loginOut">登出</view>
 			</view>
@@ -56,6 +56,7 @@
 		data() {
 			return {
 				show: false,
+				username: uni.getStorageSync('username')
 			};
 		},
 		methods:{

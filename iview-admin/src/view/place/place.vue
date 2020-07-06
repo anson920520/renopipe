@@ -119,7 +119,7 @@ export default {
           title: "創建日期",
           key: "createdAt"
         },
-        {
+        /*{
           title: "編號1",
           key: "siteCode1"
         },
@@ -130,7 +130,7 @@ export default {
         {
           title: "編號3",
           key: "siteCode3"
-        },
+        },*/
         {
           title: "項目編號",
           key: "project"
@@ -139,14 +139,14 @@ export default {
           title: "地址",
           key: "name"
         },
-        {
+        /*{
           title: "經度",
           key: "longitude"
         },
         {
           title: "緯度",
           key: "latitude"
-        },
+        },*/
         {
           title: "地盤大編號",
           key: "siteCode1"

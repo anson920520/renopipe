@@ -17,8 +17,19 @@
     <!-- 新增 -->
     <Modal v-model="showAdd" :loading="loading" @on-ok="okAdd" title="新增工人賬戶" :width='400'>
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="100">
+        <FormItem label="Company" prop="company">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.company" placeholder="選擇公司" />
+        </FormItem>
+          <FormItem label="Role" prop="role">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.role" placeholder="選擇Type of role" />
+        </FormItem>
+
         <FormItem label="工人全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.fullname" placeholder="請輸入全名" />
+        </FormItem>
+
+        <FormItem label="身份證號" prop="idNo">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.idNo" placeholder="請輸入身份證號" />
         </FormItem>
 
         <FormItem label="工人中文名" prop="cName">
@@ -29,16 +40,108 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.nickname" placeholder="請輸入暱稱" />
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.idNo" placeholder="請輸入身份證號" />
+        <FormItem label="職位" prop="position">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入職位" />
+        </FormItem>
+
+         <FormItem label="生日日期" prop="dob">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.dob" placeholder="生日日期" />
+        </FormItem>
+
+        <FormItem label="Group" prop="group">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.group" placeholder="請輸入Group (e.g: Engineer)" />
+        </FormItem>
+
+         <FormItem label="Team" prop="team">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.team" placeholder="請輸入Tean (e.g: Head office)" />
         </FormItem>
 
         <FormItem label="聯繫電話" prop="phone">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
-        <FormItem label="position" prop="position">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入position" />
+         <FormItem label="地址" prop="address">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.address" placeholder="請輸入地址" />
+        </FormItem>
+
+        <FormItem label="加入公司日期" prop="joindate">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.joindate" placeholder="請輸入加入公司日期" />
+        </FormItem>
+
+        <FormItem label="離開公司日期" prop="leavedate">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.leavedate" placeholder="請輸入離開公司日期" />
+        </FormItem>
+
+        <FormItem label="Monthley/day" prop="md">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.md" placeholder="請輸入Monthley/day" />
+        </FormItem>
+
+         <FormItem label="加入公司人工" prop="joinsalary">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.joinsalary" placeholder="請輸入加入公司人工" />
+        </FormItem>
+
+         <FormItem label="離開公司人工" prop="leavesalary">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.leavesalary" placeholder="請輸入離開公司人工" />
+        </FormItem>
+
+        <FormItem label="AB" prop="ab">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.ab" placeholder="請輸入ab" />
+        </FormItem>
+
+        <FormItem label="% of AB" prop="abpercent">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.abpercent" placeholder="請輸入% of AB" />
+        </FormItem>
+
+        <FormItem label="OT/hr" prop="OThr">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.otrate" placeholder="請輸入OT/hr" />
+        </FormItem>
+
+        <FormItem label="AL day" prop="alday">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.alday" placeholder="請輸入AL day" />
+        </FormItem>
+
+        <FormItem label="Statutory" prop="statutory">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.statutory" placeholder="請輸入Statutory" />
+        </FormItem>
+
+        <FormItem label="工作天數" prop="workday">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.workday" placeholder="請輸入工作天數" />
+        </FormItem>
+
+       <FormItem label="平日工作時間長度" prop="workperoid">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.workperoid" placeholder="請輸入平日工作時間長度" />
+        </FormItem>
+
+        <FormItem label="星期六工作時間長度" prop="satarrange">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
+        </FormItem>
+        
+          <FormItem label="星期六工作時間長度" prop="satarrange">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
+        </FormItem>
+
+        <FormItem label="Clawback Period" prop="clawbackperiod">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.clawbackperiod" placeholder="請輸入Clawback Period" />
+        </FormItem>
+
+        <FormItem label="試用期辭職通知時間長度" prop="befpobtermination">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.befpobtermination" placeholder="請輸入試用期辭職通知時間長度" />
+        </FormItem>
+
+        <FormItem label="正常辭職通知時間長度" prop="afterpodtermination">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.afterpodtermination" placeholder="請輸入正常辭職通知時間長度" />
+        </FormItem>
+
+        <FormItem label="試用期天數" prop="pobat">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.pobat" placeholder="請輸入試用期辭職通知時間長度" />
+        </FormItem>
+
+         <FormItem label="MPF" prop="mpf">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.mpf" placeholder="MPF" />
+        </FormItem>
+
+        <FormItem label="Remark" prop="remark">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.remark" placeholder="Remark" />
         </FormItem>
       </Form>
     </Modal>
@@ -47,8 +150,19 @@
     <!-- 编辑 -->
     <Modal v-model="showEdit" :loading="loading" @on-ok="okEdit" title="编辑工人賬戶" :width='400'>
       <Form :model="editForm" ref="editForm" :rules='rule' :label-width="100">
+        <FormItem label="Company" prop="company">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.company" placeholder="選擇公司" />
+        </FormItem>
+          <FormItem label="Role" prop="role">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.role" placeholder="選擇Type of role" />
+        </FormItem>
+
         <FormItem label="工人全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.fullname" placeholder="請輸入全名" />
+        </FormItem>
+
+        <FormItem label="身份證號" prop="idNo">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
         </FormItem>
 
         <FormItem label="工人中文名" prop="cName">
@@ -59,16 +173,108 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.nickname" placeholder="請輸入暱稱" />
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
+        <FormItem label="職位" prop="position">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.position" placeholder="請輸入職位" />
+        </FormItem>
+
+         <FormItem label="生日日期" prop="dob">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.dob" placeholder="生日日期" />
+        </FormItem>
+
+        <FormItem label="Group" prop="group">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.group" placeholder="請輸入Group (e.g: Engineer)" />
+        </FormItem>
+
+         <FormItem label="Team" prop="team">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.team" placeholder="請輸入Tean (e.g: Head office)" />
         </FormItem>
 
         <FormItem label="聯繫電話" prop="phone">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
-        <FormItem label="position" prop="position">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.position" placeholder="請輸入position" />
+         <FormItem label="地址" prop="address">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.address" placeholder="請輸入地址" />
+        </FormItem>
+
+        <FormItem label="加入公司日期" prop="joindate">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.joindate" placeholder="請輸入加入公司日期" />
+        </FormItem>
+
+        <FormItem label="離開公司日期" prop="leavedate">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.leavedate" placeholder="請輸入離開公司日期" />
+        </FormItem>
+
+        <FormItem label="Monthley/day" prop="md">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.md" placeholder="請輸入Monthley/day" />
+        </FormItem>
+
+         <FormItem label="加入公司人工" prop="joinsalary">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.joinsalary" placeholder="請輸入加入公司人工" />
+        </FormItem>
+
+         <FormItem label="離開公司人工" prop="leavesalary">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.leavesalary" placeholder="請輸入離開公司人工" />
+        </FormItem>
+
+        <FormItem label="AB" prop="ab">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.ab" placeholder="請輸入ab" />
+        </FormItem>
+
+        <FormItem label="% of AB" prop="abpercent">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.abpercent" placeholder="請輸入% of AB" />
+        </FormItem>
+
+        <FormItem label="OT/hr" prop="OThr">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.otrate" placeholder="請輸入OT/hr" />
+        </FormItem>
+
+        <FormItem label="AL day" prop="alday">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.alday" placeholder="請輸入AL day" />
+        </FormItem>
+
+        <FormItem label="Statutory" prop="statutory">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.statutory" placeholder="請輸入Statutory" />
+        </FormItem>
+
+        <FormItem label="工作天數" prop="workday">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.workday" placeholder="請輸入工作天數" />
+        </FormItem>
+
+       <FormItem label="平日工作時間長度" prop="workperoid">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.workperoid" placeholder="請輸入平日工作時間長度" />
+        </FormItem>
+
+        <FormItem label="星期六工作時間長度" prop="satarrange">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
+        </FormItem>
+        
+          <FormItem label="星期六工作時間長度" prop="satarrange">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
+        </FormItem>
+
+        <FormItem label="Clawback Period" prop="clawbackperiod">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.clawbackperiod" placeholder="請輸入Clawback Period" />
+        </FormItem>
+
+        <FormItem label="試用期辭職通知時間長度" prop="befpobtermination">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.befpobtermination" placeholder="請輸入試用期辭職通知時間長度" />
+        </FormItem>
+
+        <FormItem label="正常辭職通知時間長度" prop="afterpodtermination">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.afterpodtermination" placeholder="請輸入正常辭職通知時間長度" />
+        </FormItem>
+
+        <FormItem label="試用期天數" prop="pobat">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.pobat" placeholder="請輸入試用期辭職通知時間長度" />
+        </FormItem>
+
+         <FormItem label="MPF" prop="mpf">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.mpf" placeholder="MPF" />
+        </FormItem>
+
+        <FormItem label="Remark" prop="remark">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.remark" placeholder="Remark" />
         </FormItem>
       </Form>
     </Modal>
@@ -128,7 +334,7 @@ export default {
           {required:true, message: "請輸入身份證號",trigger:"blur" },
         ],
         position: [
-          {required:true, message: "請輸入position",trigger:"blur" },
+          //{required:true, message: "請輸入position",trigger:"blur" },
         ],
       },
       current: {},
@@ -140,19 +346,49 @@ export default {
   methods:{
     okAdd () {
       let that = this
+
+      let data = {
+              "company": that.addForm.company,
+              "role": that.addForm.role,
+              "fullname": that.addForm.fullname,
+              "idNo": that.addForm.idNo,
+              "cName": that.addForm.cName,
+              "nickname": that.addForm.nickname,
+              "position": that.addForm.position,
+              "dob":that.addForm.dob,
+              "group":that.addForm.group,
+              "team":that.addForm.team,
+              "phone": that.addForm.phone,
+              "address":that.addForm.address,
+              "joindate":that.addForm.joindate,
+              "leavedate":that.addForm.leavedate,
+              "md":that.addForm.md,
+              "joinsalary":that.addForm.joinsalary,
+              "leavesalary":that.addForm.leavesalary,
+              "ab":that.addForm.ab,
+              "abpercent":that.addForm.abpercent,
+              "otrate":that.addForm.otrate,
+              "alday":that.addForm.otrate,
+              "statutory":that.addForm.statutory,
+              "workday":that.addForm.workday,
+              "workperoid":that.addForm.workperoid,
+              "satarrange":that.addForm.satarrange,
+              "clawbackperiod":that.addForm.clawbackperiod,
+              "befpobtermination":that.addForm.befpobtermination,
+              "afterpodtermination":that.addForm.afterpodtermination,
+              "pobat":that.addForm.pobat,
+              "mpf":that.addForm.mpf,
+              "remark":that.addForm.remark,  
+        }
+
+        console.log(data)
+
       that.$refs.addForm.validate(flag => {
         if (flag) {
           that.$axios({
             url:'worker',
             method:"POST",
-            data: {
-              "fullname": that.addForm.fullname,
-              "cName": that.addForm.cName,
-              "nickname": that.addForm.nickname,
-              "idNo": that.addForm.idNo,
-              "position": that.addForm.position,
-              phone: that.addForm.phone
-            },
+            data: data,
           }).then(res => {
             console.log("add",res)
             if (res.data) {
@@ -168,23 +404,53 @@ export default {
         }
         that.hideLoading()
       }) 
-      
     },
     okEdit () {
       let that = this
+
+       let data = {
+              "company": that.editForm.company,
+              "role": that.editForm.role,
+              "fullname": that.editForm.fullname,
+              "idNo": that.editForm.idNo,
+              "cName": that.editForm.cName,
+              "nickname": that.editForm.nickname,
+              "position": that.editForm.position,
+              "dob":that.editForm.dob,
+              "group":that.editForm.group,
+              "team":that.editForm.team,
+              "phone": that.editForm.phone,
+              "address":that.editForm.address,
+              "joindate":that.editForm.joindate,
+              "leavedate":that.editForm.leavedate,
+              "md":that.editForm.md,
+              "joinsalary":that.editForm.joinsalary,
+              "leavesalary":that.editForm.leavesalary,
+              "ab":that.editForm.ab,
+              "abpercent":that.editForm.abpercent,
+              "otrate":that.editForm.otrate,
+              "alday":that.editForm.otrate,
+              "statutory":that.editForm.statutory,
+              "workday":that.editForm.workday,
+              "workperoid":that.editForm.workperoid,
+              "satarrange":that.editForm.satarrange,
+              "clawbackperiod":that.editForm.clawbackperiod,
+              "befpobtermination":that.editForm.befpobtermination,
+              "afterpodtermination":that.editForm.afterpodtermination,
+              "pobat":that.editForm.pobat,
+              "mpf":that.editForm.mpf,
+              "remark":that.editForm.remark,  
+        }
+
+      console.log(data);
+      console.log(that.current.ID)
+      //API call
       that.$refs.editForm.validate(flag => {
         if (flag) {
           that.$axios({
             url:'worker/' + that.current.ID,
             method:"PUT",
-            data: {
-              "fullname": that.editForm.fullname,
-              "cName": that.editForm.cName,
-              "nickname": that.editForm.nickname,
-              "idNo": that.editForm.idNo,
-              "position": that.editForm.position,
-              phone: that.editForm.phone
-            },
+            data: data,
           }).then(res => {
             console.log("add",res)
             if (res.data) {
@@ -199,7 +465,7 @@ export default {
           })
         }
         that.hideLoading()
-      }) 
+      })
     },
     edit (item) {
       this.current = item

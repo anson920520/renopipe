@@ -127,6 +127,7 @@
 							console.log(res)
 							if (res.data.ID) {
 								uni.setStorageSync("token","Bearer " + res.data.token)
+								uni.setStorageSync("username" ,""+ res.data.cName)
 								uni.navigateTo({
 									url: "/pages/index/index"
 								})
