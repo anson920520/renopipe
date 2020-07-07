@@ -22,14 +22,19 @@
 				</picker>
 				時段: &nbsp;&nbsp;
 				<span class="selectpadding">
-					<select style="padding:0rem!important;">
+					<select v-model="timeRange" style="padding:0rem!important;">
 						<option value="上午">上午</option>
-						<option value="下午">上午</option>
+						<option value="下午">下午</option>
 						<option value="全日">全日</option>
 					</select>
 				</span>
-				
-				<p>地盤: {{site.name}}</p>
+				<p>工程項目編號: {{site.project}}</p>
+				<p>地盤(中文名): {{site.name}}</p>
+				<p>地盤(英文名): {{site.siteCode3}}</p>
+				<p>Dis1 : {{site.siteCode1}}</p>
+				<p>Dis2: {{site.siteCode2}}</p>
+				<p>Site C. TO. : {{site.region}}</p>
+			
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
@@ -43,19 +48,26 @@
 			</view>
 
 			<view class="body-padding">
-				<span>工程項目:</span> <input  v-model="projectid" placeholder="">
+				副項目編號(非必填):<input  v-model="subcontract" placeholder="">
 			</view>
 
 			<view class="body-padding">
-				副項目:<input  v-model="subcontract" placeholder="">
+				判頭: <span class="">
+						<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
+							<option id="1" value="Renopipe">Renopipe</option>
+							<option id="2" value="Renopipe">信雄</option>
+							<option id="3" value="Renopipe">信昌</option>
+							<option id="4" value="Renopipe">永富</option>
+							<option id="2" value="Others">其他</option>
+						</select>
+					</span>
+
+				
+				<!--<input  v-model="rporsubCRP" placeholder="">!-->
 			</view>
 
 			<view class="body-padding">
-				判頭:<input  v-model="rporsubCRP" placeholder="">
-			</view>
-
-			<view class="body-padding">
-				機械:<input  placeholder="">
+				機械:<input v-model="machine" placeholder="">
 			</view>
 
 			<div class="hr">
@@ -72,14 +84,14 @@
 			
 			<view class="body-padding mt20">
 				<div class="tagpad">
-					<div class="jobTag">電工</div>
+					<div class="jobTag">選擇工人</div>
 				</div>
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
 					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
-							<b>{{item.fullname}}</b>
+							<b>{{item.cName}} {{item.group}}</b>
 						</div>
 						<view 
 							:class="['checkBox',{ check:item.check }]"
@@ -96,7 +108,7 @@
 				</div>
 			</view>
 			
-			<!-- Work Type
+			<!-- Work Type - worktypeOption!-->
 			<view class="body-padding">
 				<div class="">
 					<p class="title">工作類型列表</p>
@@ -105,9 +117,9 @@
 			
 			<view class="body-padding mt20">
 				<view class="border box scoll">
-					<div class="worker-main">
+					<div class="worker-main" v-for="(item,i) in worktypeOption" :key="i">
 						<div class="worktype-info-area">
-							<p class="worktype">In-Situ Concetre</p>
+							<p class="worktype">{{item.name}}</p>
 						</div>
 						<div class="chk-box-area">
 							<checkbox-group>
@@ -118,23 +130,11 @@
 						</div>
 					</div>
 					<hr/>
-					<div class="worker-main">
-						<div class="worktype-info-area">
-							<p class="worktype">Trials Pits & Insecption Pits</p>
-						</div>
-						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
-						</div>
-					</div>					
 				</view>
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
-			</view>!-->
+			</view>
 
 			<!--work description!-->
 			<view class="body-padding">
@@ -163,12 +163,14 @@
 					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
 						<image class="upLoadImg" :src="item.base64" mode="aspectFill"></image>
 						<select class="selectType">
-							<option >電工</option>
+							<option >Trial Pits & Inspection Pits</option>
 							<option >木工</option>
 						</select>
 					</view>
 				</view>
 			</view>
+				
+
 				
 				
 			<!--submit button!-->
@@ -206,7 +208,22 @@
 				projectid:"",
 				subcontract:"",
 				rporsubCRP:"",
-				username: uni.getStorageSync('username')
+				machine:"",
+				username: uni.getStorageSync('username'),
+				selected: '',
+				head:'Renopipe', //pre select Renopipe
+				timeRange:'上午', //pre select 上午
+				worktypeOption:[ //工作種類 worktype
+					{name:"打路面"},
+					{name:"挖坑"},
+					{name:"打拆"},
+					{name:"駁水"},
+					{name:"裝水喉"},
+					{name:"還原"},
+					{name:"探坑"},
+					{name:"試制"},
+					{name:"雜務"}
+				]
 			}
 		},
 		onLoad(val) {
@@ -324,32 +341,34 @@
 						workerIds: arr,
 						siteId: that.siteId,
 						supervisorId:6,
-						//startTimestamp: parseInt(Date.now()/1000) + "",
-						//endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
+						startTimestamp: parseInt(Date.now()/1000) + "",
+						endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
 						//description: that.description,
 						/*new fields*/
-						time:"上午",
-						projectid: "J1005",
-						subcontract: "T0042",
-						rporsubCRP: "RP",
-						district:"坪洲",
-						location:"離島坪洲，永東街",
-						workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
-						description:"井位鋤坭執井底坭面勞石矢草鞋落井底及開細电炮打石矢頭，泵水",
-						smr:"",
-						smrref:"",
-						daywork:"",
-						dwref:"",
-						trialpit:"",
-						pipe:"",
-						chamber:"",
-						reinstatement:"",
-						workingrecordcol:"",
-						rockamh:"",
-						other:"",
-						rebate:"",
-						ce:"",
-						remark:"",
+						time:this.timeRange,
+						//projectid: "J1005",
+						subcontract: this.subcontract,
+						rporsubCRP: this.head,
+						machine: this.machine,
+						//district:"坪洲",
+						//location:"離島坪洲，永東街",
+						//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
+						description:that.description,
+						worktype:"",
+						//smr:"",
+						//smrref:"",
+						//daywork:"",
+						//dwref:"",
+						//trialpit:"",
+						//pipe:"",
+						//chamber:"",
+						//reinstatement:"",
+						//workingrecordcol:"",
+						//rockamh:"",
+						//other:"",
+						//rebate:"",
+						//ce:"",
+						//remark:"",
 						base64Images: base64
 					},
 					success (res) {
@@ -399,12 +418,15 @@
 							reader.onerror = function (error) {
 								console.log('Error: ', error)
 							}
-							
-							
 						}
 					}
 				})
 			},
+			onChangeHead(){
+				console.log(this.head)
+				//console.log(e.target)
+				//this.head = this.head;
+			}
 		}
 	}
 </script>
@@ -480,7 +502,7 @@
 	.scoll{
 		overflow-x: scroll;
 		overflow: -moz-scrollbars-vertical; 
-		height:11rem;
+		height:16rem;
 	}
 	h3{
 		color:gray;

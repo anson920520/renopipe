@@ -159,13 +159,13 @@ export default {
           title: "地盤小編號",
           key: "siteCode3"
         },
+        /*{
+          title: "中文名",
+          key: "project" //need to adjust field name
+        },*/
         {
-          title: "項目編號",
-          key: "project"
-        },
-        {
-          title: "地區",
-          key: "region"
+          title: "Zone",
+          key: "region" //need to adjust field name
         },
         {
           title: "操作",
