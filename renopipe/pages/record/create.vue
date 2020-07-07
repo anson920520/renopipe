@@ -83,9 +83,18 @@
 			</view>
 			
 			<view class="body-padding mt20">
-				<div class="tagpad">
-					<div class="jobTag">選擇工人</div>
-				</div>
+				<view class="sb al">
+					<div class="tagpad">
+						<div class="jobTag">選擇工人</div>
+					</div>
+					<picker  mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
+						<view class="selectPosition sb" v-if="allPosition.length">
+							<view class="whiteColor">{{allPosition[currentPositionIndex].position}}</view>
+							<view class="positionIcon"></view>
+						</view>
+					</picker>
+				</view>
+				
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
 					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
@@ -122,11 +131,11 @@
 							<p class="worktype">{{item.name}}</p>
 						</div>
 						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
+							<view
+								:class="['checkBox',{ check:item.check }]"
+								@click="chooseType(i)">
+								<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+							</view>
 						</div>
 					</div>
 					<hr/>
@@ -142,7 +151,6 @@
 					<p class="title">工作描述</p>
 				</div>
 			</view>
-			
 			<view class="body-padding mt20">
 				<div class="textarea-padding">
 					<textarea v-model="description" placeholder="請輸入工作描述..."></textarea>
@@ -169,9 +177,6 @@
 					</view>
 				</view>
 			</view>
-				
-
-				
 				
 			<!--submit button!-->
 			<view class="submit-padding">
@@ -214,21 +219,25 @@
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				worktypeOption:[ //工作種類 worktype
-					{name:"打路面"},
-					{name:"挖坑"},
-					{name:"打拆"},
-					{name:"駁水"},
-					{name:"裝水喉"},
-					{name:"還原"},
-					{name:"探坑"},
-					{name:"試制"},
-					{name:"雜務"}
-				]
+					{name:"打路面",check:false},
+					{name:"挖坑",check:false},
+					{name:"打拆",check:false},
+					{name:"駁水",check:false},
+					{name:"裝水喉",check:false},
+					{name:"還原",check:false},
+					{name:"探坑",check:false},
+					{name:"試制",check:false},
+					{name:"雜務",check:false}
+				],
+				allPosition:[],      // 按工种分类好了的工人 
+				currentPositionIndex:0,
+				
 			}
 		},
 		onLoad(val) {
 			this.siteId = Number(val.siteId)
-			this.getWorders()
+			this.getAllPosition()
+			// this.getWorders()
 			this.getSite()
 			let D = new Date()
 			let Y = D.getFullYear()
@@ -257,6 +266,38 @@
 			endTime (e) {
 				this.end.name = e.detail.value
 				this.end.timesamp = new Date(e.detail.value).getTime()/1000
+			},
+			// 选择position
+			choosePosition (e) {
+				let that = this
+				let num = Number(e.detail.value)
+				
+				this.currentPositionIndex = num
+				console.log(that.currentPositionIndex)
+				that.workerList = this.allPosition[this.currentPositionIndex].workers
+			},
+			//获取所有工种(包括工人)
+			getAllPosition () {
+				let that = this
+				uni.request({
+					url:that.baseURL + "worker?action=byRole",
+					method:"GET",
+					header:{
+						Authorization:uni.getStorageSync('token')
+					},
+					success (res) {
+						console.log(res)
+						if (res.data) {
+							that.allPosition = res.data
+							that.allPosition.forEach(item => {
+								item.workers.forEach(attr => {
+									attr.check = false
+								})
+							})
+							that.workerList = that.allPosition[0].workers
+						}
+					}
+				})
 			},
 			// 獲取所以地盤
 			getSite () {
@@ -307,6 +348,11 @@
 				console.log(obj)
 				this.workerList.splice(i,1,obj)
 			},
+			chooseType (i) {
+				let obj = this.worktypeOption[i]
+				obj.check = !this.worktypeOption[i].check
+				this.worktypeOption.splice(i,1,obj)
+			},
 			toHome() {
 				uni.navigateTo({
 					url: "/pages/index/index"
@@ -318,16 +364,26 @@
 				})
 				let that = this
 				let arr = []        // 已勾選工人
-				that.workerList.forEach(item=> {
+				that.allPosition.forEach(item => {
+					item.workers.forEach(attr=> {
+						if (attr.check) {
+							arr.push(attr.ID)
+						}
+					})
+				})
+				let workType = []
+				that.worktypeOption.forEach(item => {
 					if (item.check) {
-						arr.push(item.ID)
+						workType.push(item.name)
 					}
 				})
+				
 				let base64 = []
 				that.imgs.forEach(item => {
 					let str = item.base64.split("base64,")[1]
 					base64.push(str)
 				})
+				// console.log(arr)
 				// console.log(base64)
 				
 				// return false
@@ -354,7 +410,7 @@
 						//location:"離島坪洲，永東街",
 						//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
 						description:that.description,
-						worktype:"",
+						worktype:workType,
 						//smr:"",
 						//smrref:"",
 						//daywork:"",
@@ -614,12 +670,13 @@
 		background:#007AFF;
 		color:#FFF;
 		display:flex;
+		padding: 10upx 20upx;
 		justify-content: center;
 	}
 	
-	.tagpad{
-		padding:0 13rem 0 0;
-	}
+	// .tagpad{
+	// 	padding:0 13rem 0 0;
+	// }
 	
 	.textarea-padding{
 		width: 100%;
@@ -673,5 +730,22 @@
 	input{
 		border:solid 1px lightgray;
 		margin-bottom: 1rem;
+	}
+	.selectPosition {
+		// border: solid red 1px;
+		background: #007AFF;
+		padding: 10upx 20upx;
+		color: white;
+		width: 50vw;
+	}
+	.positionIcon {
+		width: 0;
+		height: 0;
+		border: solid 15upx transparent;
+		border-top: 15upx white solid;
+		transform: translateY(13upx);
+	}
+	.whiteColor {
+		color: white;
 	}
 </style>
