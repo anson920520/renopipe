@@ -121,13 +121,11 @@
 						<div class="worktype-info-area">
 							<p class="worktype">{{item.name}}</p>
 						</div>
-						<div class="chk-box-area">
-							<checkbox-group>
-							    <label>
-							        <checkbox value="cb" />
-							    </label>
-							</checkbox-group>
-						</div>
+						<view 
+							:class="['checkBox',{ check:item.check }]"
+							@click="chooseWorkType(i)">
+							<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+						</view>
 					</div>
 					<hr/>
 				</view>
@@ -307,6 +305,15 @@
 				console.log(obj)
 				this.workerList.splice(i,1,obj)
 			},
+			//勾選工作
+			chooseWorkType (i) {
+				// console.log(i)
+				// this.workerList[i].check = !this.workerList[i].check
+				let obj = this.worktypeOption[i]
+				obj.check = !this.worktypeOption[i].check
+				console.log(obj)
+				this.worktypeOption.splice(i,1,obj)
+			},
 			toHome() {
 				uni.navigateTo({
 					url: "/pages/index/index"
@@ -323,54 +330,65 @@
 						arr.push(item.ID)
 					}
 				})
+
+				let arr2 = []        // 已勾選工作
+				that.worktypeOption.forEach(item=> {
+					if (item.check) {
+						arr2.push(item.name)
+					}
+				})
+
 				let base64 = []
 				that.imgs.forEach(item => {
 					let str = item.base64.split("base64,")[1]
 					base64.push(str)
 				})
-				// console.log(base64)
 				
-				// return false
-				uni.request({
+				//data
+				let data = {
+							workerIds: arr,
+							siteId: that.siteId,
+							supervisorId:6,
+							startTimestamp: parseInt(Date.now()/1000) + "",
+							endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
+							//description: that.description,
+							/*new fields*/
+							time:this.timeRange,
+							//projectid: "J1005",
+							subcontract: this.subcontract,
+							rporsubCRP: this.head,
+							machine: this.machine,
+							//district:"坪洲",
+							//location:"離島坪洲，永東街",
+							//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
+							description:that.description,
+							worktype:arr2,
+							//smr:"",
+							//smrref:"",
+							//daywork:"",
+							//dwref:"",
+							//trialpit:"",
+							//pipe:"",
+							//chamber:"",
+							//reinstatement:"",
+							//workingrecordcol:"",
+							//rockamh:"",
+							//other:"",
+							//rebate:"",
+							//ce:"",
+							//remark:"",
+							base64Images: base64
+				}
+				console.log(data)
+				
+				//Submit request
+				/*uni.request({
 					url:that.baseURL + "attendence",
 					method:"POST",
 					header:{
 						Authorization:uni.getStorageSync('token')
 					},
-					data: {
-						workerIds: arr,
-						siteId: that.siteId,
-						supervisorId:6,
-						startTimestamp: parseInt(Date.now()/1000) + "",
-						endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
-						//description: that.description,
-						/*new fields*/
-						time:this.timeRange,
-						//projectid: "J1005",
-						subcontract: this.subcontract,
-						rporsubCRP: this.head,
-						machine: this.machine,
-						//district:"坪洲",
-						//location:"離島坪洲，永東街",
-						//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
-						description:that.description,
-						worktype:"",
-						//smr:"",
-						//smrref:"",
-						//daywork:"",
-						//dwref:"",
-						//trialpit:"",
-						//pipe:"",
-						//chamber:"",
-						//reinstatement:"",
-						//workingrecordcol:"",
-						//rockamh:"",
-						//other:"",
-						//rebate:"",
-						//ce:"",
-						//remark:"",
-						base64Images: base64
-					},
+					data: data,
 					success (res) {
 						console.log("新增",res)
 						if (!res.data.error) {
@@ -391,7 +409,7 @@
 						})
 					},
 					complete () { uni.hideLoading() }
-				})
+				})*/
 				
 			},
 			chooseImg () {
