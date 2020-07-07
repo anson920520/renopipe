@@ -215,6 +215,7 @@
 				rporsubCRP:"",
 				machine:"",
 				username: uni.getStorageSync('username'),
+				supervisorId: uni.getStorageSync('userid'),
 				selected: '',
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
@@ -395,7 +396,7 @@
 				let data = {
 							workerIds: arr,
 							siteId: that.siteId,
-							supervisorId:6,
+							supervisorId:parseInt(this.supervisorId),
 							startTimestamp: parseInt(Date.now()/1000) + "",
 							endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
 							//description: that.description,
@@ -409,7 +410,7 @@
 							//location:"離島坪洲，永東街",
 							//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
 							description:that.description,
-							worktype:arr2,
+							worktype:arr2.join(),
 							//smr:"",
 							//smrref:"",
 							//daywork:"",
@@ -429,7 +430,7 @@
 				console.log(data)
 				
 				//Submit request
-				/*uni.request({
+				uni.request({
 					url:that.baseURL + "attendence",
 					method:"POST",
 					header:{
@@ -456,7 +457,7 @@
 						})
 					},
 					complete () { uni.hideLoading() }
-				})*/
+				})
 				
 			},
 			chooseImg () {

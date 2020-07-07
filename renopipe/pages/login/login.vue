@@ -128,6 +128,7 @@
 							if (res.data.ID) {
 								uni.setStorageSync("token","Bearer " + res.data.token)
 								uni.setStorageSync("username" ,""+ res.data.cName)
+								uni.setStorageSync("userid" ,""+ res.data.ID)
 								uni.navigateTo({
 									url: "/pages/index/index"
 								})

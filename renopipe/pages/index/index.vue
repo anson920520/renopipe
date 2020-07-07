@@ -78,22 +78,26 @@
 				uni.showLoading({
 					title:"加载中..."
 				})
-				uni.request({
-					url: that.baseURL + "attendence",
+				uni.request({ //grab supervisor id from localstorage
+					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid'),
 					method:"GET",
 					header:{
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
 						console.log(res)
-						that.dataList = res.data
-						that.dataList.forEach(item => {
-							that.siteList.forEach(attr => {
-								if (item.siteId == attr.ID) {
-									item.site = attr.name
-								}
+						if(res.data.length > 0){
+							that.dataList = res.data
+							that.dataList.forEach(item => {
+								that.siteList.forEach(attr => {
+									if (item.siteId == attr.ID) {
+										item.site = attr.name
+									}
+								})
 							})
-						})
+						}else{
+							alert("暫時未有記錄")
+						}
 					},
 					complete () { uni.hideLoading() }
 				})
