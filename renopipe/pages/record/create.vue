@@ -377,14 +377,19 @@
 						workType.push(item.name)
 					}
 				})
-				
+
+				let arr2 = []        // 已勾選工作
+				that.worktypeOption.forEach(item=> {
+					if (item.check) {
+						arr2.push(item.name)
+					}
+				})
+
 				let base64 = []
 				that.imgs.forEach(item => {
 					let str = item.base64.split("base64,")[1]
 					base64.push(str)
 				})
-				// console.log(arr)
-				// console.log(base64)
 				
 				//data
 				let data = {
