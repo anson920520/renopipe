@@ -128,11 +128,11 @@
 
     <!-- 顯示詳細 -->
     <Modal v-model="showBox" :width="1300">
-      <div class="recordBox ju">
+      <div style="border-top:solid 5px #5F98EC" class="recordBox ju">
         <!-- 左邊圖片 -->
         <div>
           <div class="bigImgWrap  ju al">
-            <img class="bigImg" :src="current.images[currentImg].base64Image" >
+            <img style="border:solid 1px lightgray" class="bigImg" :src="current.images[currentImg].base64Image" >
           </div>
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
@@ -148,11 +148,16 @@
         <!-- 中間詳細信息 -->
         <div class="centerItem sb">
           <ul class="recordDetailUl">
-            <li><span>地盤: </span><span>地盤信息....</span></li>
-            <li><span>創建者: </span><span>{{current.supervisors[0].fullname}}</span></li>
-            <li><span>創建日期: </span><span>{{current.createdAt}}</span></li>
-            <li><span>工作描述: </span></li>
-            <li><span>{{current.description}}</span></li>
+            <li><span><b>地盤:</b> </span><span>地盤信息....</span></li>
+            <li><span><b>創建者:</b> </span><span>{{current.supervisors[0].cName}} {{current.supervisors[0].fullname}} </span></li>
+            <li><span><b>創建日期:</b> </span><span>{{current.createdAt}}</span></li>
+            <li><span><b>使用機械:</b> </span><span>{{current.machine}}</span></li>
+            <li><span><b>判頭:</b> <span>{{current.rporsubCRP}}</span></span></li>
+            <li><span><b>時段:</b> <span>{{current.time}}</span></span></li>
+            <li><span><b>工作種類:</b> <span>{{current.worktype}}</span></span></li>
+             <li><span><b>副項目編號:</b> <span>{{current.subcontract}}</span></span></li>
+
+            <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
           <Button class="addBtn" type="info">下載圖片</Button>
         </div>
@@ -160,13 +165,13 @@
         <!-- 右邊工人列表 -->
         <div class="recordRight">
           <div class="ju al">
-            <span>總共上班人數 </span>
-            <span style="color: red;font-size:18px;"> 23人</span>
+            <span>當日上班工人列表 </span>
+            <span style="color: red;font-size:18px;"> </span>
           </div>
           <ul class="allWorker">
             <li class="sb" v-for="(item,i) in current.workers" :key="i">
-              <span>{{item.fullname}}</span>
-              <span>電工</span>
+              <span>{{item.cName}} {{item.fullname}} </span>
+              <span style="color:#5F98EC"><b>{{item.position}}</b></span>
             </li>
           </ul>
         </div>
@@ -266,6 +271,7 @@ export default {
         item.base64Image = "data:image/jpeg;base64," + item.base64Image
       })
       this.current = e  
+      console.log(e)
     },
     edit (item){
       console.log(item)
