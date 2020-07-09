@@ -38,8 +38,8 @@ AMap.initAMapApiLoader({
   key: "86ec9877e5e95fb2f5bb0e8b5fe52063"
 });
 
-window.baseURL = 'http://119.8.42.40:8080/'; // 测试
-//window.baseURL = 'http://119.8.42.40:8080/admin'; // 测试
+window.baseURL = 'http://119.8.42.40:8080/'; // 无需token
+// window.baseURL = 'http://119.8.42.40:8081/admin/'; // 需要token
 axios.defaults.baseURL = window.baseURL
 
 

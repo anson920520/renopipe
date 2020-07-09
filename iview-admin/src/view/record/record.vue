@@ -132,13 +132,15 @@
         <!-- 左邊圖片 -->
         <div>
           <div class="bigImgWrap  ju al">
-            <img style="border:solid 1px lightgray" class="bigImg" :src="current.images[currentImg].base64Image" >
+            <img style="border:solid 1px lightgray" class="bigImg" :src="url + current.images[currentImg].url" >
           </div>
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
             <div class="imgRela">
               <div class="imgAbso al" :style="{width:absWidth+'px',left:left+'px'}">
-                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i"><img :src="item.base64Image" ></div>
+                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i">
+                  <img :src="item.url" >
+                </div>
               </div>
             </div>
             <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
@@ -155,7 +157,7 @@
             <li><span><b>判頭:</b> <span>{{current.rporsubCRP}}</span></span></li>
             <li><span><b>時段:</b> <span>{{current.time}}</span></span></li>
             <li><span><b>工作種類:</b> <span>{{current.worktype}}</span></span></li>
-             <li><span><b>副項目編號:</b> <span>{{current.subcontract}}</span></span></li>
+            <li><span><b>副項目編號:</b> <span>{{current.subcontract}}</span></span></li>
 
             <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
@@ -186,6 +188,7 @@ export default {
     let that = this
     return {
       showBox: false,
+      url:"",
       columns: [
         { title: "創建日期", key:"createdAt" },
         // { title: "圖片預覽", slot:"preview" },
@@ -210,13 +213,13 @@ export default {
       ],
       dataList: [],
       current:{
-        images:[
-          "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-          "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-          "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-          "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-          "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-          "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+        images:[""
+          // "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
+          // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
+          // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
+          // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+          // "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
+          // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
         ],
         supervisors:[""]
       },
@@ -224,16 +227,17 @@ export default {
       left:0,
       currentImg:0,
       superList:[],
-      load:null,
+      load:function(){},
     }
   },
   created () {
-
+    this.url = window.baseURL
     this.showTable()
   },
   mounted () {
     this.$Message.loading({
-      content:"獲取記錄中..."
+      content:"獲取記錄中...",
+      duration:10
     })
     this.load = this.createImgDOM()
   },

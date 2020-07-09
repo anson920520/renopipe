@@ -109,6 +109,9 @@ export default {
                 this.$Message.warning("網絡異常")
             })
         },
+        Delete (item) {
+            
+        },
         hideLoading() {
             this.loading = false
             this.$nextTick(() => {

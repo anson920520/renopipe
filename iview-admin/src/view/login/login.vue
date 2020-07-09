@@ -45,7 +45,7 @@ export default {
         duration: 10
       })
 
-      let url = window.baseURL.replace('/admin',"/")
+      let url = window.baseURL.replace('/admin',"")
       console.log( url+ "login/admin")
       this.$axios({
         url: url+ "login/admin",
