@@ -235,7 +235,8 @@ export default {
       that.$refs.addForm.validate(flag => {
         if (flag) {
           that.$axios({
-            url: window.baseURL.replace("/admin","") + '/signup/supervisor',
+            //url: window.baseURL.replace("/admin","") + '/signup/supervisor',
+            url:"http://119.8.42.40:8080/signup/supervisor",
             method:"POST",
             data: {
                "fullname": that.addForm.fullname,
