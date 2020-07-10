@@ -88,6 +88,9 @@
 						console.log(res)
 						if(res.data.length > 0){
 							that.dataList = res.data
+							res.data.forEach(item => {
+								item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+							})
 							that.dataList.forEach(item => {
 								that.siteList.forEach(attr => {
 									if (item.siteId == attr.ID) {
