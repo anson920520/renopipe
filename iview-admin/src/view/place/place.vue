@@ -263,6 +263,9 @@ export default {
 
         console.log(res)
         if (res.data.Message != 'cannot get authorization token') {
+          res.data.forEach(item => {
+              item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+          })
           this.dataList = res.data
         }
         

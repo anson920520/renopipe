@@ -224,6 +224,9 @@ export default {
       }).then(res => {
         console.log(res,"supervisor")
         if (res.data) {
+          res.data.forEach(item => {
+              item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+          })
           this.dataList = res.data
         }
       }).catch(() => {
