@@ -39,7 +39,7 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
-      console.log('login',this.$axios)
+      // console.log('login',this.$axios)
       let load = this.$Message.loading({
         content: "登录中...",
         duration: 10
@@ -66,6 +66,7 @@ export default {
             load()
           },1000)
         } else {
+          this.$Message.warning('賬號或密碼錯誤')
           setTimeout(() => {
             load()
           },0)

@@ -116,9 +116,9 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem>
         
-          <FormItem label="星期六工作時間長度" prop="satarrange">
+          <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
-        </FormItem>
+        </FormItem> -->
 
         <FormItem label="Clawback Period" prop="clawbackperiod">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.clawbackperiod" placeholder="請輸入Clawback Period" />
@@ -249,9 +249,9 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem>
         
-          <FormItem label="星期六工作時間長度" prop="satarrange">
+          <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
-        </FormItem>
+        </FormItem> -->
 
         <FormItem label="Clawback Period" prop="clawbackperiod">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.clawbackperiod" placeholder="請輸入Clawback Period" />
@@ -290,12 +290,18 @@ export default {
       loading: true,
       columns: [
         { title: "創建日期", key:"createdAt" },
+        // { title: "公司", key:"company" },
+        // { title: "role", key:"role" },
+        // { title: "group", key:"group" },
+        // { title: "team", key:"team" },
         { title: "身份證號", key:"idNo" },
         { title: "全名", key:"fullname" },
         { title: "中文名", key:"cName" },
         { title: "暱稱", key:"nickname" },
         { title: "聯繫電話", key:"phone" },
-        { title: "position", key:"position" },
+        { title: "職位", key:"position" },
+        { title: "地址", key:"address" },
+        
         // { title: "工頭(經理)", key:"master" },
         { title: "操作", slot:"operation" },
       ],
@@ -476,6 +482,31 @@ export default {
       this.editForm.idNo = item.idNo
       this.editForm.position = item.position
       this.editForm.phone = item.phone
+      this.editForm.group = item.group
+      this.editForm.role = item.role
+      this.editForm.team = item.team
+      this.editForm.address = item.address
+      this.editForm.company = item.company
+      this.editForm.joindate = item.joindate
+      this.editForm.leavedate = item.leavedate
+      this.editForm.dob = item.dob
+      this.editForm.md = item.md
+      this.editForm.joinsalary = item.joinsalary
+      this.editForm.leavesalary = item.leavesalary
+      this.editForm.ab = item.ab
+      this.editForm.abpercent = item.abpercent
+      this.editForm.otrate = item.otrate
+      this.editForm.alday = item.alday
+      this.editForm.statutory = item.statutory
+      this.editForm.workday = item.workday
+      this.editForm.workperoid = item.workperoid
+      this.editForm.satarrange = item.satarrange
+      this.editForm.clawbackperiod = item.clawbackperiod
+      this.editForm.befpobtermination = item.befpobtermination
+      this.editForm.afterpodtermination = item.afterpodtermination
+      this.editForm.pobat = item.pobat
+      this.editForm.mpf = item.mpf
+      this.editForm.remark = item.remark
     },
     Delete (item) {
       console.log(item)

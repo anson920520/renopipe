@@ -273,20 +273,16 @@ export default {
       let that = this
       that.$refs.editForm.validate(flag => {
         if (flag) {
+          let dataInfo = JSON.parse(JSON.stringify(that.editForm))
+          // if (!that.editForm.password) {
+          //   delete dataInfo.password
+          //   delete dataInfo.password2
+          // }
+          
           that.$axios({
             url:'supervisor/' + that.current.ID,
             method:"PUT",
-            data: {
-              "fullname": that.editForm.fullname,
-              "cName": that.editForm.cName,
-              "nickname": that.editForm.nickname,
-              "supervisorNo": that.editForm.staffNo,
-              "idNo": that.editForm.idNo,
-              "position": that.editForm.position,
-              "workday": Number(that.editForm.workday),
-              phone: that.editForm.phone,
-              password: that.editForm.password
-            },
+            data:dataInfo,
           }).then(res => {
             console.log("add",res)
             if (res.data) {

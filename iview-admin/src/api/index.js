@@ -16,9 +16,6 @@ axios.interceptors.response.use(res => {
         alert("登錄異常,請重新登錄")
     }
     return res
-},err => {
-    console.log(123,err,err.response)
-    return err
 })
 
 export default axios

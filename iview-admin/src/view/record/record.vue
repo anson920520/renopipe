@@ -139,7 +139,7 @@
             <div class="imgRela">
               <div class="imgAbso al" :style="{width:absWidth+'px',left:left+'px'}">
                 <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i">
-                  <img :src="item.url" >
+                  <img :src="url + item.url" >
                 </div>
               </div>
             </div>
@@ -235,11 +235,11 @@ export default {
     this.showTable()
   },
   mounted () {
-    this.$Message.loading({
-      content:"獲取記錄中...",
-      duration:10
-    })
-    this.load = this.createImgDOM()
+    // this.load = this.$Message.loading({
+    //   content:"獲取記錄中...",
+    //   duration:10
+    // })
+    
   },
   methods:{
     showTable () {
@@ -254,10 +254,10 @@ export default {
           })
           this.dataList = res.data
           this.getSuper()
-          this.load()
+          // this.load()
         }
       }).catch(() => {
-        this.load()
+        // this.load()
       })
     },
     //獲取所有工頭
@@ -273,12 +273,19 @@ export default {
       })
     },
     showDetail(e) {
+      this.currentImg = 0
+      this.left = 0
+      this.current = e 
+      // e.images.forEach(item => {
+      //   item.base64Image = "data:image/jpeg;base64," + item.base64Image
+      // })
       this.showBox = true
-      e.images.forEach(item => {
-        item.base64Image = "data:image/jpeg;base64," + item.base64Image
+      this.$nextTick(() => {
+        this.createImgDOM()
       })
-      this.current = e  
+       
       console.log(e)
+      
     },
     edit (item){
       console.log(item)
