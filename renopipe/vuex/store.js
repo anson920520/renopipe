@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state:{
 		// baseURL: "http://119.8.42.40:8081/supervisor/",       // 需要token
-		baseURL: "http://119.8.42.40:8081/",             // 无需token
+		baseURL: "http://119.8.42.40:8080/",             // 无需token
 		site: {},
 	},
 	mutations:{

@@ -1,4 +1,41 @@
 <style lang="less" scoped>
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+.loading .img {
+  display: block;
+  width: 200px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 18px;
+  color: #fff;
+}
+/*加载中icon样式*/
+.demo-spin-icon-load {
+  animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .previewWrap {
   width: 100px;
   height: 100px;
@@ -192,17 +229,69 @@ export default {
       columns: [
         { title: "創建日期", key:"createdAt" },
         // { title: "圖片預覽", slot:"preview" },
-        { title: "地盤ID", key:"siteId" },
-        { title: "開始時間", key:"startedAt" },
-        { title: "結束時間", key:"updatedAt" },
+        { title: "地盤項目編號", key:"siteId",
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.project
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "地盤大編號", key:"siteId",
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.siteCode1
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "地盤中編號", key:"siteId" ,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.siteCode2
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "地盤小編號", key:"siteId" ,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.siteCode3
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "地盤名稱", key:"siteId",
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.name
+                  }
+              })
+              return h('div',str)
+          }
+        },
         { title: "詳請", key:"description" },
-        {
-          title: "工頭", key:"supervisor",
+        { title: "工頭", key:"supervisor",
           render:(h,p) => {
             let str = "暫無"
             that.superList.forEach(item => {
               if (item.ID==p.row.supervisorId) {
-                str = item.fullname
+                str = item.cName
+                //console.log(str)
               }
             })
             return h('div',str)
@@ -227,6 +316,7 @@ export default {
       left:0,
       currentImg:0,
       superList:[],
+      siteList:[],
       load:function(){},
     }
   },
@@ -254,6 +344,7 @@ export default {
           })
           this.dataList = res.data
           this.getSuper()
+          this.getSite()
           // this.load()
         }
       }).catch(() => {
@@ -269,6 +360,18 @@ export default {
         // console.log(res,123)
         if (res.data) {
           this.superList = res.data
+        }
+      })
+    },
+    //獲取所有site
+    getSite (item,i) {
+      this.$axios({
+        url:"site",
+        method:"GET"
+      }).then(res => {
+        // console.log(res,123)
+        if (res.data) {
+          this.siteList = res.data
         }
       })
     },

@@ -66,9 +66,21 @@
 				<!--<input  v-model="rporsubCRP" placeholder="">!-->
 			</view>
 
-			<view class="body-padding">
+			<!--<view class="body-padding">
 				機械:<input v-model="machine" placeholder="">
-			</view>
+					<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
+							<option id="1" value="發電機">發電機</option>
+							<option id="2" value="大電炮">大電炮</option>
+							<option id="3" value="細電炮">細電炮</option>
+							<option id="4" value="保路華">保路華</option>
+							<option id="2" value="跳鎚">跳鎚</option>
+							<option id="2" value="震船">震船</option>
+							<option id="2" value="9噸吊雞">9噸吊雞</option>
+							<option id="2" value="30噸吊雞">30噸吊雞</option>
+							<option id="2" value="30噸吊雞">5.5噸車</option>
+							<option id="2" value="30噸吊雞">水泵</option>
+					</select>
+			</view>!-->
 
 			<div class="hr">
 					<div class="blue-divider"></div>
@@ -78,7 +90,7 @@
 			<view class="body-padding">
 				<div class="">
 					<p class="title">工人列表</p>
-					<u>請選擇今天有上班的工人，如果找不到工人，請在工作描述中補充。</u>
+					<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
 			
@@ -144,6 +156,36 @@
 					<div class="blue-divider"></div>
 				</div>
 			</view>
+
+			<!--Machine selection!-->
+			<view class="body-padding">
+				<div class="">
+					<p class="title">使用機械列表</p>
+					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
+				</div>
+			</view>
+
+			<view class="body-padding mt20">
+				<view class="border box scoll">
+					<div class="worker-main" v-for="(item,i) in machineOption" :key="i">
+						<div class="worktype-info-area">
+							<p class="worktype">{{item.name}}</p>
+						</div>
+						<div class="chk-box-area">
+							<view
+								:class="['checkBox',{ check:item.check }]"
+								@click="chooseMachine(i)">
+								<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+							</view>
+						</div>
+					</div>
+					<hr/>
+				</view>
+				<div class="hr">
+					<div class="blue-divider"></div>
+				</div>
+			</view>
+			
 
 			<!--work description!-->
 			<view class="body-padding">
@@ -230,6 +272,18 @@
 					{name:"試制",check:false},
 					{name:"雜務",check:false}
 				],
+				machineOption:[ //機械種類 machineOption
+					{name:"發電機",check:false},
+					{name:"大電炮",check:false},
+					{name:"細電炮",check:false},
+					{name:"保路華",check:false},
+					{name:"跳鎚",check:false},
+					{name:"震船",check:false},
+					{name:"9噸吊雞",check:false},
+					{name:"30噸吊雞",check:false},
+					{name:"5.5噸車",check:false},
+					{name:"水泵",check:false}
+				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
 				
@@ -354,6 +408,11 @@
 				obj.check = !this.worktypeOption[i].check
 				this.worktypeOption.splice(i,1,obj)
 			},
+			chooseMachine(i) {
+				let obj = this.machineOption[i]
+				obj.check = !this.machineOption[i].check
+				this.machineOption.splice(i,1,obj)
+			},
 			toHome() {
 				uni.navigateTo({
 					url: "/pages/index/index"
@@ -386,6 +445,13 @@
 					}
 				})
 
+				let arr3 = []        // 已勾選工作
+				that.machineOption.forEach(item=> {
+					if (item.check) {
+						arr3.push(item.name)
+					}
+				})
+
 				let base64 = []
 				that.imgs.forEach(item => {
 					let str = item.base64.split("base64,")[1]
@@ -405,7 +471,7 @@
 							//projectid: "J1005",
 							subcontract: this.subcontract,
 							rporsubCRP: this.head,
-							machine: this.machine,
+							machine: arr3.join(),
 							//district:"坪洲",
 							//location:"離島坪洲，永東街",
 							//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
