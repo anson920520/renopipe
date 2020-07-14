@@ -194,7 +194,7 @@ export default {
         // { title: "圖片預覽", slot:"preview" },
         { title: "地盤ID", key:"siteId" },
         { title: "開始時間", key:"startedAt" },
-        { title: "結束時間", key:"updatedAt" },
+        { title: "結束時間", key:"endedAt" },
         { title: "詳請", key:"description" },
         {
           title: "工頭", key:"supervisor",
@@ -251,6 +251,8 @@ export default {
         if (res.data) {
           res.data.forEach(item => {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+              item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+              item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
           })
           this.dataList = res.data
           this.getSuper()

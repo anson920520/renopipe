@@ -274,10 +274,13 @@ export default {
       that.$refs.editForm.validate(flag => {
         if (flag) {
           let dataInfo = JSON.parse(JSON.stringify(that.editForm))
-          // if (!that.editForm.password) {
-          //   delete dataInfo.password
-          //   delete dataInfo.password2
-          // }
+          if (that.editForm.password) {
+            if (that.editForm.password != that.editForm.password2) {
+              that.$Message.warning("兩次密碼不一致")
+              that.hideLoading()
+              return false
+            }
+          }
           
           that.$axios({
             url:'supervisor/' + that.current.ID,

@@ -64,7 +64,7 @@ export default {
           })
           setTimeout(() => {
             load()
-          },1000)
+          },100)
         } else {
           this.$Message.warning('賬號或密碼錯誤')
           setTimeout(() => {
