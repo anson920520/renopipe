@@ -341,6 +341,8 @@ export default {
         if (res.data) {
           res.data.forEach(item => {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+              item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+              item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
           })
           this.dataList = res.data
           this.getSuper()

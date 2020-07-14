@@ -5,9 +5,9 @@
       <Button type="info" class="addBtn" @click="showAdd=true">新增管理員賬號</Button>
     </div>
 
-    <Modal v-model="showAdd" @on-ok="okAdd" :loading="loading" title="新增管理員賬號">
+    <Modal v-model="showAdd" @on-ok="okAdd" :rules="rule" :loading="loading" title="新增管理員賬號">
         <Form :model="addForm" ref="addForm" :rules="rule" :label-width="130">
-          <FormItem label="全名" prop="address">
+          <FormItem label="全名" prop="fullname">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -16,7 +16,7 @@
               placeholder="請輸入全名"
             />
           </FormItem>
-          <FormItem label="暱稱" prop="address">
+          <FormItem label="暱稱" prop="nickname">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -25,7 +25,7 @@
               placeholder="請輸入用全名"
             />
           </FormItem>
-          <FormItem label="電話號碼" prop="address">
+          <FormItem label="電話號碼" prop="phone">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -34,18 +34,18 @@
               placeholder="請輸入電話號碼"
             />
           </FormItem>
-          <FormItem label="密碼" prop="siteCode1">
-            <Input type="text" style="width: 250px;" v-model="addForm.pwd" placeholder="請輸入密碼" />
+          <FormItem label="密碼" prop="pwd">
+            <Input type="password" style="width: 250px;" v-model="addForm.pwd" placeholder="請輸入密碼" />
           </FormItem>
-          <FormItem label="確認密碼" prop="siteCode2">
-            <Input type="text" style="width: 250px;" v-model="addForm.pwd2" placeholder="請輸入確認密碼" />
+          <FormItem label="確認密碼" prop="pwd2">
+            <Input type="password" style="width: 250px;" v-model="addForm.pwd2" placeholder="請輸入確認密碼" />
           </FormItem>
         </Form>
       </Modal>
 
-      <Modal v-model="showEdit" @on-ok="okEdit" :loading="loading" title="編輯管理員賬號">
+      <Modal v-model="showEdit" @on-ok="okEdit"  :rules="rule" :loading="loading" title="編輯管理員賬號">
         <Form :model="editForm" ref="editForm" :rules="rule" :label-width="130">
-          <FormItem label="全名" prop="address">
+          <FormItem label="全名" prop="fullname">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -54,7 +54,7 @@
               placeholder="請輸入全名"
             />
           </FormItem>
-          <FormItem label="暱稱" prop="address">
+          <FormItem label="暱稱" prop="nickname">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -63,7 +63,7 @@
               placeholder="請輸入暱稱"
             />
           </FormItem>
-          <FormItem label="電話號碼" prop="address">
+          <FormItem label="電話號碼" prop="phone">
             <Input
               @on-keyup.enter="keydown"
               type="text"
@@ -73,10 +73,10 @@
             />
           </FormItem>
           <FormItem label="密碼" prop="siteCode1">
-            <Input type="text" style="width: 250px;" v-model="editForm.pwd" placeholder="請輸入密碼" />
+            <Input type="password" style="width: 250px;" v-model="editForm.pwd" placeholder="請輸入密碼" />
           </FormItem>
           <FormItem label="確認密碼" prop="siteCode2">
-            <Input type="text" style="width: 250px;" v-model="editForm.pwd2" placeholder="請輸入確認密碼" />
+            <Input type="password" style="width: 250px;" v-model="editForm.pwd2" placeholder="請輸入確認密碼" />
           </FormItem>
         </Form>
       </Modal>
@@ -96,10 +96,39 @@
 export default {
   name: "admin_page",
   data() {
+    const validatePassCheck = (rule, value, callback) => {
+        if (value === '') {
+            callback(new Error('請輸入確認密碼'));
+        } else if (value !== this.addForm.pwd) {
+            callback(new Error('兩次密碼不一致'));
+        } else {
+            callback();
+        }
+    };
     return {
       showAdd: false,
       showEdit: false,
-      rule: {},
+      rule: {
+        fullname: [
+          {required:true, message: "請輸入全名",trigger:"blur" },
+        ],
+        nickname: [
+          {required:true, message: "請輸入暱稱",trigger:"blur" },
+        ],
+        phone: [
+          {required:true, message: "請輸入電話",trigger:"blur" },
+        ],
+        pwd: [
+          {required:true, message: "請輸入密碼",trigger:"blur" },
+          { pattern:/^\w{6,}$/,message:"密碼不得少於六位", trigger:"blur" },
+          
+        ],
+        pwd2: [
+          {required:true, message: "請輸入確認密碼",trigger:"blur" },
+          { pattern:/^\w{6,}$/,message:"密碼不得少於六位", trigger:"blur" },
+          { validator: validatePassCheck,trigger:"blur"}
+        ]
+      },
       addForm: {
         fullname: "",
         nickname: "",
@@ -159,58 +188,76 @@ export default {
       this.id = item.ID
     },
     okAdd() {
-      this.$axios({
-        url: window.baseURL.replace("/admin", "/") + "signup/admin",
-        method: "POST",
-        data: {
-          fullname: this.addForm.fullname,
-          nickname: this.addForm.nickname,
-          phone: this.addForm.phone,
-          password: this.addForm.pwd
-        }
+      let that = this
+      that.$refs.addForm.validate(flag => {
+        if (flag) {
+          that.$axios({
+            url: window.baseURL.replace("/admin", "/") + "signup/admin",
+            method: "POST",
+            data: {
+              fullname: that.addForm.fullname,
+              nickname: that.addForm.nickname,
+              phone: that.addForm.phone,
+              password: that.addForm.pwd
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.ID) {
+              that.$Message.success("新增成功");
+              that.showAdd = false
+              that.showTable()
+            } else {
+              that.$Message.warning("新增失敗");
+            }
+          })
+          .catch(() => {
+            that.$Message.warning("網絡異常");
+          });
+        } 
+        that.hideLoading()
+
       })
-        .then(res => {
-          console.log(res);
-          if (res.data.ID) {
-            this.$Message.success("新增成功");
-            this.showAdd = false;
-            this.hideLoading();
-            this.showTable();
-          } else {
-            this.$Message.warning("新增失敗");
-            this.hideLoading();
-          }
-        })
-        .catch(() => {
-          this.$Message.warning("網絡異常");
-        });
+      
     },
     okEdit () {
-        this.$axios({
-        url: window.baseURL.replace("/admin", "/") + "admin/" + this.id,
-        method: "PUT",
-        data: {
-          fullname: this.editForm.fullname,
-          nickname: this.editForm.nickname,
-          phone: this.editForm.phone,
-          password: this.editForm.pwd
-        }
-      })
-        .then(res => {
-          console.log(res);
-          if (res.data.ID) {
-            this.$Message.success("編輯成功");
-            this.showEdit = false;
-            this.hideLoading();
-            this.showTable();
-          } else {
-            this.$Message.warning("編輯失敗");
-            this.hideLoading();
+      let that = this
+      that.$refs.editForm.validate(flag => {
+        if (flag) {
+          if (that.editForm.pwd) {
+            if (that.editForm.pwd != that.editForm.pwd2) {
+              that.$Message.warning("兩次密碼不一致")
+              that.hideLoading()
+              return false
+            }
           }
-        })
-        .catch(() => {
-          this.$Message.warning("網絡異常");
-        });
+          that.$axios({
+            url: window.baseURL.replace("/admin", "/") + "admin/" + this.id,
+            method: "PUT",
+            data: {
+              fullname: that.editForm.fullname,
+              nickname: that.editForm.nickname,
+              phone: that.editForm.phone,
+              password: that.editForm.pwd
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.ID) {
+              that.$Message.success("編輯成功");
+              that.showEdit = false;
+              that.showTable();
+            } else {
+              that.$Message.warning("編輯失敗");
+            }
+          })
+          .catch(() => {
+            that.$Message.warning("網絡異常");
+          });
+        }
+        that.hideLoading()
+      })
+      
     },
     Delete(item) {
       console.log(item);

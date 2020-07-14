@@ -441,6 +441,7 @@ export default {
     },
     //生成二維碼
     createQR (item) {
+      // console.log(item)
       this.current= item
       this.showQR = false
       this.$nextTick(() => {
