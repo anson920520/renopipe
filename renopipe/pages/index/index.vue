@@ -130,7 +130,7 @@
 			},
 			toDetail(e) {
 				uni.navigateTo({
-						url: "/pages/record/edit?id=" + e
+						url: "/pages/record/detail?id=" + e
 					})
 				},
 		}
