@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="sb al">
-      <div></div>
+      <div class="ju al">
+        <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
+        <Button @click="search"  type="info">搜索</Button>
+      </div>
       <Button type="info" class="addBtn" @click="showAdd=true">新增地盤</Button>
     </div>
     <!-- 表格展示 -->
@@ -233,6 +236,8 @@ export default {
       editMarker:{},
       loading:true,
       currant: {},     // 當前數據
+      allData:[],
+      searchVal:"",
     }
   },
   created () {
@@ -266,11 +271,24 @@ export default {
           res.data.forEach(item => {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
           })
-          this.dataList = res.data
+          this.allData = res.data
+          this.dataList = this.allData.slice(0)
         }
         
       }).catch(err => {
         console.log(err.response)
+      })
+    },
+    search () {
+      this.dataList = this.allData.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if (item[key].indexOf(this.searchVal) != -1) {
+              return true
+            }
+          }
+          
+        }
       })
     },
     okAdd () {

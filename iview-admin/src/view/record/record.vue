@@ -143,7 +143,10 @@
 <template>
   <div>
     <div class="sb al">
-      <div></div>
+      <div class="ju al">
+        <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
+        <Button @click="search"  type="info">搜索</Button>
+      </div>
       <Button type="info" class="editBtn" @click="exportData">導出CSV</Button>
     </div>
     <!-- 表格展示 -->
@@ -318,11 +321,14 @@ export default {
       superList:[],
       siteList:[],
       load:function(){},
+      allData:[],
+      searchVal:"",
     }
   },
   created () {
     this.url = window.baseURL
-    this.showTable()
+    this.getSuper()
+    this.getSite()
   },
   mounted () {
     // this.load = this.$Message.loading({
@@ -343,14 +349,33 @@ export default {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+              this.siteList.forEach(site => {
+                if (site.ID == item.siteId) {
+                  item.sitecode1 = site.siteCode1
+                  item.sitecode2 = site.siteCode2
+                  item.sitecode3 = site.siteCode3
+                }
+              })
           })
-          this.dataList = res.data
-          this.getSuper()
-          this.getSite()
+          this.allData = res.data
+          this.dataList = this.allData.slice(0)
+          
           // this.load()
         }
       }).catch(() => {
         // this.load()
+      })
+    },
+    search () {
+      this.dataList = this.allData.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if (item[key].indexOf(this.searchVal) != -1) {
+              return true
+            }
+          }
+          
+        }
       })
     },
     //獲取所有工頭
@@ -374,6 +399,8 @@ export default {
         // console.log(res,123)
         if (res.data) {
           this.siteList = res.data
+          this.showTable()
+
         }
       })
     },

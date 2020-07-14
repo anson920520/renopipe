@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="sb al">
-      <div></div>
+      <div class="ju al">
+        <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
+        <Button @click="search"  type="info">搜索</Button>
+      </div>
       <Button type="info" class="addBtn" @click="showAdd=true">新增管理員賬號</Button>
     </div>
 
@@ -153,6 +156,8 @@ export default {
         { title: "操作", slot: "operation" }
       ],
       id:"",
+      allData:[],
+      searchVal:"",
     };
   },
   created() {
@@ -173,9 +178,22 @@ export default {
               .split("-")
               .join("/");
           });
-          this.dataList = res.data;
+          this.allData = res.data
+          this.dataList = this.allData.slice(0)
         }
       });
+    },
+    search () {
+      this.dataList = this.allData.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if (item[key].indexOf(this.searchVal) != -1) {
+              return true
+            }
+          }
+          
+        }
+      })
     },
     keydown() {},
     edit(item) {
