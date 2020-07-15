@@ -15,7 +15,7 @@
 				<hr class="hr-line"/>
 			</view>
 			
-			<!--body!-->
+			<!--body
 			<view class="body-padding">
 				<div class="main">
 					<select>
@@ -28,7 +28,7 @@
 						<option>日期檢索</option>
 					</select>
 				</div>
-			</view>
+			</view>!-->
 			<!--table!-->
 			<view class=" body-padding">
 				<view class="box scoll">
@@ -37,12 +37,12 @@
 						<th>創建日期</th>
 						<th>上班人數</th> 
 						<th>地盤</th>
-						<th>工作種類</th>
+						<th>工作</th>
 					  </tr>
 					  
-					  <tr v-for="(item,i) in dataList" :key="i">
+					  <tr v-for="(item,i) in dataList" :key="i" v-bind:id="item.ID" @click="toDetail(item.ID)">
 						<td>{{item.createdAt}}</td>
-						<td>{{item.workers.length}}</td>
+						<td style="width: 25%;">{{item.workers.length}}</td>
 						<td>{{item.site}}</td>
 						<td>In-Situ Concetre</td>
 					  </tr>
@@ -128,6 +128,11 @@
 					url: "/pages/record/selectsite"
 				})
 			},
+			toDetail(e) {
+				uni.navigateTo({
+						url: "/pages/record/detail?id=" + e
+					})
+				},
 		}
 	}
 </script>
@@ -213,9 +218,9 @@
 	  border-collapse: collapse;
 	}
 	th, td {
-	  padding: 15px;
-	  text-align: left;
-	  font-size:0.5rem;
+	  padding: 8px;
+	  text-align: center;
+	  font-size:0.7rem;
 	}
 	table#t01 tr:nth-child(even) {
 	  background-color: #F8FCFF;

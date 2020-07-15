@@ -24,6 +24,18 @@
 				"navigationStyle":"custom"
 			}
 		}
+		,{
+		    "path" : "pages/record/edit",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		}
+		,{
+		    "path" : "pages/record/detail",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		}
         ,{
             "path" : "pages/record/complete",
             "style" : {

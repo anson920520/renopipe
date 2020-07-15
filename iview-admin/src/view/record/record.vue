@@ -190,7 +190,8 @@
         <!-- 中間詳細信息 -->
         <div class="centerItem sb">
           <ul class="recordDetailUl">
-            <li><span><b>地盤:</b> </span><span>地盤信息....</span></li>
+            <li><span><b>地盤項目編號:</b> </span><span>{{thisSite.project}}</span></li>
+            <li><span><b>地盤編號:</b> </span><span>{{thisSite.siteCode1}} ,  {{thisSite.siteCode2}} , {{thisSite.siteCode3}}</span></li>
             <li><span><b>創建者:</b> </span><span>{{current.supervisors[0].cName}} {{current.supervisors[0].fullname}} </span></li>
             <li><span><b>創建日期:</b> </span><span>{{current.createdAt}}</span></li>
             <li><span><b>使用機械:</b> </span><span>{{current.machine}}</span></li>
@@ -229,6 +230,7 @@ export default {
     return {
       showBox: false,
       url:"",
+      thisSite:"",
       columns: [
         { title: "創建日期", key:"createdAt" },
         // { title: "圖片預覽", slot:"preview" },
@@ -430,7 +432,13 @@ export default {
       })
        
       console.log(e)
-      
+
+      //show site
+      this.siteList.forEach(item => {
+         if (item.ID==e.siteId) {
+              this.thisSite = item
+           }
+       })
     },
     edit (item){
       console.log(item)
