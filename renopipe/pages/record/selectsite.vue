@@ -63,6 +63,7 @@
 			},
 			onDecode (data) {
 				let that= this
+				alert(data);
 			   // console.log('二维码数据',data)
 			   that.siteList.forEach(item => {
 				   // console.log(item.uuid, data)

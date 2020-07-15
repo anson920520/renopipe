@@ -225,7 +225,7 @@
 				
 			<!--submit button!--><br/>
 			<view class="submit-padding">
-				<button type="primary" @click="submit"> 編輯紀錄 (未上線)</button>
+				<button type="primary" @click="editNow"> 編輯紀錄 (未上線)</button>
 			</view>
 				
 				
@@ -590,6 +590,11 @@
 				console.log(this.head)
 				//console.log(e.target)
 				//this.head = this.head;
+			},
+			editNow(){
+				uni.navigateTo({
+						url: "/pages/record/edit?id=" + this.$route.query.id
+				})
 			}
 		}
 	}
