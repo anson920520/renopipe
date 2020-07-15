@@ -57,7 +57,7 @@
 .bigImgWrap {
   width: 400px;
   height: 330px;
-  // border: solid red 1px;
+  border: solid #CCC 1px;
   overflow:hidden;
   >img {
     width:auto;
@@ -172,7 +172,7 @@
         <!-- 左邊圖片 -->
         <div>
           <div class="bigImgWrap  ju al">
-            <img style="border:solid 1px lightgray" class="bigImg" :src="url + current.images[currentImg].filePath" >
+            <img  class="bigImg" :src="url + current.images[currentImg].filePath" >
           </div>
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
@@ -351,13 +351,7 @@ export default {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-              this.siteList.forEach(site => {
-                if (site.ID == item.siteId) {
-                  item.sitecode1 = site.siteCode1
-                  item.sitecode2 = site.siteCode2
-                  item.sitecode3 = site.siteCode3
-                }
-              })
+              this.loopData(item)
           })
           this.allData = res.data
           this.dataList = this.allData.slice(0)
@@ -367,6 +361,25 @@ export default {
       }).catch(() => {
         // this.load()
       })
+    },
+    loopData (item) {
+      setTimeout(() => {
+        this.siteList.forEach(site => {
+          if (site.ID == item.siteId) {
+            item.sitecode1 = site.siteCode1
+            item.sitecode2 = site.siteCode2
+            item.sitecode3 = site.siteCode3
+            item.siteName = site.name
+            item.project = site.project
+          }
+        })
+        this.superList.forEach(supervisor => {
+          if (supervisor.ID == item.supervisorId) {
+            item.cName = supervisor.cName
+          }
+        })
+
+      },200)
     },
     search () {
       this.dataList = this.allData.filter((item,i) => {
