@@ -331,6 +331,42 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			
+			checkData () {
+				setTimeout(() => {
+					// 勾选已存在工人
+					// console.log(this.attendenceData)
+					this.attendenceData.workers.forEach(item => {
+						// console.log(item)
+						let worderId = item.ID
+						this.allPosition.forEach(workType => {
+							// console.log(workType)
+							workType.workers.forEach(man => {
+								// console.log(worderId, man.ID)
+								if (worderId == man.ID) {
+									man.check = true
+								}
+							})
+						})
+					})
+					
+					this.attendenceData.worktype.split(",").forEach(item => {
+						this.worktypeOption.forEach(type => {
+							if (type.name == item) {
+								type.check = true
+							}
+						})
+					})
+					
+					this.attendenceData.machine.split(",").forEach(item => {
+						this.machineOption.forEach(type => {
+							if (type.name == item) {
+								type.check = true
+							}
+						})
+					})
+				},500)
+			},
 			getData () {
 				let that = this
 				uni.showLoading({
@@ -346,7 +382,8 @@
 						if(res){
 							that.attendenceData = res.data[0]
 							that.getSite(res);
-							console.log(this.attendenceData);
+							// console.log(this.attendenceData);
+							that.checkData()
 						}else{
 							alert("記錄不存在")
 						}
@@ -405,7 +442,7 @@
 					},
 					success (res) {
 						console.log(res)
-						console.log("get site", e.data[0].siteId);
+						// console.log("get site", e.data[0].siteId);
 						if (res.data) {
 							that.siteList = res.data
 							that.siteList.forEach(item => {
