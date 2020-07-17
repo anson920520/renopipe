@@ -44,7 +44,7 @@
 						<td>{{item.createdAt}}</td>
 						<td style="width: 25%;">{{item.workers.length}}</td>
 						<td>{{item.site}}</td>
-						<td>In-Situ Concetre</td>
+						<td>{{item.worktype}}</td>
 					  </tr>
 					  
 					</table>
@@ -55,6 +55,11 @@
 		<view class="footer btmBorder">
 			©RenoPipe Construction Co. Ltd. Copyright © 2020
 		</view>
+		
+		<view class="searchBox sb al">
+			<input class="searchInp" type="text" v-model="val" />
+			<view class="searchbtn op" @click="search"> 搜索</view>
+		</view>
 	</view>
 </template>
 
@@ -62,8 +67,10 @@
 	export default {
 		data() {
 			return {
-				dataList: [],
+				dataList: [],    // 過濾後記錄
 				siteList: [],     //地盘
+				val:"",       // 搜索关键字
+				allData:[],      // 所有記錄
 			}
 		},
 		onLoad() {
@@ -73,6 +80,18 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			search () {
+				let that = this
+				that.dataList = that.allData.filter(item => {
+					for(let key in item) {
+						if (typeof item[key] == "string") {
+							if (item[key].indexOf(that.val) != -1) {
+								return true
+							}
+						}
+					}
+				})
+			},
 			getData () {
 				let that = this
 				uni.showLoading({
@@ -98,6 +117,7 @@
 									}
 								})
 							})
+							that.allData = that.dataList
 						}else{
 							alert("暫時未有記錄")
 						}
@@ -145,7 +165,27 @@
 	.nav-background{
 		background: #5F98EC;
 	}
-	
+	.searchBox {
+		position: fixed;
+		// border: solid red 1px;
+		right: 0upx;
+		top: 10upx;
+		width: 85%;
+		z-index:200;
+		// padding-left: 90upx;
+		padding-right: 20upx;
+		box-sizing: border-box;
+	}
+	.searchInp {
+		width: 78%;
+		background-color: white;
+		padding: 5upx 0;
+	}
+	.searchbtn {
+		color: white;
+		background: #3A75BB;
+		padding: 10upx 30upx;
+	}
 	/*header的button的css*/
 	.menu-btn{
 		width:0.9rem;
