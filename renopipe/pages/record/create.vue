@@ -273,8 +273,11 @@
 					{name:"雜務",check:false}
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機",check:false},
-					{name:"大電炮",check:false},
+					{name:"發電機 1",check:false},
+					{name:"發電機 2",check:false},
+					{name:"發電機 3",check:false},
+					{name:"大電炮 1",check:false},
+					{name:"大電炮 2",check:false},
 					{name:"細電炮",check:false},
 					{name:"保路華",check:false},
 					{name:"跳鎚",check:false},
@@ -282,7 +285,7 @@
 					{name:"9噸吊雞",check:false},
 					{name:"30噸吊雞",check:false},
 					{name:"5.5噸車",check:false},
-					{name:"水泵",check:false}
+					{name:"水泵",check:false},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,

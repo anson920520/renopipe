@@ -22,15 +22,46 @@
 			<view  class="qrWrap">
 				<qrcode-stream class="qrView" @decode="onDecode"></qrcode-stream>
 			</view>
+			<br/>
+			<hr/>
+			<br/>
 			<!--手動選擇地盤!-->
+			<p style="text-align: center;">如未能使用QR code，可選擇手動輸入</p>
+			<br/>
 			<view class="body-padding">
+				<view>
+					<select>
+						<option>荃灣</option>
+						<option>沙田</option>
+					</select>
+				</view>
+				<view>
+					<select>
+						<option>ST1</option>
+						<option>ST2</option>
+					</select>
+				</view>
 				<div class="main">
 					<select @change="chooseSite" v-model="val">
 						<option v-for="(item,i) in siteList" :key="i" :value="item.ID">{{item.name}}</option>
 					</select>
-					<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
+					<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">搜索</span></div>
 				</div>
 			</view>
+			<br/>
+			<hr/>
+			<br/>
+			<view class="body-padding">
+				<view class="siteBorder" v-for="(item,i) in siteList" :key="i" :value="item.ID">
+					{{item.cname}}
+					{{item.siteCode1}} {{item.siteCode2}} {{item.siteCode3}}
+					{{item.project}}
+					{{item.region}}
+				</view>
+				<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
+			</view>
+			
+		
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -236,5 +267,10 @@
 	.selectsiteWrap {
 		// border: solid green 1px;
 		// flex:1;
+	}
+	.siteBorder{
+		margin: 5px;
+		padding:20px;
+		border:solid 1px #5F98EC;
 	}
 </style>

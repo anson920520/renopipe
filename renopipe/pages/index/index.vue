@@ -15,20 +15,19 @@
 				<hr class="hr-line"/>
 			</view>
 			
-			<!--body
+			<!--body!-->
 			<view class="body-padding">
 				<div class="main">
-					<select>
-						<option>地盤檢索</option>
-					</select>
-					<select>
-						<option>工作種類檢索</option>
-					</select>
-					<select>
-						<option>日期檢索</option>
-					</select>
+					<!--顯示前一天的所有記錄，做一個漂亮一點的箭嘴!-->
+					<span @click="yesterday"> < </span>
+					<!--顯示當前日期改讓客戶透過picker選擇想要觀看的日期!-->
+					<picker mode="date" @change="startTime">
+						<input class="dateBox" value="2020-07-16"/>
+					</picker>
+					<span @click="tomorrow"> > </span>
+					<!--顯示後一天的所有記錄，做一個漂亮一點的箭嘴!-->
 				</div>
-			</view>!-->
+			</view>
 			<!--table!-->
 			<view class=" body-padding">
 				<view class="box scoll">
@@ -153,6 +152,12 @@
 						url: "/pages/record/detail?id=" + e
 					})
 				},
+			yesterday(){
+				alert("顯示上一天的所有記錄")
+			},
+			tomorrow(){
+				alert("顯示下一天的所有記錄")
+			}
 		}
 	}
 </script>
@@ -294,6 +299,9 @@
 		min-height: 100vh;
 		// border: solid black 1px;
 		flex-direction: column;
+	}
+	.dateBox{
+		border: solid 1px;
 	}
 
 </style>

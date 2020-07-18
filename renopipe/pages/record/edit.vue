@@ -28,6 +28,7 @@
 						<option value="全日">全日</option>
 					</select>
 				</span>
+				<p style="display: none;"></p>
 				<p>工程項目編號: {{site.project}}</p>
 				<p>地盤(中文名): {{site.name}}</p>
 				<p>地盤(英文名): {{site.siteCode3}}</p>
@@ -258,7 +259,7 @@
 				description: "",
 				workerList: [],
 				siteList: [],
-				siteId: "",
+				siteId:"",
 				site: {},
 				start: {
 					name: "",
@@ -289,8 +290,11 @@
 					{name:"雜務",check:false}
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機",check:false},
-					{name:"大電炮",check:false},
+					{name:"發電機 1",check:false},
+					{name:"發電機 2",check:false},
+					{name:"發電機 3",check:false},
+					{name:"大電炮 1",check:false},
+					{name:"大電炮 2",check:false},
 					{name:"細電炮",check:false},
 					{name:"保路華",check:false},
 					{name:"跳鎚",check:false},
@@ -539,44 +543,24 @@
 				//data
 				let data = {
 							workerIds: arr,
-							siteId: that.siteId,
+							siteId: this.siteId,
 							supervisorId:parseInt(this.supervisorId),
 							startTimestamp: parseInt(Date.now()/1000) + "",
 							endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
-							//description: that.description,
-							/*new fields*/
 							time:this.timeRange,
-							//projectid: "J1005",
 							subcontract: this.subcontract,
 							rporsubCRP: this.head,
 							machine: arr3.join(),
-							//district:"坪洲",
-							//location:"離島坪洲，永東街",
-							//workers:"{雜工:{黃錦江，鄭世杰，翁余川}}",
 							description:that.description,
 							worktype:arr2.join(),
-							//smr:"",
-							//smrref:"",
-							//daywork:"",
-							//dwref:"",
-							//trialpit:"",
-							//pipe:"",
-							//chamber:"",
-							//reinstatement:"",
-							//workingrecordcol:"",
-							//rockamh:"",
-							//other:"",
-							//rebate:"",
-							//ce:"",
-							//remark:"",
 							base64Images: base64
 				}
 				console.log(data)
-				
+				console.log(uni.getStorageSync('token'))
 				//Submit request
 				uni.request({
-					url:that.baseURL + "attendence",
-					method:"POST",
+					url:that.baseURL + "attendence/" + this.$route.query.id,
+					method:"PUT",
 					header:{
 						Authorization:uni.getStorageSync('token')
 					},
@@ -589,14 +573,14 @@
 							})
 						} else {
 							uni.showToast({
-								title: "創建失敗",
+								title: "編輯失敗",
 								icon:"none"
 							})
 						}
 					}, 
 					fail () {
 						uni.showToast({
-							title: "網絡錯誤",
+							title: "編輯失敗",
 							icon:"none"
 						})
 					},
