@@ -241,7 +241,7 @@
 	export default {
 		data() {
 			return {
-				attendenceData:{supervisors:[]},
+				attendenceData:{supervisors:[""], workers:[]},
 				imgs:[],
 				description: "",
 				workerList: [],

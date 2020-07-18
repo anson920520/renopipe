@@ -54,7 +54,7 @@
 
 			<view class="body-padding">
 				判頭: <span class="">
-						<select @change="onChangeHead()" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
+						<select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
 							<option id="1" value="Renopipe">Renopipe</option>
 							<option id="2" value="Renopipe">信雄</option>
 							<option id="3" value="Renopipe">信昌</option>
@@ -314,7 +314,6 @@
 			this.getAllPosition()
 			// this.getWorders()
 			this.getData()
-			this.getSite()
 			let D = new Date()
 			let Y = D.getFullYear()
 			let M = D.getMonth();
@@ -508,6 +507,7 @@
 				let arr = []        // 已勾選工人
 				that.allPosition.forEach(item => {
 					item.workers.forEach(attr=> {
+						// console.log(attr.ID,attr.check)
 						if (attr.check) {
 							arr.push(attr.ID)
 						}
@@ -543,20 +543,21 @@
 				//data
 				let data = {
 							workerIds: arr,
-							siteId: this.siteId,
-							supervisorId:parseInt(this.supervisorId),
-							startTimestamp: parseInt(Date.now()/1000) + "",
-							endTimestamp:parseInt(Date.now()/1000) + 2592000 + "",
-							time:this.timeRange,
-							subcontract: this.subcontract,
-							rporsubCRP: this.head,
+							siteId: this.attendenceData.siteId,
+							supervisorId:parseInt(this.attendenceData.supervisorId),
+							startTimestamp: this.attendenceData.startTimestamp,
+							endTimestamp:this.attendenceData.endTimestamp,
+							time:this.attendenceData.time,
+							subcontract: this.attendenceData.subcontract ? this.attendenceData.subcontract : " ",
+							rporsubCRP: this.attendenceData.rporsubCRP,
 							machine: arr3.join(),
-							description:that.description,
+							description:that.attendenceData.description,
 							worktype:arr2.join(),
 							base64Images: base64
 				}
 				console.log(data)
-				console.log(uni.getStorageSync('token'))
+				// console.log(uni.getStorageSync('token'))
+				// return false
 				//Submit request
 				uni.request({
 					url:that.baseURL + "attendence/" + this.$route.query.id,
@@ -566,7 +567,8 @@
 					},
 					data: data,
 					success (res) {
-						console.log("新增",res)
+						console.log("编辑",res)
+						// that.getData()
 						if (!res.data.error) {
 							uni.navigateTo({
 								url: "/pages/record/complete"
@@ -616,8 +618,9 @@
 					}
 				})
 			},
-			onChangeHead(){
-				console.log(this.head)
+			onChangeHead(e){
+				
+				console.log(e,this.head)
 				//console.log(e.target)
 				//this.head = this.head;
 			}
