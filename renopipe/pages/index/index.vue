@@ -127,25 +127,28 @@
 					success (res) {
 						console.log(res)
 						if(res.data.length > 0){
-							that.dataList = res.data
+							console.log(111)
+							that.allData = res.data
 							res.data.forEach(item => {
 								item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
 							})
-							that.dataList.forEach(item => {
+							that.allData.forEach(item => {
 								that.siteList.forEach(attr => {
 									if (item.siteId == attr.ID) {
 										item.site = attr.name
 									}
 								})
 							})
-							that.allData = that.dataList
+							that.dataList = that.allData
 						}else{
 							//alert("暫時未有記錄")
 							that.allData = []
+							that.dataList = []
 						}
 					},
 					fail () {
 						that.allData = []
+						that.dataList = []
 					},
 					complete () { uni.hideLoading() }
 				})
