@@ -47,6 +47,7 @@
 					  </tr>
 					  
 					</table>
+					<view v-if="dataList.length==0" class="ju al noData">暫無數據</view>
 				</view>
 			</view>
 		</view>
@@ -169,6 +170,9 @@
 	/*header的style*/
 	.nav-background{
 		background: #5F98EC;
+	}
+	.noData {
+		padding: 20upx;
 	}
 	.searchBox {
 		position: fixed;
