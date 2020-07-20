@@ -571,7 +571,7 @@
 						// that.getData()
 						if (!res.data.error) {
 							uni.navigateTo({
-								url: "/pages/record/complete"
+								url: "/pages/record/completeEdit"
 							})
 						} else {
 							uni.showToast({

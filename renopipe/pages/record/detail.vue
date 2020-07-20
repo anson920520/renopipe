@@ -225,7 +225,7 @@
 				
 			<!--submit button!--><br/>
 			<view class="submit-padding">
-				<button type="primary" @click="editNow"> 編輯紀錄 (未上線)</button>
+				<button type="primary" @click="editNow"> 編輯紀錄</button>
 			</view>
 				
 				
