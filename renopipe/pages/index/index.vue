@@ -19,12 +19,12 @@
 			<view class="body-padding">
 				<div class="main">
 					<!--顯示前一天的所有記錄，做一個漂亮一點的箭嘴!-->
-					<span class="arrow" @click="yesterday"> &#8678; </span>
+					<!--<span class="arrow" @click="yesterday"> &#8678; </span>!--
 					<!--顯示當前日期改讓客戶透過picker選擇想要觀看的日期!-->
 					<picker class="selectedDate" mode="date" @change="attendenceDate">
 						<input class="dateBox" v-model="start.name" value=""/>
 					</picker>
-					<span class="arrow" @click="tomorrow"> &#8680; </span>
+					<!--<span class="arrow" @click="tomorrow"> &#8680; </span>!-->
 					<!--顯示後一天的所有記錄，做一個漂亮一點的箭嘴!-->
 				</div>
 			</view>
@@ -195,7 +195,7 @@
 			},
 			tomorrow(){
 				
-				this.start.name = parseInt(this.start.name) + 1
+				//this.start.name = parseInt(this.start.name) + 1
 				this.start.id = parseInt(this.start.id) +1
 				this.end = parseInt(this.start.id) +2
 				
