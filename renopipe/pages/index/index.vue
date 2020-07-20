@@ -141,7 +141,11 @@
 							that.allData = that.dataList
 						}else{
 							//alert("暫時未有記錄")
+							that.allData = []
 						}
+					},
+					fail () {
+						that.allData = []
 					},
 					complete () { uni.hideLoading() }
 				})
