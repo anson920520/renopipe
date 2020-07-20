@@ -19,12 +19,12 @@
 			<view class="body-padding">
 				<div class="main">
 					<!--顯示前一天的所有記錄，做一個漂亮一點的箭嘴!-->
-					<span @click="yesterday"> < </span>
+					<span class="arrow" @click="yesterday"> &#8678; </span>
 					<!--顯示當前日期改讓客戶透過picker選擇想要觀看的日期!-->
-					<picker mode="date" @change="startTime">
-						<input class="dateBox" value="2020-07-16"/>
+					<picker class="selectedDate" mode="date" @change="attendenceDate">
+						<input class="dateBox" v-model="start.name" value=""/>
 					</picker>
-					<span @click="tomorrow"> > </span>
+					<span class="arrow" @click="tomorrow"> &#8680; </span>
 					<!--顯示後一天的所有記錄，做一個漂亮一點的箭嘴!-->
 				</div>
 			</view>
@@ -70,10 +70,27 @@
 				siteList: [],     //地盘
 				val:"",       // 搜索关键字
 				allData:[],      // 所有記錄
+				start: {
+					name: "",
+					id:null,
+					timesamp: 0
+				},
+				end:null
 			}
 		},
 		onLoad() {
 			this.getSite()
+			let D = new Date()
+			let Y = D.getFullYear()
+			let M = D.getMonth();
+			let d = D.getDate()
+			let str = Y + "-0" + (M+1) + "-" + d
+			this.start.name = str
+			this.start.id = Y.toString()+"0"+(M+1).toString()+d.toString()
+			this.start.timesamp = new Date(str).getTime()/1000
+			
+			this.end = parseInt(this.start.id) - 1
+			
 		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }
@@ -92,12 +109,16 @@
 				})
 			},
 			getData () {
+				
+				console.log(parseInt(this.start.id)-1)
+				this.end = parseInt(this.start.id)-1
+				
 				let that = this
 				uni.showLoading({
 					title:"加载中..."
 				})
 				uni.request({ //grab supervisor id from localstorage
-					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid'),
+					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid') + "&start="+this.end+"&end=" + this.start.id,
 					method:"GET",
 					header:{
 						Authorization:uni.getStorageSync('token')
@@ -118,7 +139,7 @@
 							})
 							that.allData = that.dataList
 						}else{
-							alert("暫時未有記錄")
+							//alert("暫時未有記錄")
 						}
 					},
 					complete () { uni.hideLoading() }
@@ -153,10 +174,48 @@
 					})
 				},
 			yesterday(){
-				alert("顯示上一天的所有記錄")
+				
+				//this.start.name = parseInt(this.start.name) -1
+				this.start.id = parseInt(this.start.id) -1
+				this.end = parseInt(this.start.id) -2
+				
+				console.log(parseInt(this.start.name) -1)
+				console.log(this.start.id)
+				console.log(this.end)
+				
+				this.getData()
 			},
 			tomorrow(){
-				alert("顯示下一天的所有記錄")
+				
+				this.start.name = parseInt(this.start.name) + 1
+				this.start.id = parseInt(this.start.id) +1
+				this.end = parseInt(this.start.id) +2
+				
+				console.log(this.start.id)
+				console.log(this.end)
+				
+				this.getData()
+				
+			},
+			attendenceDate(e){
+				//alert("所選那天的紀錄")
+				console.log(e)
+				let changedDate = e.detail.value
+				this.start.name = changedDate
+				
+				let subStr = new RegExp('-','');
+				let str = e.detail.value.replace(subStr,"")
+				let changedDateId = str.replace(subStr,"")
+				
+				console.log(changedDateId)
+				
+				this.start.id = changedDateId
+				this.end = parseInt(changedDateId) - 1
+				
+				console.log(this.start.id);
+				console.log(this.end)
+				
+				this.getData()	
 			}
 		}
 	}
@@ -165,6 +224,10 @@
 <style lang="scss" scoped>
 	body{
 		font-family: Abel;
+	}
+	.arrow{
+		color:#5F98EC;
+		font-size: 1.3rem;
 	}
 	/*header的style*/
 	.nav-background{
@@ -303,5 +366,10 @@
 	.dateBox{
 		border: solid 1px;
 	}
-
+	
+	.selectedDate{
+		text-align: center;
+		background-color: #5F98EC;
+		color:#FFFFFF;
+	}
 </style>
