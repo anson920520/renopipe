@@ -47,7 +47,7 @@
 					  </tr>
 					  
 					</table>
-					<view v-if="dataList.length==0" class="ju al noData">暫無數據</view>
+					<view v-if="dataList.length==0" class="ju al noData">所選日期無數據</view>
 				</view>
 			</view>
 		</view>
@@ -242,7 +242,8 @@
 		background: #5F98EC;
 	}
 	.noData {
-		padding: 20upx;
+		padding: 250upx;
+		background-color: #E8E8E8;
 	}
 	.searchBox {
 		position: fixed;

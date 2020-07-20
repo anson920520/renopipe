@@ -202,7 +202,7 @@
 
             <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
-          <Button class="addBtn" type="info">下載圖片</Button>
+          <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">下載圖片</Button>
         </div>
 
         <!-- 右邊工人列表 -->
@@ -430,7 +430,7 @@ export default {
       this.$nextTick(() => {
         this.createImgDOM()
       })
-       
+      
       console.log(e)
 
       //show site
@@ -486,7 +486,17 @@ export default {
         filename: "報工記錄"
       });
     },
-  }
+    downloadIMG(e){
+       this.$axios({
+            url:"attendence/"+ e +"/image",
+            method:"GET"
+          }).then(res => {
+            console.log(res)
+            window.location.href = res.request.responseURL
+            //trigger download link by open a window in background
+        })
+      }
+    }
 }
 </script>
 
