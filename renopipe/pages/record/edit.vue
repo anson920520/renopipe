@@ -211,6 +211,7 @@
 				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in attendenceData.images" :key="i">
+						<image src="../../static/img/close.png" class="delImg" @click="delImg2(item.ID,i)" mode="widthFix"></image>
 						<image class="upLoadImg" :src="baseURL + item.filePath" mode="aspectFill"></image>
 						<!--<select class="selectType">
 							<option >Trial Pits & Inspection Pits</option>
@@ -228,6 +229,7 @@
 				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
+						<image src="../../static/img/close.png" class="delImg" @click="delImg(i)" mode="widthFix"></image>
 						<image class="upLoadImg" :src="item.base64" mode="aspectFill"></image>
 						<select class="selectType">
 							<option >Trial Pits & Inspection Pits</option>
@@ -306,14 +308,14 @@
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
-				
+				delImgs:[],
 			}
 		},
 		onLoad(val) {
 			this.siteId = Number(val.siteId)
 			this.getAllPosition()
 			// this.getWorders()
-			this.getData()
+			
 			let D = new Date()
 			let Y = D.getFullYear()
 			let M = D.getMonth();
@@ -334,7 +336,13 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
-			
+			delImg2 (id,i) {
+				this.delImgs.push(id)
+				this.attendenceData.images.splice(i,1)
+			},
+			delImg(i) {
+				this.imgs.splice(i,1)
+			},
 			checkData () {
 				setTimeout(() => {
 					// 勾选已存在工人
@@ -430,6 +438,7 @@
 								})
 							})
 							that.workerList = that.allPosition[0].workers
+							that.getData()
 						}
 					}
 				})
@@ -553,7 +562,8 @@
 							machine: arr3.join(),
 							description:that.attendenceData.description,
 							worktype:arr2.join(),
-							base64Images: base64
+							base64Images: base64,
+							removeImageId: that.delImgs
 				}
 				console.log(data)
 				// console.log(uni.getStorageSync('token'))

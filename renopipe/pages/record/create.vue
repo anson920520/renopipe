@@ -211,6 +211,7 @@
 				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
+						<image src="../../static/img/close.png" class="delImg" @click="delImg(i)" mode="widthFix"></image>
 						<image class="upLoadImg" :src="item.base64" mode="aspectFill"></image>
 						<select class="selectType">
 							<option >Trial Pits & Inspection Pits</option>
@@ -317,6 +318,9 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			delImg(i) {
+				this.imgs.splice(i,1)
+			},
 			startTime (e) {
 				this.start.name = e.detail.value
 				this.start.timesamp = new Date(e.detail.value).getTime()/1000

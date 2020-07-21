@@ -44,4 +44,16 @@
 		position: sticky;
 		top: 0;
 	}
+	.imgBox {
+		position: relative;
+
+	}
+	.delImg {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 40upx;
+		height: 40upx;
+		z-index: 100;
+	}
 </style>
