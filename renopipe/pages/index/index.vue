@@ -111,15 +111,15 @@
 			},
 			getData () {
 				
-				console.log(parseInt(this.start.id)-1)
-				this.end = parseInt(this.start.id)-1
+				//console.log(parseInt(this.start.id)-1)
+				this.end = parseInt(this.start.id) + 1 
 				
 				let that = this
 				uni.showLoading({
-					title:"加载中..."
+					title:"讀取中..."
 				})
 				uni.request({ //grab supervisor id from localstorage
-					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid') + "&start="+this.end+"&end=" + this.start.id,
+					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid') + "&start="+this.start.id+"&end=" + this.end,
 					method:"GET",
 					header:{
 						Authorization:uni.getStorageSync('token')
@@ -218,7 +218,7 @@
 				console.log(changedDateId)
 				
 				this.start.id = changedDateId
-				this.end = parseInt(changedDateId) - 1
+				this.end = parseInt(changedDateId) + 1
 				
 				console.log(this.start.id);
 				console.log(this.end)
