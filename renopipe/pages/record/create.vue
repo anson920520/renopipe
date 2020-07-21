@@ -212,10 +212,10 @@
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in imgs" :key="i">
 						<image class="upLoadImg" :src="item.base64" mode="aspectFill"></image>
-						<select class="selectType">
+						<!--<select class="selectType">
 							<option >Trial Pits & Inspection Pits</option>
 							<option >木工</option>
-						</select>
+						</select>!-->
 					</view>
 				</view>
 			</view>

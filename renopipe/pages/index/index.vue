@@ -47,7 +47,9 @@
 					  </tr>
 					  
 					</table>
-					<view v-if="dataList.length==0" class="ju al noData">所選日期無數據</view>
+					<view v-if="dataList.length==0" class="ju al noData">
+						{{this.loaderMSG}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -76,7 +78,8 @@
 					id:null,
 					timesamp: 0
 				},
-				end:null
+				end:null,
+				loaderMSG: "讀取數據中..."
 			}
 		},
 		onLoad() {
@@ -110,13 +113,12 @@
 				})
 			},
 			getData () {
-				
 				//console.log(parseInt(this.start.id)-1)
 				this.end = parseInt(this.start.id) + 1 
-				
+				this.loaderMSG = "讀取數據中..."
 				let that = this
 				uni.showLoading({
-					title:"讀取中..."
+					title:"讀取數據中..."
 				})
 				uni.request({ //grab supervisor id from localstorage
 					url: that.baseURL + "attendence?supervisorId=" + uni.getStorageSync('userid') + "&start="+this.start.id+"&end=" + this.end,
@@ -127,7 +129,6 @@
 					success (res) {
 						console.log(res)
 						if(res.data.length > 0){
-							console.log(111)
 							that.allData = res.data
 							res.data.forEach(item => {
 								item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
@@ -141,7 +142,9 @@
 							})
 							that.dataList = that.allData
 						}else{
-							//alert("暫時未有記錄")
+							alert("暫時未有記錄")
+							this.loaderMSG = "所選擇的日期沒有數據"
+							console.log(this.loaderMSG);
 							that.allData = []
 							that.dataList = []
 						}
