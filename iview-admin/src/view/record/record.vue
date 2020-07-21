@@ -202,7 +202,7 @@
 
             <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
-          <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">下載圖片</Button>
+          <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">{{this.msg}}</Button>
         </div>
 
         <!-- 右邊工人列表 -->
@@ -231,6 +231,7 @@ export default {
       showBox: false,
       url:"",
       thisSite:"",
+      msg:"下載圖片",
       columns: [
         { title: "創建日期", key:"createdAt" },
         // { title: "圖片預覽", slot:"preview" },
@@ -487,11 +488,13 @@ export default {
       });
     },
     downloadIMG(e){
+      this.msg = "下載中...請稍候"
        this.$axios({
             url:"attendence/"+ e +"/image",
             method:"GET"
           }).then(res => {
             console.log(res)
+            this.msg = "下載圖片"
             window.location.href = res.request.responseURL
             //trigger download link by open a window in background
         })
