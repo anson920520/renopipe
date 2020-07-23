@@ -154,24 +154,29 @@
     <div class=" ">
       <div class="ju al">
                 項目編號
-           <select>
-          <option>J1005</option>
+        <select v-model="pro">
+          <option value="">全部</option>
+          <option v-for="(item,i) in proList" :key="i" :value="item">{{item}}</option>
         </select>
         DIS(1)
-        <select>
-          <option>ST1</option>
+        <select v-model="dis1">
+          <option value="">全部</option>
+          <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
         </select>
         DIS(2)
-         <select>
-          <option>AKK</option>
+         <select v-model="dis2">
+           <option value="">全部</option>
+          <option v-for="(item,i) in disList2" :key="i" :value="item">{{item}}</option>
         </select>
          地盤
-         <select>
-          <option>馬鞍山食水配水庫</option>
+         <select v-model="site">
+           <option value="">全部</option>
+          <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
         </select>
         工頭
-           <select>
-          <option>林偉正</option>
+           <select  v-model="cName">
+             <option value="">全部</option>
+          <option v-for="(item,i) in superList" :key="i" :value="item.cName">{{item.cName}}</option>
         </select>
 
         <Button @click="search"  type="info">搜索</Button>
@@ -263,9 +268,9 @@ export default {
       thisSite:"",
       msg:"下載圖片",
       columns: [
-        { title: "創建日期", key:"createdAt" },
+        { title: "創建日期", key:"createdAt" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
-        { title: "地盤項目編號", key:"siteId",
+        { title: "地盤項目編號", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -276,7 +281,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤大編號", key:"siteId",
+        { title: "地盤大編號", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -287,7 +292,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤中編號", key:"siteId" ,
+        { title: "地盤中編號", key:"siteId" ,sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -298,7 +303,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤小編號", key:"siteId" ,
+        { title: "地盤小編號", key:"siteId" ,sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -309,7 +314,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤名稱", key:"siteId",
+        { title: "地盤名稱", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -320,8 +325,8 @@ export default {
               return h('div',str)
           }
         },
-        { title: "詳請", key:"description" },
-        { title: "工頭", key:"supervisor",
+        { title: "詳請", key:"description",sortable: true, },
+        { title: "工頭", key:"supervisor",sortable: true,
           render:(h,p) => {
             let str = "暫無"
             that.superList.forEach(item => {
@@ -356,6 +361,18 @@ export default {
       load:function(){},
       allData:[],
       searchVal:"",
+
+      // 五个搜索框
+      proList:[],
+      disList1:[],
+      disList2:[],
+      SiteList:[],
+      pro:"",
+      dis1:"",
+      dis2:"",
+      site:'',
+      cName:""
+
     }
   },
   created () {
@@ -370,7 +387,27 @@ export default {
     // })
     
   },
+  
   methods:{
+    createSearchData () {
+      this.proList = []
+      this.disList1 = []
+
+      this.allData.forEach(item => {
+        console.log(item,item.sitecode1)
+        this.proList.push(item.project)
+        this.disList1.push(item.sitecode1)
+        this.disList2.push(item.sitecode2)
+        this.SiteList.push(item.siteName)
+      })
+      console.log(123,this.proList)
+      this.proList = [...new Set(this.proList)].filter(item => item)
+      this.disList1 = [...new Set(this.disList1)].filter(item => item)
+      this.disList2 = [...new Set(this.disList2)].filter(item => item)
+      this.SiteList = [...new Set(this.SiteList)].filter(item => item)
+
+
+    },
     showTable () {
       this.$axios({
         url:"attendence",
@@ -410,17 +447,58 @@ export default {
           }
         })
 
+        this.createSearchData()
+
       },200)
     },
     search () {
       this.dataList = this.allData.filter((item,i) => {
         for(let key in item) {
           if ( typeof item[key] == "string") {
-            if (item[key].indexOf(this.searchVal) != -1) {
+            if ( item[key].indexOf(this.cName) != -1 ) {
               return true
             }
           }
-          
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.site) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.dis1) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.dis2) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.pro) != -1 ) {
+              return true
+            }
+          }
         }
       })
     },

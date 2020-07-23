@@ -131,7 +131,7 @@
           console.log(res)
           if (res.data) {
             this.mapOrder = res.data
-            this.mapLook(1)
+            this.mapLook(0)
           }
           
         }).catch(err => {
@@ -146,6 +146,7 @@
         $event.currentTarget.className = "indent";
       },
       mapLook(index){
+        console.log(123123123,index)
         this.visible = false
 
         this.index = index
