@@ -138,6 +138,15 @@
   border-radius:6px;
   background: #CCC;
 }
+
+.section{
+  width:100%;
+  display:flex;
+}
+
+.selectBox{
+  padding:20px;
+}
 </style>
 
 <template>
@@ -151,36 +160,45 @@
     </div>
     <hr/>
     <!--過濾器!-->
-    <div class=" ">
-      <div class="ju al">
-                項目編號
-        <select v-model="pro">
-          <option value="">全部</option>
-          <option v-for="(item,i) in proList" :key="i" :value="item">{{item}}</option>
-        </select>
-        DIS(1)
-        <select v-model="dis1">
-          <option value="">全部</option>
-          <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
-        </select>
-        DIS(2)
-         <select v-model="dis2">
-           <option value="">全部</option>
-          <option v-for="(item,i) in disList2" :key="i" :value="item">{{item}}</option>
-        </select>
-         地盤
-         <select v-model="site">
-           <option value="">全部</option>
-          <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
-        </select>
-        工頭
-           <select  v-model="cName">
-             <option value="">全部</option>
-          <option v-for="(item,i) in superList" :key="i" :value="item.cName">{{item.cName}}</option>
-        </select>
-
-        <Button @click="search"  type="info">搜索</Button>
+    <div class="">
+      <div class="section ">
+          <div class="selectBox">
+            <label>項目編號</label>
+            <select @change="search" v-model="pro">
+              <option value="">全部</option>
+              <option v-for="(item,i) in proList" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+          <div class="selectBox">
+            <label>DIS(1)</label>
+            <select @change="search" v-model="dis1">
+              <option value="">全部</option>
+              <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+          <div class="selectBox">
+              <label>DIS(2)</label>
+              <select @change="search" v-model="dis2">
+                <option value="">全部</option>
+                <option v-for="(item,i) in disList2" :key="i" :value="item">{{item}}</option>
+              </select>
+         </div>
+          <div class="selectBox">
+            <label> 地盤</label>
+            <select @change="search" v-model="site">
+              <option value="">全部</option>
+              <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+            <div class="selectBox">
+            <label>工頭</label>
+              <select @change="search"  v-model="cName">
+                <option  value="">全部</option>
+              <option v-for="(item,i) in superList" :key="i" :value="item.cName">{{item.cName}}</option>
+            </select>
+          </div>
       </div>
+        <!--<Button @change="search"  type="info">搜索</Button>!-->
     </div>
      <br/>
       <br/>
