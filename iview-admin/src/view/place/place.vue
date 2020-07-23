@@ -118,11 +118,11 @@ export default {
       addMap: {},
       editMap: {},
       columns: [
-        {
+       /* {
           title: "創建日期",
           key: "createdAt"
         },
-        /*{
+        {
           title: "編號1",
           key: "siteCode1"
         },
@@ -150,25 +150,33 @@ export default {
           title: "緯度",
           key: "latitude"
         },*/
+         {
+          title: "Imple. TO",
+          key: "imple"
+        },
+         {
+          title: "Site C. TO.",
+          key: "sitetoc"
+        },
         {
-          title: "地盤大編號",
+          title: "Dis(1)",
           key: "siteCode1"
         },
         {
-          title: "地盤中編號",
+          title: "Dis(1)中文",
           key: "siteCode2"
         },
         {
-          title: "地盤小編號",
+          title: "Dis(2)",
           key: "siteCode3"
         },
-        /*{
-          title: "中文名",
-          key: "project" //need to adjust field name
-        },*/
         {
-          title: "Zone",
-          key: "region" //need to adjust field name
+          title: "DMA",
+          key: "dma" //need to adjust field name
+        },
+        {
+          title: "EMFM Ref.",
+          key: "emfm" //need to adjust field name
         },
         {
           title: "操作",

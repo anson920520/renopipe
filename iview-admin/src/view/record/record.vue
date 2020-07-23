@@ -141,7 +141,7 @@
 </style>
 
 <template>
-  <div>
+  <div><!--關鍵字搜索!-->
     <div class="sb al">
       <div class="ju al">
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
@@ -149,6 +149,36 @@
       </div>
       <Button type="info" class="editBtn" @click="exportData">導出CSV</Button>
     </div>
+    <hr/>
+    <!--過濾器!-->
+    <div class=" ">
+      <div class="ju al">
+                項目編號
+           <select>
+          <option>J1005</option>
+        </select>
+        DIS(1)
+        <select>
+          <option>ST1</option>
+        </select>
+        DIS(2)
+         <select>
+          <option>AKK</option>
+        </select>
+         地盤
+         <select>
+          <option>馬鞍山食水配水庫</option>
+        </select>
+        工頭
+           <select>
+          <option>林偉正</option>
+        </select>
+
+        <Button @click="search"  type="info">搜索</Button>
+      </div>
+    </div>
+     <br/>
+      <br/>
     <!-- 表格展示 -->
     <Table :columns="columns" ref="recordTable" :data="dataList" @on-row-click="showDetail">
       <template slot-scope="{row}" slot="operation">
