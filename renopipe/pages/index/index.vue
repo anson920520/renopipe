@@ -79,7 +79,7 @@
 					timesamp: 0
 				},
 				end:null,
-				loaderMSG: "讀取數據中..."
+				loaderMSG:"讀取數據中..."
 			}
 		},
 		onLoad() {
@@ -116,6 +116,7 @@
 				//console.log(parseInt(this.start.id)-1)
 				this.end = parseInt(this.start.id) + 1 
 				this.loaderMSG = "讀取數據中..."
+				this.loaderMSG = "所選擇的日期沒有數據"
 				let that = this
 				uni.showLoading({
 					title:"讀取數據中..."
@@ -142,7 +143,7 @@
 							})
 							that.dataList = that.allData
 						}else{
-							alert("暫時未有記錄")
+							//alert("暫時未有記錄")
 							this.loaderMSG = "所選擇的日期沒有數據"
 							console.log(this.loaderMSG);
 							that.allData = []

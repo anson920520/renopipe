@@ -29,11 +29,13 @@
 					</select>
 				</span>
 				<p>工程項目編號: {{site.project}}</p>
-				<p>地盤(中文名): {{site.name}}</p>
-				<p>地盤(英文名): {{site.siteCode3}}</p>
-				<p>Dis1 : {{site.siteCode1}}</p>
-				<p>Dis2: {{site.siteCode2}}</p>
-				<p>Site C. TO. : {{site.region}}</p>
+				<p>地盤(中文名): {{site.cname}}</p>
+				<p>地盤(英文名): {{site.name}}</p>
+				<p>Dis(1) : {{site.siteCode1}}</p>
+				<p>Dis(2): {{site.siteCode3}}</p>
+				<p>DMA : {{site.dma}}</p>
+				<p>EMFM Ref. : {{site.emfm}}</p>
+				<p>Site C. TO. : {{site.sitetoc}}</p>
 			
 				<div class="hr">
 					<div class="blue-divider"></div>

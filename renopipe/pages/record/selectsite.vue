@@ -30,7 +30,7 @@
 			<br/>
 			<view class="body-padding">
 				<view>
-					<view>搜索地盤項目:</view>
+					<view>地盤項目編號搜索:</view>
 					<select v-model="pro">
 						<option value="">全部</option>
 						<option v-for="(item,i) in proList" :value="item">{{item}}</option>
@@ -47,11 +47,11 @@
 					<view>搜索地盤中編號:</view>
 					<select v-model="dis2" >
 						<option value="">全部</option>
-						<option v-for="(item,i) in disList2" :value="item">{{item}}</option>
+						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
 					</select>
 				</view>
-				<div class="btn-color customize-btn" @click="search"> <span class="word-in-btn">搜索</span></div>
-				<br />
+				<br/>
+				<div class="btn-color customize-btn" @click="search" long> <span class="word-in-btn">搜索</span></div>
 				<!-- <view>選擇地盤</view>
 				<div class="main">
 					
@@ -64,16 +64,14 @@
 			<br />
 			<!-- <div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div> -->
 			<br/>
-			<view class="body-padding">
+			<view class="body-padding scrollSection">
 				<view class="siteBorder op" v-for="(item,i) in siteList" :key="i" :value="item.ID" @click="toCreate(item)">
-					{{item.cname}}
-					{{item.siteCode1}} {{item.siteCode2}} {{item.siteCode3}}
-					{{item.project}}
-					{{item.region}}
+					<b style="color:#007AFF">{{item.name}} | {{item.cname}} </b> <br/>
+					{{item.siteCode1}}({{item.siteCode2}}) | {{item.siteCode3}} <br/>
+					{{item.dma}}<br/>
+					{{item.emfm}}
 				</view>
 			</view>
-			
-		
 		</view>
 		<!--footer!-->
 		<view class="footer btmBorder">
@@ -94,7 +92,7 @@
 				// 过滤
 				proList: [],
 				disList1:[],
-				disList2:[],
+				sitename:[],
 				pro:"",
 				dis1:"",
 				dis2:"",
@@ -179,15 +177,15 @@
 							
 							that.proList = []
 							that.disList1 = []
-							that.disList2 = []
+							that.sitename = []
 							that.siteList.forEach(item => {
 								that.proList.push(item.project)
-								that.disList1.push(item.siteCode1)
-								that.disList2.push(item.siteCode2)
+								that.disList1.push(item.siteCode2)
+								that.sitename.push(item.cname)
 							})
 							that.proList = [...new Set(that.proList)]
 							that.disList1 = [...new Set(that.disList1)]
-							that.disList2 = [...new Set(that.disList2)]
+							that.sitename = [...new Set(that.sitename)]
 						}
 					}
 				})
@@ -202,6 +200,14 @@
 	/*header的style*/
 	.nav-background{
 		background: #5F98EC;
+	}
+	
+	.scrollSection{
+		height:350px;
+		overflow-x: auto;
+		border:solid 2px lightgray;
+		background: #e8e8e8;
+		overflow-y: auto;
 	}
 	
 	/*header的button的css*/
@@ -266,7 +272,7 @@
 	
 	select{
 		padding:0.6rem;
-		width:12rem;
+		width:100%;
 	}
 
 	table {
@@ -336,7 +342,8 @@
 	}
 	.siteBorder{
 		margin: 5px;
-		padding:20px;
+		padding:10px;
 		border:solid 1px #5F98EC;
+		background: white;
 	}
 </style>
