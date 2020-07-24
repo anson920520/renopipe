@@ -5,10 +5,12 @@
         <div v-for="(item,index) in mapOrder" :key="index">
           <hr class="hrHide" v-if="index!=0">
           <div class="indent" @click="mapLook(index)" @mouseover="mouseOver($event)" @mouseleave="mouseLeave($event)">
-            <p class="name" style="display: inline">{{item.name}}</p>
+            <p class="name" style="display: inline">{{item.name}} {{item.cname}}</p>
             <img v-if="item.store_provider==2" src="../../assets/images/cxj.png" alt="" style="width:50px;float:right">
-            <p class="phone">地盤編號：{{item.siteCode1}}</p>
             <p class="dizhi">項目編號：{{item.project}}</p>
+            <p class="phone">地盤編號：{{item.siteCode1}} {{item.siteCode3}}</p>
+            <p class="phone">DMA : {{item.dma}}</p>
+            <p class="phone">EMFM Ref.: {{item.emfm}}</p>
             <!-- <p class="grade">
               评分：
               <img src="../../assets/images/grade.png" alt="" style="position: relative;top: 3px;">
