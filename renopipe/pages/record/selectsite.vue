@@ -52,22 +52,20 @@
 				</view>
 				<div class="btn-color customize-btn" @click="search"> <span class="word-in-btn">搜索</span></div>
 				<br />
-				<view>選擇地盤</view>
+				<!-- <view>選擇地盤</view>
 				<div class="main">
 					
 					<select @change="chooseSite" v-model="val">
 						<option v-for="(item,i) in siteList" :key="i" :value="item.ID">{{item.name}}</option>
 					</select>
-				</div>
+				</div> -->
 			</view>
 			
 			<br />
-			<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
-			<br/>
-			<hr/>
+			<!-- <div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div> -->
 			<br/>
 			<view class="body-padding">
-				<view class="siteBorder" v-for="(item,i) in siteList" :key="i" :value="item.ID">
+				<view class="siteBorder op" v-for="(item,i) in siteList" :key="i" :value="item.ID" @click="toCreate(item)">
 					{{item.cname}}
 					{{item.siteCode1}} {{item.siteCode2}} {{item.siteCode3}}
 					{{item.project}}
@@ -141,7 +139,8 @@
 					}
 				})
 			},
-			toCreate() {
+			toCreate(item) {
+				this.val = item.ID
 				uni.navigateTo({
 					url: "/pages/record/create?siteId=" + this.val
 				})
