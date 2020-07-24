@@ -30,24 +30,39 @@
 			<br/>
 			<view class="body-padding">
 				<view>
-					<select>
-						<option>荃灣</option>
-						<option>沙田</option>
+					<view>搜索地盤項目:</view>
+					<select v-model="pro">
+						<option value="">全部</option>
+						<option v-for="(item,i) in proList" :value="item">{{item}}</option>
 					</select>
 				</view>
 				<view>
-					<select>
-						<option>ST1</option>
-						<option>ST2</option>
+					<view>搜索地盤大編號:</view>
+					<select v-model="dis1" >
+						<option value="">全部</option>
+						<option v-for="(item,i) in disList1" :value="item">{{item}}</option>
 					</select>
 				</view>
+				<view>
+					<view>搜索地盤中編號:</view>
+					<select v-model="dis2" >
+						<option value="">全部</option>
+						<option v-for="(item,i) in disList2" :value="item">{{item}}</option>
+					</select>
+				</view>
+				<div class="btn-color customize-btn" @click="search"> <span class="word-in-btn">搜索</span></div>
+				<br />
+				<view>選擇地盤</view>
 				<div class="main">
+					
 					<select @change="chooseSite" v-model="val">
 						<option v-for="(item,i) in siteList" :key="i" :value="item.ID">{{item.name}}</option>
 					</select>
-					<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">搜索</span></div>
 				</div>
 			</view>
+			
+			<br />
+			<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
 			<br/>
 			<hr/>
 			<br/>
@@ -58,7 +73,6 @@
 					{{item.project}}
 					{{item.region}}
 				</view>
-				<div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div>
 			</view>
 			
 		
@@ -77,7 +91,15 @@
 				val:"",             //  所選地盤的 ID
 				site:{},
 				siteList: [],
+				allData: [],
 				
+				// 过滤
+				proList: [],
+				disList1:[],
+				disList2:[],
+				pro:"",
+				dis1:"",
+				dis2:"",
 			}
 		},
 		onLoad() {
@@ -87,6 +109,38 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			search () {
+				let that = this
+				that.siteList = that.allData.filter(item => { 
+					for(let key in item) {
+						if (typeof item[key] == 'string') {
+							if (item[key].indexOf(that.pro) != -1) {
+								return true
+							} 
+						}
+					}
+				})
+				
+				that.siteList = that.siteList.filter(item => {
+					for(let key in item) {
+						if (typeof item[key] == 'string') {
+							if (item[key].indexOf(that.dis1) != -1) {
+								return true
+							} 
+						}
+					}
+				})
+				
+				that.siteList = that.siteList.filter(item => {
+					for(let key in item) {
+						if (typeof item[key] == 'string') {
+							if (item[key].indexOf(that.dis2) != -1) {
+								return true
+							} 
+						}
+					}
+				})
+			},
 			toCreate() {
 				uni.navigateTo({
 					url: "/pages/record/create?siteId=" + this.val
@@ -121,7 +175,20 @@
 						console.log(res)
 						if (res.data) {
 							that.siteList = res.data
+							that.allData = res.data
 							that.val = that.siteList[0].ID
+							
+							that.proList = []
+							that.disList1 = []
+							that.disList2 = []
+							that.siteList.forEach(item => {
+								that.proList.push(item.project)
+								that.disList1.push(item.siteCode1)
+								that.disList2.push(item.siteCode2)
+							})
+							that.proList = [...new Set(that.proList)]
+							that.disList1 = [...new Set(that.disList1)]
+							that.disList2 = [...new Set(that.disList2)]
 						}
 					}
 				})
