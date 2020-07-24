@@ -143,15 +143,21 @@
 					url: "/pages/record/create?siteId=" + this.val
 				})
 			},
+			QRtoCreate(e) {
+				uni.navigateTo({
+					url: "/pages/record/create?siteId=" + e
+				})
+			},
 			onDecode (data) {
 				let that= this
-				alert(data);
-			   // console.log('二维码数据',data)
+				//alert(data);
+			    //alert('二维码数据',data)
 			   that.siteList.forEach(item => {
 				   // console.log(item.uuid, data)
 				   
 				   if (item.uuid == data) {
 					   that.val = String(item.ID)
+					   that.QRtoCreate(that.val)
 				   }
 			   })
 			},
