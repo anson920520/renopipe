@@ -160,27 +160,37 @@
         $event.currentTarget.className = "indent";
       },
       mapLook(index){
-        console.log(123123123,index)
+        //console.log(123123123,index)
         this.visible = false
-
         this.index = index
         // console.log(this.mapOrder[index])
         this.currentWindow.position = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
+        console.log(this.currentWindow.position);
+
         this.center = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
-        // this.center = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
-        // this.position = [this.mapOrder[index].longitude+1,this.mapOrder[index].latitude+1]
-        this.currentWindow.content = '<strong>地址：</strong>' + this.mapOrder[index].name + '<br>' ;
-                                      // +
-                                      // '<strong>服务类型：</strong>' + this.currentWindows[i].content + '<br>'; 
-                                      // +
-                                      // '<a href="http://www.maintance.pro/admin/#/o_management?Id='+
-                                      // this.currentWindows[i].Id+
-                                      // '">查看详情</a>' ;
-        // console.log(this.currentWindow.position)
-        // console.log(this.currentWindow.content)
-        setTimeout(() => {
-          this.visible = true
-        }, 300)
+        console.log(this.center)
+
+        if(this.center[0] !== 0 && this.center[1] !== 0){
+            // this.center = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
+            // this.position = [this.mapOrder[index].longitude+1,this.mapOrder[index].latitude+1]
+            this.currentWindow.content = '<strong>地址：</strong>' + this.mapOrder[index].name + '<br>' 
+                                           +
+                                          '<strong>中文地址：</strong>' + this.mapOrder[index].cname + '<br>'
+                                          +
+                                          '<strong>項目編號：</strong>' + this.mapOrder[index].project + '<br>'; 
+                                          // +
+                                          // '<a href="http://www.maintance.pro/admin/#/o_management?Id='+
+                                          // this.currentWindows[i].Id+
+                                          // '">查看详情</a>' ;
+            // console.log(this.currentWindow.position)
+            // console.log(this.currentWindow.content)
+            setTimeout(() => {
+              this.visible = true
+            }, 300)
+          }else{
+            //this.center = [114.14, 22.29];
+            alert("沒有經緯度資料");
+          }
       },
       
     },
