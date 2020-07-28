@@ -265,8 +265,9 @@
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				worktypeOption:[ //工作種類 worktype
+					{name:"代工",check:false},
 					{name:"打路面",check:false},
-					{name:"挖坑",check:false},
+					{name:"挖窿",check:false},
 					{name:"打拆",check:false},
 					{name:"駁水",check:false},
 					{name:"裝水喉",check:false},
