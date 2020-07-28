@@ -28,8 +28,9 @@
     <div id="container">
       <el-amap vid="amapDemo" class="amap" :center='center' :zoom="zoom">
         <el-amap-marker 
+          v-for="(item,i) in markerList" :key="i"
           vid="marker" :events='event'
-          :position="position" >
+          :position="item.position" >
         </el-amap-marker>
         <el-amap-info-window
           :position="currentWindow.position"
@@ -104,13 +105,15 @@
         srcimg:'../../assets/images/grade.png',
         visible: true,
         event: {
-          click: () => {
-            // console.log(this.visible)
+          click: (e,i) => {
+            console.log(this.visible,e,i)
+
             this.visible = false
             setTimeout(() => {this.visible = true},300)
             
           }
-        }
+        },
+        markerList:[]
       }
     },
     created() {
@@ -136,6 +139,12 @@
           console.log(res)
           if (res.data) {
             this.mapOrder = res.data
+            this.markerList = []
+            this.mapOrder.forEach(item => {
+              this.markerList.push({
+                position: [item.longitude, item.latitude]
+              })
+            })
             this.mapLook(0)
           }
           
