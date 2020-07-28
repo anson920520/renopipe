@@ -52,6 +52,7 @@
         // center:[114.0806579590,22.5468059955],
         center: [114.14, 22.29],
         position:[114.14, 22.29],
+        // position:[114.14, 22.29],
         mapArry:[],
         Wposition:[114.14, 22.29],
         mapArrylength:'',
@@ -66,11 +67,12 @@
             close() {}
           },
           visible: true,
-          retainWhenClose: true
+          retainWhenClose: true,
         },
         lng: 0,
         lat: 0,
-        plugin: [{
+        plugin: [
+          {
             pName: 'Geolocation',
             events: {
               init(o) {
@@ -88,7 +90,8 @@
                 });
               }
             }
-          }],
+          }
+        ],
         province_list: [],      
         city_list: [],
         area_list:[],
@@ -156,7 +159,7 @@
         this.currentWindow.position = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
         this.center = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
         // this.center = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
-        // this.position = [this.mapOrder[index].longitude,this.mapOrder[index].latitude]
+        // this.position = [this.mapOrder[index].longitude+1,this.mapOrder[index].latitude+1]
         this.currentWindow.content = '<strong>地址：</strong>' + this.mapOrder[index].name + '<br>' ;
                                       // +
                                       // '<strong>服务类型：</strong>' + this.currentWindows[i].content + '<br>'; 

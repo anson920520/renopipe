@@ -192,28 +192,28 @@
           </div>
            <div class="selectBox">
             <label>Imple TO.</label>
-            <select @change="search" v-model="dis1">
+            <select @change="search" v-model="impleVal">
               <option value="">全部</option>
               <option v-for="(item,i) in imple" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
             <div class="selectBox">
             <label>Site C To.</label>
-            <select @change="search" v-model="dis1">
+            <select @change="search" v-model="sitetocVal">
               <option value="">全部</option>
               <option v-for="(item,i) in sitetoc" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
             <div class="selectBox">
             <label>DMA</label>
-            <select @change="search" v-model="dis1">
+            <select @change="search" v-model="dmaVal">
               <option value="">全部</option>
               <option v-for="(item,i) in dma" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
              <div class="selectBox">
             <label>EMFM</label>
-            <select @change="search" v-model="dis1">
+            <select @change="search" v-model="emfmVal">
               <option value="">全部</option>
               <option v-for="(item,i) in emfm" :key="i" :value="item">{{item}}</option>
             </select>
@@ -455,8 +455,11 @@ export default {
       dis1:"",
       dis2:"",
       site:'',
-      cName:""
-
+      cName:"",
+      impleVal: "",
+      dmaVal:"",
+      emfmVal:"",
+      sitetocVal:"",
     }
   },
   created () {
@@ -550,6 +553,8 @@ export default {
       },200)
     },
     search () {
+      
+
       this.dataList = this.allData.filter((item,i) => {
         for(let key in item) {
           if ( typeof item[key] == "string") {
@@ -595,6 +600,48 @@ export default {
         for(let key in item) {
           if ( typeof item[key] == "string") {
             if ( item[key].indexOf(this.pro) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.emfmVal) != -1 ) {
+              // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.dmaVal) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.impleVal) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.sitetocVal) != -1 ) {
               return true
             }
           }
