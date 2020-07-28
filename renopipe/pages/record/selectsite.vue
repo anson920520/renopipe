@@ -111,8 +111,8 @@
 					// console.log(item.project,val)
 					if (item.project.indexOf(val) != -1) {
 						// that.proList.push(item.project)
-						that.disList1.push(item.siteCode1)
-						that.sitename.push(item.name)
+						that.disList1.push(item.siteCode2)
+						that.sitename.push(item.cname)
 					}
 				})
 				that.dis1 = ""
@@ -125,8 +125,8 @@
 				that.sitename = []
 				that.allData.forEach(item => {
 					console.log(item.siteCode1,val)
-					if (item.siteCode1.indexOf(val) != -1) {
-						that.sitename.push(item.name)
+					if (item.siteCode2.indexOf(val) != -1) {
+						that.sitename.push(item.cname)
 					}
 				})
 				that.dis2 = ""
@@ -244,7 +244,7 @@
 				that.sitename = []
 				that.siteList.forEach(item => {
 					that.proList.push(item.project)
-					that.disList1.push(item.siteCode1)
+					that.disList1.push(item.siteCode2)
 					that.sitename.push(item.cname)//+ " | "+ item.name
 				})
 				that.proList = [...new Set(that.proList)]
