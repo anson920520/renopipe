@@ -37,14 +37,14 @@
 					</select>
 				</view>
 				<view>
-					<view>搜索地盤大編號:</view>
+					<view>地盤地區搜索:</view>
 					<select v-model="dis1" >
 						<option value="">全部</option>
 						<option v-for="(item,i) in disList1" :value="item">{{item}}</option>
 					</select>
 				</view>
 				<view>
-					<view>搜索地盤中編號:</view>
+					<view>地盤地址搜索:</view>
 					<select v-model="dis2" >
 						<option value="">全部</option>
 						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
@@ -112,7 +112,7 @@
 					if (item.project.indexOf(val) != -1) {
 						// that.proList.push(item.project)
 						that.disList1.push(item.siteCode1)
-						that.sitename.push(item.siteCode2)
+						that.sitename.push(item.name)
 					}
 				})
 				that.dis1 = ""
@@ -126,7 +126,7 @@
 				that.allData.forEach(item => {
 					console.log(item.siteCode1,val)
 					if (item.siteCode1.indexOf(val) != -1) {
-						that.sitename.push(item.siteCode2)
+						that.sitename.push(item.name)
 					}
 				})
 				that.dis2 = ""
@@ -245,7 +245,7 @@
 				that.siteList.forEach(item => {
 					that.proList.push(item.project)
 					that.disList1.push(item.siteCode1)
-					that.sitename.push(item.siteCode2)
+					that.sitename.push(item.cname)//+ " | "+ item.name
 				})
 				that.proList = [...new Set(that.proList)]
 				that.disList1 = [...new Set(that.disList1)]
