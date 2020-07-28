@@ -104,8 +104,36 @@
 		watch:{
 			pro (val) {
 				this.search()
+				let that=this
+				that.disList1 = []
+				that.sitename = []
+				that.allData.forEach(item => {
+					// console.log(item.project,val)
+					if (item.project.indexOf(val) != -1) {
+						// that.proList.push(item.project)
+						that.disList1.push(item.siteCode1)
+						that.sitename.push(item.siteCode2)
+					}
+				})
+				that.dis1 = ""
+				// that.proList = [...new Set(that.proList)]
+				that.disList1 = [...new Set(that.disList1)]
+				that.sitename = [...new Set(that.sitename)]
 			},
 			dis1 (val) {
+				let that=this
+				that.sitename = []
+				that.allData.forEach(item => {
+					console.log(item.siteCode1,val)
+					if (item.siteCode1.indexOf(val) != -1) {
+						that.sitename.push(item.siteCode2)
+					}
+				})
+				that.dis2 = ""
+				// that.proList = [...new Set(that.proList)]
+				// that.disList1 = [...new Set(that.disList1)]
+				that.sitename = [...new Set(that.sitename)]
+				// that.dis2 = ""
 				this.search()
 			},
 			dis2 (val) {
@@ -147,6 +175,18 @@
 						}
 					}
 				})
+				// that.getFilterData()
+				// that.proList = []
+				// that.disList1 = []
+				// that.sitename = []
+				// that.siteList.forEach(item => {
+				// 	// that.proList.push(item.project)
+				// 	that.disList1.push(item.siteCode2)
+				// 	that.sitename.push(item.cname)
+				// })
+				// // that.proList = [...new Set(that.proList)]
+				// that.disList1 = [...new Set(that.disList1)]
+				// that.sitename = [...new Set(that.sitename)]
 			},
 			toCreate(item) {
 				this.val = item.ID
@@ -191,21 +231,25 @@
 							that.siteList = res.data
 							that.allData = res.data
 							that.val = that.siteList[0].ID
+							that.getFilterData()
 							
-							that.proList = []
-							that.disList1 = []
-							that.sitename = []
-							that.siteList.forEach(item => {
-								that.proList.push(item.project)
-								that.disList1.push(item.siteCode2)
-								that.sitename.push(item.cname)
-							})
-							that.proList = [...new Set(that.proList)]
-							that.disList1 = [...new Set(that.disList1)]
-							that.sitename = [...new Set(that.sitename)]
 						}
 					}
 				})
+			},
+			getFilterData () {
+				let that = this
+				that.proList = []
+				that.disList1 = []
+				that.sitename = []
+				that.siteList.forEach(item => {
+					that.proList.push(item.project)
+					that.disList1.push(item.siteCode1)
+					that.sitename.push(item.siteCode2)
+				})
+				that.proList = [...new Set(that.proList)]
+				that.disList1 = [...new Set(that.disList1)]
+				that.sitename = [...new Set(that.sitename)]
 			}
 		}
 	}
