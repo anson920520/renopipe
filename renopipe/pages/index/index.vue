@@ -34,14 +34,16 @@
 					<table class="" id="t01">
 					  <tr id="header">
 						<th>創建日期</th>
-						<th>上班人數</th> 
+						<th>時段</th>
+						<th>人數</th> 
 						<th>地盤</th>
 						<th>工作</th>
 					  </tr>
 					  
 					  <tr v-for="(item,i) in dataList" :key="i" v-bind:id="item.ID" @click="toDetail(item.ID)">
 						<td>{{item.createdAt}}</td>
-						<td style="width: 25%;">{{item.workers.length}}</td>
+						<td style="width: 15%;">{{item.time}}</td>
+						<td style="width: 20%;">{{item.workers.length}}</td>
 						<td>{{item.site}}</td>
 						<td>{{item.worktype}}</td>
 					  </tr>
