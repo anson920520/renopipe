@@ -173,14 +173,14 @@
             <label>DIS(1)</label>
             <select @change="search" v-model="dis1">
               <option value="">全部</option>
-              <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
+              <option v-for="(item,i) in disList3" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
           <div class="selectBox">
               <label>DIS(2)</label>
               <select @change="search" v-model="dis2">
                 <option value="">全部</option>
-                <option v-for="(item,i) in disList2" :key="i" :value="item">{{item}}</option>
+                <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
               </select>
          </div>
           <div class="selectBox">
@@ -188,6 +188,34 @@
             <select @change="search" v-model="site">
               <option value="">全部</option>
               <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+           <div class="selectBox">
+            <label>Imple TO.</label>
+            <select @change="search" v-model="dis1">
+              <option value="">全部</option>
+              <option v-for="(item,i) in imple" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+            <div class="selectBox">
+            <label>Site C To.</label>
+            <select @change="search" v-model="dis1">
+              <option value="">全部</option>
+              <option v-for="(item,i) in sitetoc" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+            <div class="selectBox">
+            <label>DMA</label>
+            <select @change="search" v-model="dis1">
+              <option value="">全部</option>
+              <option v-for="(item,i) in dma" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
+             <div class="selectBox">
+            <label>EMFM</label>
+            <select @change="search" v-model="dis1">
+              <option value="">全部</option>
+              <option v-for="(item,i) in emfm" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
             <div class="selectBox">
@@ -286,9 +314,9 @@ export default {
       thisSite:"",
       msg:"下載圖片",
       columns: [
-        { title: "創建日期", key:"createdAt" ,sortable: true},
+        { title: "日期", key:"createdAt" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
-        { title: "地盤項目編號", key:"siteId",sortable: true,
+        { title: "項目", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -299,29 +327,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤大編號", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.siteCode1
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "地盤中編號", key:"siteId" ,sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.siteCode2
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "地盤小編號", key:"siteId" ,sortable: true,
+        { title: "DIS(1)", key:"siteId" ,sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -332,12 +338,67 @@ export default {
               return h('div',str)
           }
         },
-        { title: "地盤名稱", key:"siteId",sortable: true,
+        { title: "DIS(2)", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
                   if (item.ID==p.row.siteId) {
-                    str = item.name
+                    str = item.siteCode1
+                  }
+              })
+              return h('div',str)
+          }
+        },
+         { title: "地盤", key:"siteId",sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.cname
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "Imple.", key:"siteId" ,sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.imple
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "Site C.", key:"siteId",sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.sitetoc
+                  }
+              })
+              return h('div',str)
+          }
+        },
+          { title: "DMA", key:"siteId",sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.dma
+                  }
+              })
+              return h('div',str)
+          }
+        },
+        { title: "EMFM", key:"siteId",sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.emfm
                   }
               })
               return h('div',str)
@@ -384,7 +445,12 @@ export default {
       proList:[],
       disList1:[],
       disList2:[],
+      disList3:[],
+      dma:[],
+      emfm:[],
       SiteList:[],
+      imple:[],
+      sitetoc:[],
       pro:"",
       dis1:"",
       dis2:"",
@@ -416,12 +482,22 @@ export default {
         this.proList.push(item.project)
         this.disList1.push(item.sitecode1)
         this.disList2.push(item.sitecode2)
+        this.disList3.push(item.sitecode3)
+        this.imple.push(item.imple)
+        this.sitetoc.push(item.sitetoc)
+        this.dma.push(item.dma)
+        this.emfm.push(item.emfm)
         this.SiteList.push(item.siteName)
       })
       console.log(123,this.proList)
       this.proList = [...new Set(this.proList)].filter(item => item)
       this.disList1 = [...new Set(this.disList1)].filter(item => item)
       this.disList2 = [...new Set(this.disList2)].filter(item => item)
+      this.disList3 = [...new Set(this.disList3)].filter(item => item)
+      this.imple = [...new Set(this.imple)].filter(item => item)
+      this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
+      this.dma = [...new Set(this.dma)].filter(item => item)
+      this.emfm = [...new Set(this.emfm)].filter(item => item)
       this.SiteList = [...new Set(this.SiteList)].filter(item => item)
 
 
@@ -455,7 +531,11 @@ export default {
             item.sitecode1 = site.siteCode1
             item.sitecode2 = site.siteCode2
             item.sitecode3 = site.siteCode3
-            item.siteName = site.name
+            item.imple = site.imple
+            item.sitetoc = site.sitetoc
+            item.dma = site.dma
+            item.emfm = site.emfm
+            item.siteName = site.cname
             item.project = site.project
           }
         })
@@ -479,6 +559,7 @@ export default {
           }
         }
       })
+
 
       this.dataList = this.dataList.filter((item,i) => {
         for(let key in item) {
