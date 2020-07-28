@@ -101,6 +101,17 @@
 		onLoad() {
 			this.getSite()
 		},
+		watch:{
+			pro (val) {
+				this.search()
+			},
+			dis1 (val) {
+				this.search()
+			},
+			dis2 (val) {
+				this.search()
+			},
+		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }
 		},
