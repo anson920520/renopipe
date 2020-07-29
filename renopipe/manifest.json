@@ -86,7 +86,10 @@
             }
         },
         "router" : {
-            "base" : "/renopipe/"
+            "base" : "./"
+        },
+        "uniStatistics" : {
+            "enable" : false
         }
     }
 }
