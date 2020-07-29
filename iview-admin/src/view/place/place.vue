@@ -25,7 +25,7 @@
       title="新增地盤">
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
        <FormItem label="地盤地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.name" placeholder="請輸入地盤地址" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
         <FormItem label="地盤中文地址" prop="">
@@ -82,7 +82,7 @@
       title="编辑地盤">
       <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
         <FormItem label="地盤地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.name" placeholder="請輸入地盤地址" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
         <FormItem label="地盤中文地址" prop="">
@@ -252,6 +252,7 @@ export default {
       },
       addForm: {
         address: "",
+        cname: "",
         uuid:"",
         proId: "",     //項目編號
         siteCode1: "",
@@ -262,6 +263,7 @@ export default {
         lo:""
       },
       editForm: {
+        cname: "",
         address: "",
         uuid:"",
         proId: "",     //項目編號
@@ -340,7 +342,6 @@ export default {
             url:"site",
             method:"POST",
             data: {
-              name:that.addForm.name,
               cname:that.addForm.cname,
               project:that.addForm.project,
               sitetoc:that.addForm.sitetoc,
@@ -350,7 +351,6 @@ export default {
               siteCode1: that.addForm.siteCode1,
               siteCode2: that.addForm.siteCode2,
               siteCode3: that.addForm.siteCode3,
-              region: that.addForm.region,
               "name": that.addForm.address,
               "latitude":Number(that.addForm.la),
               "longitude": Number(that.addForm.lo)
@@ -413,7 +413,7 @@ export default {
       console.log(item)
       let that = this
       this.showEdit = true
-      this.editForm.name = item.name
+      this.editForm.address = item.name
       this.editForm.cname = item.cname
       this.editForm.siteCode1 = item.siteCode1
       this.editForm.siteCode2 = item.siteCode2
