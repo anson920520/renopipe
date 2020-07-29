@@ -21,8 +21,9 @@
 					<!--顯示前一天的所有記錄，做一個漂亮一點的箭嘴!-->
 					<!--<span class="arrow" @click="yesterday"> &#8678; </span>!--
 					<!--顯示當前日期改讓客戶透過picker選擇想要觀看的日期!-->
+					<label  style="font-size: 20px;">選擇日期 : </label>
 					<picker class="selectedDate" mode="date" @change="attendenceDate">
-						<input class="dateBox" type="date" disabled="disabled" v-model="start.name" />
+						<input style="font-size: 20px;" class="dateBox" type="date" disabled="disabled" v-model="start.name" />
 					</picker>
 					<!--<span class="arrow" @click="tomorrow"> &#8680; </span>!-->
 					<!--顯示後一天的所有記錄，做一個漂亮一點的箭嘴!-->
@@ -33,18 +34,15 @@
 				<view class="box scoll">
 					<table class="" id="t01">
 					  <tr id="header">
-						<th>創建日期</th>
-						<th>時段</th>
-						<th>人數</th> 
-						<th>地盤</th>
+						<!--<th>時段</th>!-->
+						<th>地盤</th> 
 						<th>工作</th>
 					  </tr>
 					  
 					  <tr v-for="(item,i) in dataList" :key="i" v-bind:id="item.ID" @click="toDetail(item.ID)">
-						<td>{{item.createdAt}}</td>
-						<td style="width: 15%;">{{item.time}}</td>
-						<td style="width: 20%;">{{item.workers.length}}</td>
-						<td>{{item.site}}</td>
+						<!--<td >{{item.time}}</td>!-->
+						
+						<td style="width: 80%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
 						<td>{{item.worktype}}</td>
 					  </tr>
 					  
@@ -81,7 +79,8 @@
 					timesamp: 0
 				},
 				end:null,
-				loaderMSG:"讀取數據中..."
+				loaderMSG:"讀取數據中...",
+				abc:null
 			}
 		},
 		onLoad() {
@@ -140,10 +139,20 @@
 								that.siteList.forEach(attr => {
 									if (item.siteId == attr.ID) {
 										item.site = attr.name
+										item.sitecode1 = attr.siteCode1
+										item.sitecode2 = attr.siteCode2
+										item.sitecode3 = attr.siteCode3
+										item.imple = attr.imple
+										item.sitetoc = attr.sitetoc
+										item.dma = attr.dma
+										item.emfm = attr.emfm
+										item.siteName = attr.cname
+										item.project = attr.project
 									}
 								})
 							})
 							that.dataList = that.allData
+							//get site data by site ID
 						}else{
 							//alert("暫時未有記錄")
 							this.loaderMSG = "所選擇的日期沒有數據"
@@ -173,6 +182,8 @@
 						if (res.data) {
 							that.siteList = res.data
 							that.getData()
+							
+							console.log(siteList);
 						}
 					}
 				})
@@ -384,6 +395,8 @@
 	.dateBox{
 		border: solid 1px;
 	}
+	
+	
 	
 	.selectedDate{
 		text-align: center;

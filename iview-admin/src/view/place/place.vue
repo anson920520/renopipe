@@ -24,28 +24,44 @@
       :loading='loading'
       title="新增地盤">
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
-        <FormItem label="地盤地址" prop="address">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
+       <FormItem label="地盤地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.name" placeholder="請輸入地盤地址" />
         </FormItem>
 
-        <FormItem label="地盤大編號" prop="siteCode1">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="請輸入地盤大編號" />
+        <FormItem label="地盤中文地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.cname" placeholder="請輸入中文地址" />
         </FormItem>
 
-        <FormItem label="地盤中編號" prop="siteCode2">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入地盤中編號" />
+        <FormItem label="項目編號" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.project" placeholder="請輸入項目編號" />
         </FormItem>
 
-        <FormItem label="地盤小編號" prop="siteCode3">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="請輸入地盤小編號" />
+        <FormItem label="DIS(1)" prop="siteCode1">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="輸入DIS(1)" />
         </FormItem>
 
-        <FormItem label="項目編號" prop="proId">
-          <Input type="text" style="width: 250px;" v-model="addForm.proId" placeholder="請輸入項目編號" />
+        <FormItem label="DIS(1) 中文翻譯" prop="siteCode2">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入DIS(1)的中文翻譯" />
         </FormItem>
 
-        <FormItem label="地區" prop="region">
-          <Input type="text" style="width: 250px;" v-model="addForm.region" placeholder="請輸入地盤編號" />
+        <FormItem label="DIS(2)" prop="siteCode3">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="輸入DIS(2)" />
+        </FormItem>
+
+        <FormItem label="Site C. To" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.sitetoc" placeholder="請輸入地盤Site C. To" />
+        </FormItem>
+
+        <FormItem label="Imple To." prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.imple" placeholder="請輸入地盤Imple To." />
+        </FormItem>
+
+        <FormItem label="DMA" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.dma" placeholder="請輸入地盤DMA" />
+        </FormItem>
+
+        <FormItem label="EMFM" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.emfm" placeholder="請輸入地盤EMFM" />
         </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
@@ -65,28 +81,44 @@
       :loading='loading'
       title="编辑地盤">
       <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
-        <FormItem label="地盤地址" prop="address">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
+        <FormItem label="地盤地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.name" placeholder="請輸入地盤地址" />
         </FormItem>
 
-        <FormItem label="地盤大編號" prop="siteCode1">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="請輸入地盤大編號" />
+        <FormItem label="地盤中文地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.cname" placeholder="請輸入中文地址" />
         </FormItem>
 
-        <FormItem label="地盤中編號" prop="siteCode2">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入地盤中編號" />
+        <FormItem label="項目編號" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.project" placeholder="請輸入項目編號" />
         </FormItem>
 
-        <FormItem label="地盤小編號" prop="siteCode3">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="請輸入地盤小編號" />
+        <FormItem label="DIS(1)" prop="siteCode1">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="輸入DIS(1)" />
         </FormItem>
 
-        <FormItem label="項目編號" prop="proId">
-          <Input type="text" style="width: 250px;" v-model="editForm.proId" placeholder="請輸入項目編號" />
+        <FormItem label="DIS(1) 中文翻譯" prop="siteCode2">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入DIS(1)的中文翻譯" />
         </FormItem>
 
-        <FormItem label="地區" prop="region">
-          <Input type="text" style="width: 250px;" v-model="editForm.region" placeholder="請輸入地盤編號" />
+        <FormItem label="DIS(2)" prop="siteCode3">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="輸入DIS(2)" />
+        </FormItem>
+
+        <FormItem label="Site C. To" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.sitetoc" placeholder="請輸入地盤Site C. To" />
+        </FormItem>
+
+        <FormItem label="Imple To." prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.imple" placeholder="請輸入地盤Imple To." />
+        </FormItem>
+
+        <FormItem label="DMA" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.dma" placeholder="請輸入地盤DMA" />
+        </FormItem>
+
+        <FormItem label="EMFM" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.emfm" placeholder="請輸入地盤EMFM" />
         </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
@@ -308,18 +340,25 @@ export default {
             url:"site",
             method:"POST",
             data: {
-              "name": that.addForm.address,
-              "latitude":Number(that.addForm.la),
-              "longitude": Number(that.addForm.lo),
+              name:that.addForm.name,
+              cname:that.addForm.cname,
+              project:that.addForm.project,
+              sitetoc:that.addForm.sitetoc,
+              emfm:that.addForm.emfm,
+              imple:that.addForm.imple,
+              dma:that.addForm.dma,
               siteCode1: that.addForm.siteCode1,
               siteCode2: that.addForm.siteCode2,
               siteCode3: that.addForm.siteCode3,
-              project: that.addForm.proId,
               region: that.addForm.region,
+              "name": that.addForm.address,
+              "latitude":Number(that.addForm.la),
+              "longitude": Number(that.addForm.lo)
             }
           }).then(res => {
             console.log("add",res)
             if (res.data) {
+              alert('123')
               that.$Message.success("已新增地盤")
               that.showAdd = false
               that.hideLoading()
@@ -340,10 +379,16 @@ export default {
             url:"site/" + that.current.ID,
             method:"PUT",
             data: {
+              name:that.editForm.name,
+              cname:that.editForm.cname,
+              project:that.editForm.project,
+              sitetoc:that.editForm.sitetoc,
+              emfm:that.editForm.emfm,
+              imple:that.editForm.imple,
+              dma:that.editForm.dma,
               siteCode1: that.editForm.siteCode1,
               siteCode2: that.editForm.siteCode2,
               siteCode3: that.editForm.siteCode3,
-              project: that.editForm.proId,
               region: that.editForm.region,
               "name": that.editForm.address,
               "latitude":Number(that.editForm.la),
@@ -368,15 +413,19 @@ export default {
       console.log(item)
       let that = this
       this.showEdit = true
-      this.editForm.address = item.name
-      this.editForm.uuid = item.uuid
+      this.editForm.name = item.name
+      this.editForm.cname = item.cname
       this.editForm.siteCode1 = item.siteCode1
       this.editForm.siteCode2 = item.siteCode2
       this.editForm.siteCode3 = item.siteCode3
-      this.editForm.proId = item.project
+      this.editForm.sitetoc = item.sitetoc
+      this.editForm.emfm = item.emfm
+      this.editForm.imple = item.imple
+      this.editForm.dma = item.dma
       this.editForm.region = item.region
       this.editForm.la = item.latitude + ""
       this.editForm.lo = item.longitude  + ""
+      this.editForm.project = item.project
       this.current = item
       setTimeout(() => {
         that.editMap.remove(that.editMarker)

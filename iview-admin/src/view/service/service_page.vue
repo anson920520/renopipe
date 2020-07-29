@@ -9,6 +9,8 @@
             <img v-if="item.store_provider==2" src="../../assets/images/cxj.png" alt="" style="width:50px;float:right">
             <p class="dizhi">項目編號：{{item.project}}</p>
             <p class="phone">地盤編號：{{item.siteCode1}} {{item.siteCode3}}</p>
+            <p class="phone">Site To. C. : {{item.sitetoc}}</p>
+            <p class="phone">Imple To. : {{item.imple}}</p>
             <p class="phone">DMA : {{item.dma}}</p>
             <p class="phone">EMFM Ref.: {{item.emfm}}</p>
             <!-- <p class="grade">

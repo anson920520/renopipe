@@ -30,11 +30,14 @@
 				</span>
 				<p style="display: none;"></p>
 				<p>工程項目編號: {{site.project}}</p>
-				<p>地盤(中文名): {{site.name}}</p>
-				<p>地盤(英文名): {{site.siteCode3}}</p>
+				<p>地盤(中文名): {{site.cname}}</p>
+				<p>地盤(英文名): {{site.name}}</p>
 				<p>Dis1 : {{site.siteCode1}}</p>
-				<p>Dis2: {{site.siteCode2}}</p>
-				<p>Site C. TO. : {{site.region}}</p>
+				<p>Dis2: {{site.siteCode3}}</p>
+				<p>DMA : {{site.dma}}</p>
+				<p>EMFM .Ref: {{site.emfm}}</p>
+				<p>Site C. TO. : {{site.sitetoc}}</p>	
+				<p>Imple TO. : {{site.imple}}</p>	
 			
 				<div class="hr">
 					<div class="blue-divider"></div>
@@ -113,7 +116,7 @@
 					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
-							<b>{{item.cName}} {{item.group}}</b>
+							<b>{{item.cName}} {{item.position}}</b>
 						</div>
 						<view 
 							:class="['checkBox',{ check:item.check }]"
