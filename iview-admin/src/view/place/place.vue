@@ -358,7 +358,7 @@ export default {
           }).then(res => {
             console.log("add",res)
             if (res.data) {
-              alert('123')
+              // alert('123')
               that.$Message.success("已新增地盤")
               that.showAdd = false
               that.hideLoading()

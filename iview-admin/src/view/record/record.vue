@@ -152,10 +152,17 @@
 <template>
   <div><!--關鍵字搜索!-->
     <div class="sb al">
+      
+
       <div class="ju al">
+        <div style="padding-right: 10px;">
+          <DatePicker type="date" @on-change="changeDate" placeholder="搜索日期" style="width: 200px"></DatePicker>
+        </div>
+
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
         <Button @click="search"  type="info">搜索</Button>
       </div>
+
       <Button type="info" class="editBtn" @click="exportData">導出CSV</Button>
     </div>
     <hr/>
@@ -473,15 +480,35 @@ export default {
     //   duration:10
     // })
     
+    
   },
   
   methods:{
+    changeDate (e) {
+      // console.log(e)
+
+      let start = e.replace("-","/").replace("-","/")
+      this.dataList = this.allData.filter(item => {
+        // console.log(item.createdAt, start)
+        if (item.createdAt.indexOf(start) != -1) {
+          return true
+        }
+      })
+      // let D = new Date(new Date(e).getTime() + 86400000)
+      // let y = D.getFullYear()
+      // let M = D.getMonth() < 9 ? "0" + (D.getMonth()+1) : (D.getMonth()+1)
+      // let d = D.getDate() < 10 ? "0" + D.getDate() : D.getDate()
+      // let end = y + M + d
+      // // console.log(end)
+      // let params = "?start=" + start + "&end=" + end
+      // this.showTable(params)
+    },
     createSearchData () {
       this.proList = []
       this.disList1 = []
 
       this.allData.forEach(item => {
-        console.log(item,item.sitecode1)
+        // console.log(item,item.sitecode1)
         this.proList.push(item.project)
         this.disList1.push(item.sitecode1)
         this.disList2.push(item.sitecode2)
@@ -492,7 +519,7 @@ export default {
         this.emfm.push(item.emfm)
         this.SiteList.push(item.siteName)
       })
-      console.log(123,this.proList)
+      // console.log(123,this.proList)
       this.proList = [...new Set(this.proList)].filter(item => item)
       this.disList1 = [...new Set(this.disList1)].filter(item => item)
       this.disList2 = [...new Set(this.disList2)].filter(item => item)
@@ -505,9 +532,9 @@ export default {
 
 
     },
-    showTable () {
+    showTable (params="") {
       this.$axios({
-        url:"attendence",
+        url:"attendence" + params,
         method:"GET"
       }).then(res => {
         console.log(res)
@@ -553,8 +580,6 @@ export default {
       },200)
     },
     search () {
-      
-
       this.dataList = this.allData.filter((item,i) => {
         for(let key in item) {
           if ( typeof item[key] == "string") {
@@ -641,12 +666,25 @@ export default {
       this.dataList = this.dataList.filter((item,i) => {
         for(let key in item) {
           if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.sitetocVal) != -1 ) {
+            if ( item[key].indexOf(this.sitetocVal) != -1) {
               return true
             }
           }
         }
       })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            // console.log(item[key], this.searchVal)
+            if ( item[key].indexOf(this.searchVal) != -1) {
+              return true
+            }
+          }
+        }
+      })
+
+
     },
     //獲取所有工頭
     getSuper (item,i) {
