@@ -258,7 +258,7 @@
     <Modal v-model="showBox" :width="1300">
       <div style="border-top:solid 5px #5F98EC" class="recordBox ju">
         <!-- 左邊圖片 -->
-        <div>
+        <div v-if="current.images">
           <div class="bigImgWrap  ju al">
             <img  class="bigImg" :src="url + current.images[currentImg].filePath" >
           </div>
@@ -274,6 +274,7 @@
             <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
           </div>
         </div>
+        <div v-else>暫無圖片</div>
 
         <!-- 中間詳細信息 -->
         <div class="centerItem sb">
@@ -759,7 +760,10 @@ export default {
     },
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');
-      this.absWidth = this.current.images.length*80
+      if (this.current.images) {
+        this.absWidth = this.current.images.length*80
+      }
+      
     },
     preNext (boo) {
       if (boo) {
