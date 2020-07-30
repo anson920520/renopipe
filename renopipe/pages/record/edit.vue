@@ -284,8 +284,18 @@
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				worktypeOption:[ //工作種類 worktype
+					// {name:"打路面",check:false},
+					// {name:"挖坑",check:false},
+					// {name:"打拆",check:false},
+					// {name:"駁水",check:false},
+					// {name:"裝水喉",check:false},
+					// {name:"還原",check:false},
+					// {name:"探坑",check:false},
+					// {name:"試制",check:false},
+					// {name:"雜務",check:false}
+					{name:"代工",check:false},
 					{name:"打路面",check:false},
-					{name:"挖坑",check:false},
+					{name:"挖窿",check:false},
 					{name:"打拆",check:false},
 					{name:"駁水",check:false},
 					{name:"裝水喉",check:false},
@@ -569,38 +579,51 @@
 							removeImageId: that.delImgs
 				}
 				console.log(data)
-				// console.log(uni.getStorageSync('token'))
-				// return false
-				//Submit request
-				uni.request({
-					url:that.baseURL + "attendence/" + this.$route.query.id,
-					method:"PUT",
-					header:{
-						Authorization:uni.getStorageSync('token')
-					},
-					data: data,
-					success (res) {
-						console.log("编辑",res)
-						// that.getData()
-						if (!res.data.error) {
-							uni.navigateTo({
-								url: "/pages/record/completeEdit"
-							})
-						} else {
+				if (data.workerIds.length == 0) {
+					uni.showToast({ title: "請選擇工人", icon: "none" })
+				} else if (!data.worktype) {
+					uni.showToast({ title: "請選擇工作種類", icon: "none" })
+				} else if (data.machine.length == 0) {
+					uni.showToast({ title: "請選擇機械", icon: "none" })
+				} else if (!data.description) {
+					uni.showToast({ title: "請填寫工作描述", icon: "none" })
+				} else {
+					
+					// console.log(uni.getStorageSync('token'))
+					// return false
+					//Submit request
+					uni.request({
+						url:that.baseURL + "attendence/" + this.$route.query.id,
+						method:"PUT",
+						header:{
+							Authorization:uni.getStorageSync('token')
+						},
+						data: data,
+						success (res) {
+							console.log("编辑",res)
+							// that.getData()
+							if (!res.data.error) {
+								uni.navigateTo({
+									url: "/pages/record/completeEdit"
+								})
+							} else {
+								uni.showToast({
+									title: "編輯失敗",
+									icon:"none"
+								})
+							}
+						}, 
+						fail () {
 							uni.showToast({
 								title: "編輯失敗",
 								icon:"none"
 							})
-						}
-					}, 
-					fail () {
-						uni.showToast({
-							title: "編輯失敗",
-							icon:"none"
-						})
-					},
-					complete () { uni.hideLoading() }
-				})
+						},
+						complete () { uni.hideLoading() }
+					})
+					
+				}
+				
 				
 			},
 			chooseImg () {

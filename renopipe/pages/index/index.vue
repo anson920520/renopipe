@@ -183,7 +183,6 @@
 							that.siteList = res.data
 							that.getData()
 							
-							console.log(siteList);
 						}
 					}
 				})
