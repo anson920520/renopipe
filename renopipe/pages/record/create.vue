@@ -279,11 +279,11 @@
 					{name:"雜務",check:false}
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機 1",check:false},
-					{name:"發電機 2",check:false},
-					{name:"發電機 3",check:false},
-					{name:"大電炮 1",check:false},
-					{name:"大電炮 2",check:false},
+					{name:"發電機1部",check:false},
+					{name:"發電機2部",check:false},
+					{name:"發電機3部",check:false},
+					{name:"大電炮1部",check:false},
+					{name:"大電炮2部",check:false},
 					{name:"細電炮",check:false},
 					{name:"保路華",check:false},
 					{name:"跳鎚",check:false},
