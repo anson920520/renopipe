@@ -279,8 +279,13 @@
         <!-- 中間詳細信息 -->
         <div class="centerItem sb">
           <ul class="recordDetailUl">
+            <li><span><b>地盤名稱:</b> </span><span>{{thisSite.cname}}{{thisSite.name}}</span></li>
             <li><span><b>地盤項目編號:</b> </span><span>{{thisSite.project}}</span></li>
-            <li><span><b>地盤編號:</b> </span><span>{{thisSite.siteCode1}} ,  {{thisSite.siteCode2}} , {{thisSite.siteCode3}}</span></li>
+            <li><span><b>地盤編號:</b> </span><span>{{thisSite.siteCode1}}({{thisSite.siteCode2}}) , {{thisSite.siteCode3}}</span></li>
+            <li><span><b>EMFM:</b> </span><span>{{thisSite.emfm}}</span></li>
+            <li><span><b>DMA:</b> </span><span>{{thisSite.dma}}</span></li>
+            <li><span><b>Imple To.:</b> </span><span>{{thisSite.imple}}</span></li>
+            <li><span><b>Site C To:</b> </span><span>{{thisSite.sitetoc}}</span></li>
             <li><span><b>創建者:</b> </span><span>{{current.supervisors[0].cName}} {{current.supervisors[0].fullname}} </span></li>
             <li><span><b>創建日期:</b> </span><span>{{current.createdAt}}</span></li>
             <li><span><b>使用機械:</b> </span><span>{{current.machine}}</span></li>
