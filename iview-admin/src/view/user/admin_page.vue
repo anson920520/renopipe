@@ -177,6 +177,8 @@ export default {
               .replace("T", " ")
               .split("-")
               .join("/");
+            let T = (new Date(new Date(item.createdAt).getTime() + 28800000))
+            // item.createdAt = T.toLocaleDateString() + " " + (T.toTimeString().slice(0,5))
           });
           this.allData = res.data
           this.dataList = this.allData.slice(0)

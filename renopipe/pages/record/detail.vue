@@ -18,7 +18,7 @@
 				<p>工頭名稱: {{attendenceData.supervisors[0].cName}}</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
 				<picker mode="date" @change="startTime">
-					<view>今日日期: {{attendenceData.createdAt}}</view>
+					<view>今日日期: {{attendenceData.createdAt.split("T")[0]}}</view>
 				</picker>
 				<p>時段: {{attendenceData.time}}</p>
 				<!--<span class="selectpadding">

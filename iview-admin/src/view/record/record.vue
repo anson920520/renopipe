@@ -59,6 +59,7 @@
   height: 330px;
   border: solid #CCC 1px;
   overflow:hidden;
+  transition: 0.3s;
   >img {
     width:auto;
     height: 100%;
@@ -70,29 +71,47 @@
 .imgRela {
   position: relative;
   width: 320px;
-  height: 80px;
+  height: 130px;
   overflow: hidden;
+  display: flex;
   // border: solid green 1px;
+}
+// .fcolumn {
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+// }
+.showBig {
+  position: fixed !important;
+  width: 70% !important;
+  height: auto !important;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border: solid #CCC 1px;
+  z-index:10;
 }
 .imgAbso {
   transition:0.3s;
   position: absolute;
   width: 400px;
-  height: 80px;
+  height: 130px;
   left: 0;
   top: 0;
+  
   // border: solid blue 1px;
   >.smallImgWrap {
-    width:80px;
-    height: 80px;
+    float:left;
+    width:64px;
+    height: 64px;
     overflow: hidden;
     border: solid #CCC 1px;
-    // display: inline-block;
+    display: block;
     box-sizing: border-box;
     >img {
       width:auto;
       height: 100%;
-      
+      display: block
     }
   }
 }
@@ -147,6 +166,9 @@
 .selectBox{
   padding:20px;
 }
+
+
+
 </style>
 
 <template>
@@ -260,8 +282,21 @@
         <!-- 左邊圖片 -->
         <div v-if="current.images">
           <div class="bigImgWrap  ju al">
-            <img  class="bigImg" :src="url + current.images[currentImg].filePath" >
+            <img @click="showBig=!showBig" :class="['bigImg',{ showBig: showBig }]" :src="url + current.images[currentImg].filePath" >
           </div>
+          <div class="recordSmallImgWrap al ju">
+            <Icon @click="preNext(true)" v-show="current.images.length>10" class="lefttopIcon" type="ios-arrow-back" size="30" />
+            <div :class="['imgRela']">
+              <div :class="['imgAbso']" :style="{width:absWidth+'px',left:left+'px'}">
+                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i">
+                  <img :src="url + item.filePath" >
+                </div>
+
+              </div>
+            </div>
+            <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
+          </div>
+<!-- 
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
             <div class="imgRela">
@@ -272,7 +307,9 @@
               </div>
             </div>
             <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
-          </div>
+          </div> -->
+
+
         </div>
         <div v-else>暫無圖片</div>
 
@@ -323,6 +360,7 @@ export default {
     let that = this
     return {
       showBox: false,
+      showBig: false,
       url:"",
       thisSite:"",
       msg:"下載圖片",
@@ -473,6 +511,7 @@ export default {
       dmaVal:"",
       emfmVal:"",
       sitetocVal:"",
+      filterTime:""
     }
   },
   created () {
@@ -492,14 +531,15 @@ export default {
   methods:{
     changeDate (e) {
       // console.log(e)
-
       let start = e.replace("-","/").replace("-","/")
-      this.dataList = this.allData.filter(item => {
-        // console.log(item.createdAt, start)
-        if (item.createdAt.indexOf(start) != -1) {
-          return true
-        }
-      })
+      // this.dataList = this.allData.filter(item => {
+      //   // console.log(item.createdAt, start)
+      //   if (item.createdAt.indexOf(start) != -1) {
+      //     return true
+      //   }
+      // })
+      this.filterTime = start
+      this.search()
       // let D = new Date(new Date(e).getTime() + 86400000)
       // let y = D.getFullYear()
       // let M = D.getMonth() < 9 ? "0" + (D.getMonth()+1) : (D.getMonth()+1)
@@ -546,9 +586,12 @@ export default {
         console.log(res)
         if (res.data) {
           res.data.forEach(item => {
+
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+
+              // console.log(new Date())
               this.loopData(item)
           })
           this.allData = res.data
@@ -689,7 +732,12 @@ export default {
           }
         }
       })
-
+      this.dataList = this.dataList.filter(item => {
+        console.log(item.createdAt, this.filterTime)
+        if (item.createdAt.indexOf(this.filterTime) != -1) {
+          return true
+        }
+      })
 
     },
     //獲取所有工頭
@@ -766,7 +814,7 @@ export default {
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');
       if (this.current.images) {
-        this.absWidth = this.current.images.length*80
+        this.absWidth = this.current.images.length*64 / 2
       }
       
     },
