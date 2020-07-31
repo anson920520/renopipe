@@ -171,6 +171,10 @@ export default {
           key: "project"
         },
         {
+          title: "中文地址",
+          key: "cname"
+        },
+        {
           title: "地址",
           key: "name"
         },
