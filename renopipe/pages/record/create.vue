@@ -507,35 +507,45 @@
 				}
 				console.log(data)
 				
-				//Submit request
-				uni.request({
-					url:that.baseURL + "attendence",
-					method:"POST",
-					header:{
-						Authorization:uni.getStorageSync('token')
-					},
-					data: data,
-					success (res) {
-						console.log("新增",res)
-						if (!res.data.error) {
-							uni.navigateTo({
-								url: "/pages/record/complete"
-							})
-						} else {
+				if (data.workerIds.length == 0) {
+					uni.showToast({ title: "請選擇工人", icon: "none" })
+				} else if (!data.worktype) {
+					uni.showToast({ title: "請選擇工作種類", icon: "none" })
+				} else if (data.machine.length == 0) {
+					uni.showToast({ title: "請選擇機械", icon: "none" })
+				} else if (!data.description) {
+					uni.showToast({ title: "請填寫工作描述", icon: "none" })
+				} else {
+					uni.request({
+						url:that.baseURL + "attendence",
+						method:"POST",
+						header:{
+							Authorization:uni.getStorageSync('token')
+						},
+						data: data,
+						success (res) {
+							console.log("新增",res)
+							if (!res.data.error) {
+								uni.navigateTo({
+									url: "/pages/record/complete"
+								})
+							} else {
+								uni.showToast({
+									title: "創建失敗",
+									icon:"none"
+								})
+							}
+						}, 
+						fail () {
 							uni.showToast({
-								title: "創建失敗",
+								title: "網絡錯誤",
 								icon:"none"
 							})
-						}
-					}, 
-					fail () {
-						uni.showToast({
-							title: "網絡錯誤",
-							icon:"none"
-						})
-					},
-					complete () { uni.hideLoading() }
-				})
+						},
+						complete () { uni.hideLoading() }
+					})
+				}
+				
 				
 			},
 			chooseImg () {
