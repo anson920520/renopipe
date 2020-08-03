@@ -175,6 +175,9 @@
 						<div class="worktype-info-area">
 							<p class="worktype">{{item.name}}</p>
 						</div>
+						<div style="padding: 1.3rem 0.5rem;width: 30%;">
+							<input v-model="item.number" style="text-align: center;" type="number" placeholder="1" step="1" min="0" max="5"/>
+						</div>
 						<div class="chk-box-area">
 							<view
 								:class="['checkBox',{ check:item.check }]"
@@ -279,19 +282,16 @@
 					{name:"雜務",check:false}
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機1部",check:false},
-					{name:"發電機2部",check:false},
-					{name:"發電機3部",check:false},
-					{name:"大電炮1部",check:false},
-					{name:"大電炮2部",check:false},
-					{name:"細電炮",check:false},
-					{name:"保路華",check:false},
-					{name:"跳鎚",check:false},
-					{name:"震船",check:false},
-					{name:"9噸吊雞",check:false},
-					{name:"30噸吊雞",check:false},
-					{name:"5.5噸車",check:false},
-					{name:"水泵",check:false},
+					{name:"發電機",number: 1, check:false},
+					{name:"大電炮",number: 1,check:false},
+					{name:"細電炮",number: 1,check:false},
+					{name:"保路華",number: 1,check:false},
+					{name:"跳鎚",number: 1,check:false},
+					{name:"震船",number: 1,check:false},
+					{name:"9噸吊雞",number: 1,check:false},
+					{name:"30噸吊雞",number: 1,check:false},
+					{name:"5.5噸車",number: 1,check:false},
+					{name:"水泵",number: 1,check:false},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
@@ -424,6 +424,9 @@
 				let obj = this.machineOption[i]
 				obj.check = !this.machineOption[i].check
 				this.machineOption.splice(i,1,obj)
+				
+				console.log(this.machineOption.splice(i,1,obj));
+				console.log(i)
 			},
 			toHome() {
 				uni.navigateTo({
@@ -432,7 +435,7 @@
 			},
 			submit() { //this shall be change to API for Create new record
 				uni.showLoading({
-					title:"加载中..."
+					title:"處理中..."
 				})
 				let that = this
 				let arr = []        // 已勾選工人
@@ -460,7 +463,7 @@
 				let arr3 = []        // 已勾選工作
 				that.machineOption.forEach(item=> {
 					if (item.check) {
-						arr3.push(item.name)
+						arr3.push(item.name +item.number + "部")
 					}
 				})
 
@@ -749,6 +752,10 @@
 	
 	.worktype-info-area{
 		padding:1.3rem 0.5rem;
+	}
+	
+	.worktype-info-area-num{
+		width:50%;
 	}
 	
 	.worktype{
