@@ -175,6 +175,11 @@
 						<div class="worktype-info-area">
 							<p class="worktype">{{item.name}}</p>
 						</div>
+						<div class="ju al" style="padding: 1.3rem 0.5rem;width: 30%;" >
+							<view class="addSubBtn ju al op" @click="addSub(true,i)">-</view>
+							<input v-model="item.number" disabled style="margin-bottom: 0;width: 80upx;text-align: center;" type="number" placeholder="1" step="1" min="0" max="5"/>
+							<view class="addSubBtn ju al op" @click="addSub(false,i)">+</view>
+						</div>
 						<div class="chk-box-area">
 							<view
 								:class="['checkBox',{ check:item.check }]"
@@ -305,19 +310,29 @@
 					{name:"雜務",check:false}
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機1部",check:false},
-					{name:"發電機2部",check:false},
-					{name:"發電機3部",check:false},
-					{name:"大電炮1部",check:false},
-					{name:"大電炮2部",check:false},
-					{name:"細電炮",check:false},
-					{name:"保路華",check:false},
-					{name:"跳鎚",check:false},
-					{name:"震船",check:false},
-					{name:"9噸吊雞",check:false},
-					{name:"30噸吊雞",check:false},
-					{name:"5.5噸車",check:false},
-					{name:"水泵",check:false}
+					// {name:"發電機1部",check:false},
+					// {name:"發電機2部",check:false},
+					// {name:"發電機3部",check:false},
+					// {name:"大電炮1部",check:false},
+					// {name:"大電炮2部",check:false},
+					// {name:"細電炮",check:false},
+					// {name:"保路華",check:false},
+					// {name:"跳鎚",check:false},
+					// {name:"震船",check:false},
+					// {name:"9噸吊雞",check:false},
+					// {name:"30噸吊雞",check:false},
+					// {name:"5.5噸車",check:false},
+					// {name:"水泵",check:false},
+					{name:"發電機",number: 1, check:false},
+					{name:"大電炮",number: 1,check:false},
+					{name:"細電炮",number: 1,check:false},
+					{name:"保路華",number: 1,check:false},
+					{name:"跳鎚",number: 1,check:false},
+					{name:"震船",number: 1,check:false},
+					{name:"9噸吊雞",number: 1,check:false},
+					{name:"30噸吊雞",number: 1,check:false},
+					{name:"5.5噸車",number: 1,check:false},
+					{name:"水泵",number: 1,check:false},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
@@ -349,6 +364,21 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			addSub (boo, i) {
+				if (boo) {
+					// 减
+					this.machineOption[i].number--
+				} else{
+					// 加
+					this.machineOption[i].number++
+				}
+				if (this.machineOption[i].number < 1) {
+					this.machineOption[i].number = 1
+				}
+				if (this.machineOption[i].number > 5) {
+					this.machineOption[i].number = 5
+				}
+			},
 			delImg2 (id,i) {
 				this.delImgs.push(id)
 				this.attendenceData.images.splice(i,1)
@@ -383,9 +413,16 @@
 					})
 					
 					this.attendenceData.machine.split(",").forEach(item => {
-						this.machineOption.forEach(type => {
-							if (type.name == item) {
+						this.machineOption.forEach((type,i) => {
+							if (item.indexOf(type.name) != -1) {
 								type.check = true
+								let number = item.slice(-2,-1) * 1
+								if (number) {
+									this.machineOption[i].number = number
+								} else {
+									this.machineOption[i].number = 1
+								}
+								
 							}
 						})
 					})
@@ -552,7 +589,7 @@
 				let arr3 = []        // 已勾選工作
 				that.machineOption.forEach(item=> {
 					if (item.check) {
-						arr3.push(item.name)
+						arr3.push(item.name +item.number + "部")
 					}
 				})
 

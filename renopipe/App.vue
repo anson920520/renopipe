@@ -56,4 +56,9 @@
 		height: 40upx;
 		z-index: 100;
 	}
+	.addSubBtn {
+		width: 42upx;
+		height: 45upx;
+		border: solid #CCC 1px;
+	}
 </style>

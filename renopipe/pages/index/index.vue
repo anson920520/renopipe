@@ -84,7 +84,7 @@
 			}
 		},
 		onLoad() {
-			this.getSite()
+			// this.getSite()
 			let D = new Date()
 			let Y = D.getFullYear()
 			let M = D.getMonth();
@@ -96,6 +96,9 @@
 			
 			this.end = parseInt(this.start.id) - 1
 			
+		},
+		onShow () {
+			this.getSite()
 		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }

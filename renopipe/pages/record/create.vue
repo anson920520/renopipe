@@ -175,8 +175,10 @@
 						<div class="worktype-info-area">
 							<p class="worktype">{{item.name}}</p>
 						</div>
-						<div style="padding: 1.3rem 0.5rem;width: 30%;">
-							<input v-model="item.number" style="text-align: center;" type="number" placeholder="1" step="1" min="0" max="5"/>
+						<div class="ju al" style="padding: 1.3rem 0.5rem;width: 30%;" >
+							<view class="addSubBtn ju al op" @click="addSub(true,i)">-</view>
+							<input v-model="item.number" disabled style="margin-bottom: 0;width: 80upx;text-align: center;" type="number" placeholder="1" step="1" min="0" max="5"/>
+							<view class="addSubBtn ju al op" @click="addSub(false,i)">+</view>
 						</div>
 						<div class="chk-box-area">
 							<view
@@ -323,6 +325,21 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			addSub (boo, i) {
+				if (boo) {
+					// 减
+					this.machineOption[i].number--
+				} else{
+					// 加
+					this.machineOption[i].number++
+				}
+				if (this.machineOption[i].number < 1) {
+					this.machineOption[i].number = 1
+				}
+				if (this.machineOption[i].number > 5) {
+					this.machineOption[i].number = 5
+				}
+			},
 			delImg(i) {
 				this.imgs.splice(i,1)
 			},
