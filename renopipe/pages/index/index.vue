@@ -88,10 +88,19 @@
 			let D = new Date()
 			let Y = D.getFullYear()
 			let M = D.getMonth();
+			/*handle date*/
 			let d = D.getDate()
+			if(d < 10){
+				d = "0" + d.toString()
+				console.log(d)
+			}else{
+				d = d
+			}
+			
 			let str = Y + "-0" + (M+1) + "-" + d
 			this.start.name = str
-			this.start.id = Y.toString()+"0"+(M+1).toString()+d.toString()
+			
+			this.start.id = Y.toString()+"0"+(M+1).toString()+d
 			this.start.timesamp = new Date(str).getTime()/1000
 			
 			this.end = parseInt(this.start.id) - 1
