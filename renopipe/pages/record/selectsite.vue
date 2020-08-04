@@ -149,17 +149,17 @@
 			        await promise
 			      } catch (error) {
 			        if (error.name === 'NotAllowedError') {
-			          this.error = "ERROR: you need to grant camera access permisson"
+			          this.error = "錯誤: 需要權限使用手機上的相機"
 			        } else if (error.name === 'NotFoundError') {
-			          this.error = "ERROR: no camera on this device"
+			          this.error = "錯誤: 本設備沒有發現具備相機功能"
 			        } else if (error.name === 'NotSupportedError') {
-			          this.error = "ERROR: secure context required (HTTPS, localhost)"
+			          this.error = "錯誤: 從不合法渠道訪問請重新登陸"
 			        } else if (error.name === 'NotReadableError') {
-			          this.error = "ERROR: is the camera already in use?"
+			          this.error = "錯誤: 偵測到相機正在被其他程式佔用"
 			        } else if (error.name === 'OverconstrainedError') {
-			          this.error = "ERROR: installed cameras are not suitable"
+			          this.error = "錯誤: 相機現在無法啟用"
 			        } else if (error.name === 'StreamApiNotSupportedError') {
-			          this.error = "ERROR: Stream API is not supported in this browser"
+			          this.error = "錯誤: 本瀏覽器不支援QR code掃描，如果是Iphone請使用safari，如果是安卓手機請使用Chorme或Firefox"
 			        }
 			      }
 			    },
