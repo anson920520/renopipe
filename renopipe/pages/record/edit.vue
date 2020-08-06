@@ -665,6 +665,7 @@
 							description:that.attendenceData.description,
 							worktype:arr2.join(),
 							base64Images: base64,
+							remark:positions.slice(0,-1),
 							removeImageId: that.delImgs
 				}
 				console.log(data)
