@@ -98,21 +98,23 @@
 			<!--worker-list!-->
 			<view class="body-padding">
 				<div class="">
-					<p class="title">當值工人: {{attendenceData.workers.length}} 人</p>
+					<p  v-if="attendenceData.workers.length > 0" class="title">當值工人: {{attendenceData.workers.length}} 人</p>
 					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
 				</div>
 			</view>
 			
-			<view class="body-padding mt20">
-				<!--<view class="sb al">
-					<picker  mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
-						<view class="selectPosition sb" v-if="allPosition.length">
-							<view class="whiteColor">{{allPosition[currentPositionIndex].position}}</view>
-							<view class="positionIcon"></view>
-						</view>
-					</picker>
-				</view>!-->
+			<view class="body-padding">
+				<div class="">
+					<p v-if="attendenceData.remark" class="title">當值工人: {{attendenceData.remark}} </p>
+					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
+				</div>
 				
+			</view>
+				
+			
+			
+			<view v-if="attendenceData.workers.length > 0" class="body-padding mt20">
+
 				<view class="border box scoll">
 					<!--only need one worker-main when for loop!-->
 					<div class="worker-main al" v-for="(item,i) in attendenceData.workers" :key="i">
@@ -127,12 +129,13 @@
 						</view>!-->
 					</div>
 					<hr/>
-					
-					
+				
+				
 				</view>
-				<div class="hr">
-					<div class="blue-divider"></div>
-				</div>
+			</view>
+			
+			<view class="hr">
+				<div class="blue-divider"></div>
 			</view>
 			
 			<!-- Work Type - worktypeOption

@@ -576,7 +576,8 @@
 							//other:"",
 							//rebate:"",
 							//ce:"",
-							//remark:"",
+							//other:this.head,
+							remark:positions.slice(0,-1),
 							base64Images: base64
 				}
 				console.log(data)

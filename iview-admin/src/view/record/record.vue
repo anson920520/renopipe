@@ -338,16 +338,25 @@
 
         <!-- 右邊工人列表 -->
         <div class="recordRight">
-          <div class="ju al">
-            <span>當日上班工人列表 </span>
-            <span style="color: red;font-size:18px;"> </span>
-          </div>
-          <ul class="allWorker">
-            <li class="sb" v-for="(item,i) in current.workers" :key="i">
-              <span>{{item.cName}} {{item.fullname}} </span>
-              <span style="color:#5F98EC"><b>{{item.position}}</b></span>
-            </li>
-          </ul>
+          <div>
+              <div class="ju al">
+                <span>當日上班工人列表 </span>
+                <span style="color: red;font-size:18px;"> </span>
+              </div>
+              <ul class="allWorker">
+                <li class="sb" v-for="(item,i) in current.workers" :key="i">
+                  <span>{{item.cName}} {{item.fullname}} </span>
+                  <span style="color:#5F98EC"><b>{{item.position}}</b></span>
+                </li>
+              </ul>
+            </div>
+            <!--判頭不是renopiipe!-->
+            <div v-if="current.remark" >
+              <div class="ju al">
+                <span></span>
+                <b style="font-size:18px;">{{current.remark}} </b>
+              </div>
+            </div>
         </div>
       </div>
     </Modal>
