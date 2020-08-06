@@ -59,9 +59,9 @@
 				判頭: <span class="">
 						<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
 							<option id="1" value="Renopipe">Renopipe</option>
-							<option id="2" value="Renopipe">信雄</option>
-							<option id="3" value="Renopipe">信昌</option>
-							<option id="4" value="Renopipe">永富</option>
+							<option id="2" value="信雄">信雄</option>
+							<option id="3" value="信昌">信昌</option>
+							<option id="4" value="永富">永富</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>
@@ -103,7 +103,7 @@
 					<div class="tagpad">
 						<div class="jobTag">選擇工人</div>
 					</div>
-					<picker  mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
+					<picker v-if="head=='Renopipe'" mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
 						<view class="selectPosition sb" v-if="allPosition.length">
 							<view class="whiteColor">{{allPosition[currentPositionIndex].position}}</view>
 							<view class="positionIcon"></view>
@@ -111,7 +111,7 @@
 					</picker>
 				</view>
 				
-				<view class="border box scoll">
+				<view class="border box scoll" v-if="head=='Renopipe'">
 					<!--only need one worker-main when for loop!-->
 					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
@@ -125,9 +125,31 @@
 						</view>
 					</div>
 					<hr/>
-					
-					
 				</view>
+				
+				<!-- 选择职位 -->
+				<view class="border box scoll" v-else>
+					<!--only need one worker-main when for loop!-->
+					<div class="worker-main al" v-for="(item,i) in allPosition" :key="i">
+						<div class="worker-info-area">
+							<b>{{item.position}}</b>
+						</div>
+						<view class="ju al">
+							<view class="addSubBtn ju al op" @click="changePositionNum(true,i)">-</view>
+							<input v-model="item.number" style="margin-bottom: 0;width: 80upx;text-align: center;" type="number" placeholder="1" step="1" />
+							<view class="addSubBtn ju al op" @click="changePositionNum(false,i)">+</view>
+						</view>
+						
+						<view 
+							:class="['checkBox',{ check:item.check }]"
+							@click="checkPosition(i)">
+							<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+						</view>
+					</div>
+					<hr/>
+				</view>
+				
+				
 				<div class="hr">
 					<div class="blue-divider"></div>
 				</div>
@@ -340,6 +362,20 @@
 					this.machineOption[i].number = 5
 				}
 			},
+			changePositionNum (boo,i) {
+				let obj = this.allPosition[i]
+				if (boo) {
+					// 减
+					obj.number = Number(obj.number) - 1
+				} else{
+					// 加
+					obj.number = Number(obj.number) + 1
+				}
+				if (obj.number < 1) {
+					obj.number = 1
+				}
+				this.allPosition.splice(i,1,obj)
+			},
 			delImg(i) {
 				this.imgs.splice(i,1)
 			},
@@ -350,6 +386,11 @@
 			endTime (e) {
 				this.end.name = e.detail.value
 				this.end.timesamp = new Date(e.detail.value).getTime()/1000
+			},
+			checkPosition (i) {
+				let obj = this.allPosition[i]
+				obj.check = !obj.check
+				this.allPosition.splice(i,1,obj)
 			},
 			// 选择position
 			choosePosition (e) {
@@ -377,6 +418,8 @@
 								item.workers.forEach(attr => {
 									attr.check = false
 								})
+								item.number = 1
+								item.check = false
 							})
 							that.workerList = that.allPosition[0].workers
 						}
@@ -490,6 +533,17 @@
 					base64.push(str)
 				})
 				
+				let positions = ""
+				that.allPosition.forEach(item => {
+					if (item.check) {
+						positions = positions + item.position + item.number + "人,"
+					}
+				})
+				
+				// 職位拼接起來的string
+				console.log(positions.slice(0,-1))
+				// return false
+				
 				//data
 				let data = {
 							workerIds: arr,
@@ -527,7 +581,7 @@
 				}
 				console.log(data)
 				
-				if (data.workerIds.length == 0) {
+				if (data.workerIds.length == 0 && that.head=='Renopipe') {
 					uni.showToast({ title: "請選擇工人", icon: "none" })
 				} else if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
