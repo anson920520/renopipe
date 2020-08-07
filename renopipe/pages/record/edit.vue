@@ -467,6 +467,18 @@
 							}
 						})
 					})
+					let remarkList = this.attendenceData.remark.split(',')
+					remarkList.forEach((item,i) => {
+						this.allPosition.forEach(position => {
+							console.log(position,item)
+							if (item.includes(position.position)) {
+								position.check = true
+								let re = /[\D+]/g
+								let num = item.replace(re,"")
+								position.number = num * 1
+							}
+						})
+					})
 				},500)
 			},
 			getData () {
