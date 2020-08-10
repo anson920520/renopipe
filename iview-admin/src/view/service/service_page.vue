@@ -31,7 +31,7 @@
       <el-amap vid="amapDemo" class="amap" :center='center' :zoom="zoom">
         <el-amap-marker 
           v-for="(item,i) in markerList" :key="i"
-          vid="marker" :events='event'
+          vid="marker" :events='{ click: function () { clickMar(i) } }'
           :position="item.position" >
         </el-amap-marker>
         <el-amap-info-window
@@ -67,7 +67,9 @@
           position: [0, 0],
           content: '',
           events: {
-            close() {}
+            click (e) {
+              console.log(e)
+            }
           },
           visible: true,
           retainWhenClose: true,
@@ -108,7 +110,7 @@
         visible: true,
         event: {
           click: (e,i) => {
-            console.log(this.visible,e,i)
+            console.log(e,i)
 
             this.visible = false
             setTimeout(() => {this.visible = true},300)
@@ -128,6 +130,10 @@
       
     },
     methods: {
+      clickMar (i) {
+        console.log(i)
+        this.mapLook(i)
+      },
       getData () {
         this.$axios({
           url:"site",
