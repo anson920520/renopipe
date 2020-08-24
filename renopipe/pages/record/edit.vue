@@ -57,7 +57,7 @@
 
 			<view class="body-padding">
 				判頭: <span class="">
-						<select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
+						<select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
 							<option id="2" value="信雄">信雄</option>
 							<option id="3" value="信昌">信昌</option>

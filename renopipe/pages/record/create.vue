@@ -57,7 +57,7 @@
 
 			<view class="body-padding">
 				判頭: <span class="">
-						<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
+						<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
 							<option id="2" value="信雄">信雄</option>
 							<option id="3" value="信昌">信昌</option>
@@ -398,7 +398,7 @@
 				let num = Number(e.detail.value)
 				
 				this.currentPositionIndex = num
-				console.log(that.currentPositionIndex)
+				//console.log(that.currentPositionIndex)
 				that.workerList = this.allPosition[this.currentPositionIndex].workers
 			},
 			//获取所有工种(包括工人)
@@ -411,7 +411,7 @@
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
-						console.log(res)
+						//console.log(res)
 						if (res.data) {
 							that.allPosition = res.data
 							that.allPosition.forEach(item => {
@@ -436,7 +436,7 @@
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
-						console.log(res)
+						//console.log(res)
 						if (res.data) {
 							that.siteList = res.data
 							that.siteList.forEach(item => {
@@ -458,7 +458,7 @@
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
-						console.log("workerList",res)
+						//console.log("workerList",res)
 						that.workerList = res.data
 						that.workerList.forEach(item => {
 							item.check = false
@@ -472,7 +472,7 @@
 				// this.workerList[i].check = !this.workerList[i].check
 				let obj = this.workerList[i]
 				obj.check = !this.workerList[i].check
-				console.log(obj)
+				//console.log(obj)
 				this.workerList.splice(i,1,obj)
 			},
 			chooseType (i) {
@@ -485,8 +485,8 @@
 				obj.check = !this.machineOption[i].check
 				this.machineOption.splice(i,1,obj)
 				
-				console.log(this.machineOption.splice(i,1,obj));
-				console.log(i)
+				//console.log(this.machineOption.splice(i,1,obj));
+				//console.log(i)
 			},
 			toHome() {
 				uni.navigateTo({
@@ -541,8 +541,27 @@
 				})
 				
 				// 職位拼接起來的string
-				console.log(positions.slice(0,-1))
+				//console.log(positions.slice(0,-1))
 				// return false
+				
+				//select Group ID
+				let pjid = this.site.project
+				let groupId = "";
+				//console.log(pjid)
+				
+				if(pjid == "J1005"){
+					groupId = "1598237648";
+				}else if(pjid == "J1003"){
+					groupId = "1598237623";
+				}else if(pjid == "J1008"){
+					groupId = "1598237673";
+				}else if(pjid == "J1009"){
+					groupId = "1598237699";
+				}else{
+					groupId = "not found";
+				}
+				
+				//console.log(groupId)
 				
 				//data
 				let data = {
@@ -578,9 +597,13 @@
 							//ce:"",
 							//other:this.head,
 							remark:positions.slice(0,-1),
-							base64Images: base64
+							base64Images: base64,
+							//for whatsapp
+							groupId:groupId,
+							phone:"85292631429",
+							token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
 				}
-				console.log(data)
+				//console.log(data)
 				
 				if (data.workerIds.length == 0 && that.head=='Renopipe') {
 					uni.showToast({ title: "請選擇工人", icon: "none" })
@@ -655,7 +678,14 @@
 				console.log(this.head)
 				//console.log(e.target)
 				//this.head = this.head;
-			}
+			},
+			/*groupIdSelector(e){
+				console.log(this.site.project)
+				
+				e = this.site.project
+				
+				return
+			}*/
 		}
 	}
 </script>
