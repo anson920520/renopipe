@@ -311,16 +311,9 @@
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				worktypeOption:[ //工作種類 worktype
-					// {name:"打路面",check:false},
-					// {name:"挖坑",check:false},
-					// {name:"打拆",check:false},
-					// {name:"駁水",check:false},
-					// {name:"裝水喉",check:false},
-					// {name:"還原",check:false},
-					// {name:"探坑",check:false},
-					// {name:"試制",check:false},
-					// {name:"雜務",check:false}
-					{name:"代工",check:false},
+					{name:"代工(試制)",check:false},
+					{name:"代工(開井蓋)",check:false},
+					{name:"代工(其他)",check:false},
 					{name:"打路面",check:false},
 					{name:"挖窿",check:false},
 					{name:"打拆",check:false},
@@ -329,7 +322,8 @@
 					{name:"還原",check:false},
 					{name:"探坑",check:false},
 					{name:"試制",check:false},
-					{name:"雜務",check:false}
+					{name:"雜務",check:false},
+					{name:"其他",check:false},
 				],
 				machineOption:[ //機械種類 machineOption
 					// {name:"發電機1部",check:false},

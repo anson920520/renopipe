@@ -305,7 +305,8 @@
 					{name:"還原",check:false},
 					{name:"探坑",check:false},
 					{name:"試制",check:false},
-					{name:"雜務",check:false}
+					{name:"雜務",check:false},
+					{name:"其他",check:false},
 				],
 				machineOption:[ //機械種類 machineOption
 					{name:"發電機",number: 1, check:false},
@@ -607,13 +608,13 @@
 				}
 				//console.log(data)
 				
-				if (data.workerIds.length == 0 && that.head=='Renopipe') {
-					uni.showToast({ title: "請選擇工人", icon: "none" })
-				} else if (!data.worktype) {
+				if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
-				} else if (data.machine.length == 0) {
-					uni.showToast({ title: "請選擇機械", icon: "none" })
-				} else if (!data.description) {
+				} 
+				// else if (data.machine.length == 0) {
+				// 	uni.showToast({ title: "請選擇機械", icon: "none" })
+				// } 
+				else if (!data.description) {
 					uni.showToast({ title: "請填寫工作描述", icon: "none" })
 				} else {
 					uni.request({
