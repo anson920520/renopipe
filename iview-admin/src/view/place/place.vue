@@ -24,57 +24,58 @@
       :loading='loading'
       title="新增地盤">
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
+        <img style="width:50%;display:flex;justify-content: center;" src="../../assets/images/ex.png"/>
         <small style=" display: flex;justify-content: center;">沒有*的欄位可以選填，有*的欄位如果沒有資料請填寫NA</small>
         <FormItem label="項目編號" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.project" placeholder="請輸入項目編號" />
+          <Input type="text" style="width: 300px;" v-model="addForm.project" placeholder="報工介面第一層過濾器選項" />
         </FormItem>
 
         <FormItem label="DIS(2)" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="輸入DIS(2)" />
+          <Input type="text" style="width: 300px;" v-model="addForm.siteCode1" placeholder="報工介面第二層過濾器選項" />
         </FormItem>
 
         <FormItem label="DIS(2) 中文翻譯" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入DIS(2)的中文翻譯" />
+          <Input type="text" style="width: 300px;" v-model="addForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
         </FormItem>
 
         <FormItem label="DIS(1)" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="輸入DIS(1)" />
+          <Input type="text" style="width: 300px;" v-model="addForm.siteCode3" placeholder="輸入DIS(1)" />
         </FormItem>
 
         <FormItem label="Site C. To" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.sitetoc" placeholder="請輸入地盤Site C. To" />
+          <Input type="text" style="width: 300px;" v-model="addForm.sitetoc" placeholder="請輸入地盤Site C. To" />
         </FormItem>
 
         <FormItem label="Imple To." prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.imple" placeholder="請輸入地盤Imple To." />
+          <Input type="text" style="width: 300px;" v-model="addForm.imple" placeholder="請輸入地盤Imple To." />
         </FormItem>
 
         <FormItem label="DMA" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.dma" placeholder="請輸入地盤DMA" />
+          <Input type="text" style="width: 300px;" v-model="addForm.dma" placeholder="請輸入地盤DMA" />
         </FormItem>
 
         <FormItem label="EMFM" prop="">
-          <Input type="text" style="width: 250px;" v-model="addForm.emfm" placeholder="請輸入地盤EMFM" />
+          <Input type="text" style="width: 300px;" v-model="addForm.emfm" placeholder="請輸入地盤EMFM Ref." />
         </FormItem>
 
-        <FormItem label="地盤地址" prop="address">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
+        <FormItem label="地盤英文全名" prop="address">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.address" placeholder="Loc. Name (Eng)" />
         </FormItem>
 
-        <FormItem label="地盤中文地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.cname" placeholder="請輸入中文地址" />
+        <FormItem label="地盤中文全名" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.cname" placeholder=" 報工介面第三層過濾器選項" />
         </FormItem>
 
          <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
         </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.lo" placeholder="請輸入地盤經度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.lo" placeholder="latitude (地盤經度)" />
         </FormItem>
 
         <FormItem label="地盤緯度" prop="la">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.la" placeholder="請輸入地盤緯度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.la" placeholder="longitude (地盤緯度)" />
         </FormItem>
         <small style=" display: flex;justify-content: center;">點擊地圖選擇座標</small>
         <div id="placeMap"></div>
