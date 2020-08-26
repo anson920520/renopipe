@@ -13,6 +13,7 @@
             <p class="phone">Imple To. : {{item.imple}}</p>
             <p class="phone">DMA : {{item.dma}}</p>
             <p class="phone">EMFM Ref.: {{item.emfm}}</p>
+             <p class="phone">Nature(MM/ EC/ NC/MC): {{item.region}}</p>
             <!-- <p class="grade">
               评分：
               <img src="../../assets/images/grade.png" alt="" style="position: relative;top: 3px;">

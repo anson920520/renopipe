@@ -20,31 +20,41 @@
     <!-- 新增 -->
     <Modal v-model="showAdd" :loading="loading" @on-ok="okAdd" title="新增工人賬戶" :width='400'>
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="100">
-        <FormItem label="Company" prop="company">
+        <FormItem label="Company" prop="">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.company" placeholder="選擇公司" />
         </FormItem>
-          <FormItem label="Role" prop="role">
+          <FormItem label="Role" prop="">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.role" placeholder="選擇Type of role" />
         </FormItem>
 
         <FormItem label="工人全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.fullname" placeholder="請輸入全名" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="身份證號" prop="idNo">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.idNo" placeholder="請輸入身份證號" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="工人中文名" prop="cName">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.cName" placeholder="請輸入中文名" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="暱稱" prop="nickname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.nickname" placeholder="請輸入暱稱" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
+        </FormItem>
+
+        <FormItem label="聯繫電話" prop="phone">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.phone" placeholder="請輸入聯繫電話" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="職位" prop="position">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.position" placeholder="請輸入職位" />
+          <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
          <FormItem label="生日日期" prop="dob">
@@ -57,10 +67,6 @@
 
          <FormItem label="Team" prop="team">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.team" placeholder="請輸入Tean (e.g: Head office)" />
-        </FormItem>
-
-        <FormItem label="聯繫電話" prop="phone">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
          <FormItem label="地址" prop="address">
@@ -162,22 +168,32 @@
 
         <FormItem label="工人全名" prop="fullname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.fullname" placeholder="請輸入全名" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="身份證號" prop="idNo">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="工人中文名" prop="cName">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.cName" placeholder="請輸入中文名" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="暱稱" prop="nickname">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.nickname" placeholder="請輸入暱稱" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
+        </FormItem>
+        
+        <FormItem label="聯繫電話" prop="phone">
+          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
+          <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
         <FormItem label="職位" prop="position">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.position" placeholder="請輸入職位" />
+           <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
          <FormItem label="生日日期" prop="dob">
@@ -190,10 +206,6 @@
 
          <FormItem label="Team" prop="team">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.team" placeholder="請輸入Tean (e.g: Head office)" />
-        </FormItem>
-
-        <FormItem label="聯繫電話" prop="phone">
-          <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
         </FormItem>
 
          <FormItem label="地址" prop="address">

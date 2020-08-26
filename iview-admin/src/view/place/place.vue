@@ -24,28 +24,21 @@
       :loading='loading'
       title="新增地盤">
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
-       <FormItem label="地盤地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
-        </FormItem>
-
-        <FormItem label="地盤中文地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.cname" placeholder="請輸入中文地址" />
-        </FormItem>
-
+        <small style=" display: flex;justify-content: center;">沒有*的欄位可以選填，有*的欄位如果沒有資料請填寫NA</small>
         <FormItem label="項目編號" prop="">
           <Input type="text" style="width: 250px;" v-model="addForm.project" placeholder="請輸入項目編號" />
         </FormItem>
 
-        <FormItem label="DIS(1)" prop="siteCode1">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="輸入DIS(1)" />
+        <FormItem label="DIS(2)" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode1" placeholder="輸入DIS(2)" />
         </FormItem>
 
-        <FormItem label="DIS(1) 中文翻譯" prop="siteCode2">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入DIS(1)的中文翻譯" />
+        <FormItem label="DIS(2) 中文翻譯" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode2" placeholder="請輸入DIS(2)的中文翻譯" />
         </FormItem>
 
-        <FormItem label="DIS(2)" prop="siteCode3">
-          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="輸入DIS(2)" />
+        <FormItem label="DIS(1)" prop="">
+          <Input type="text" style="width: 250px;" v-model="addForm.siteCode3" placeholder="輸入DIS(1)" />
         </FormItem>
 
         <FormItem label="Site C. To" prop="">
@@ -64,6 +57,18 @@
           <Input type="text" style="width: 250px;" v-model="addForm.emfm" placeholder="請輸入地盤EMFM" />
         </FormItem>
 
+        <FormItem label="地盤地址" prop="address">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.address" placeholder="請輸入地盤地址" />
+        </FormItem>
+
+        <FormItem label="地盤中文地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.cname" placeholder="請輸入中文地址" />
+        </FormItem>
+
+         <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
+        </FormItem>
+
         <FormItem label="地盤經度" prop="lo">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.lo" placeholder="請輸入地盤經度" />
         </FormItem>
@@ -71,6 +76,7 @@
         <FormItem label="地盤緯度" prop="la">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="addForm.la" placeholder="請輸入地盤緯度" />
         </FormItem>
+        <small style=" display: flex;justify-content: center;">點擊地圖選擇座標</small>
         <div id="placeMap"></div>
       </Form>
     </Modal>
@@ -81,27 +87,19 @@
       :loading='loading'
       title="编辑地盤">
       <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
-        <FormItem label="地盤地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
-        </FormItem>
-
-        <FormItem label="地盤中文地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.cname" placeholder="請輸入中文地址" />
-        </FormItem>
-
         <FormItem label="項目編號" prop="">
           <Input type="text" style="width: 250px;" v-model="editForm.project" placeholder="請輸入項目編號" />
         </FormItem>
 
-        <FormItem label="DIS(1)" prop="siteCode1">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="輸入DIS(1)" />
+        <FormItem label="DIS(2)" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="輸入DIS(2)" />
         </FormItem>
 
-        <FormItem label="DIS(1) 中文翻譯" prop="siteCode2">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入DIS(1)的中文翻譯" />
+        <FormItem label="DIS(2) 中文翻譯" prop="">
+          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入DIS(2)的中文翻譯" />
         </FormItem>
 
-        <FormItem label="DIS(2)" prop="siteCode3">
+        <FormItem label="DIS(1)" prop="">
           <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="輸入DIS(2)" />
         </FormItem>
 
@@ -119,6 +117,18 @@
 
         <FormItem label="EMFM" prop="">
           <Input type="text" style="width: 250px;" v-model="editForm.emfm" placeholder="請輸入地盤EMFM" />
+        </FormItem>
+
+        <FormItem label="地盤地址" prop="address">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
+        </FormItem>
+
+        <FormItem label="地盤中文地址" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.cname" placeholder="請輸入中文地址" />
+        </FormItem>
+
+        <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
+          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
         </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
@@ -214,6 +224,10 @@ export default {
           title: "EMFM Ref.",
           key: "emfm" //need to adjust field name
         },
+                {
+          title: "Nature",
+          key: "region" //need to adjust field name
+        },
         {
           title: "操作",
           slot:"operation",
@@ -260,6 +274,7 @@ export default {
         uuid:"",
         proId: "",     //項目編號
         siteCode1: "",
+        Nature:"",
         siteCode2: "",
         siteCode3: "",
         region: "",
@@ -355,6 +370,7 @@ export default {
               siteCode1: that.addForm.siteCode1,
               siteCode2: that.addForm.siteCode2,
               siteCode3: that.addForm.siteCode3,
+              region: that.addForm.region,
               "name": that.addForm.address,
               "latitude":Number(that.addForm.la),
               "longitude": Number(that.addForm.lo)

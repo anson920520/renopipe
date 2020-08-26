@@ -247,6 +247,13 @@
               <option v-for="(item,i) in emfm" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
+          <div class="selectBox">
+            <label>Nature</label>
+            <select @change="search" v-model="natureVal">
+              <option value="">全部</option>
+              <option v-for="(item,i) in nature" :key="i" :value="item">{{item}}</option>
+            </select>
+          </div>
             <div class="selectBox">
             <label>工頭</label>
               <select @change="search"  v-model="cName">
@@ -323,6 +330,7 @@
             <li><span><b>DMA:</b> </span><span>{{thisSite.dma}}</span></li>
             <li><span><b>Imple To.:</b> </span><span>{{thisSite.imple}}</span></li>
             <li><span><b>Site C To:</b> </span><span>{{thisSite.sitetoc}}</span></li>
+            <li><span><b>Nature(MM/ EC/ NC/MC):</b> </span><span>{{thisSite.region}}</span></li>
             <li><span><b>創建者:</b> </span><span>{{current.supervisors[0].cName}} {{current.supervisors[0].fullname}} </span></li>
             <li><span><b>創建日期:</b> </span><span>{{current.createdAt}}</span></li>
             <li><span><b>使用機械:</b> </span><span>{{current.machine}}</span></li>
@@ -464,6 +472,17 @@ export default {
               return h('div',str)
           }
         },
+        { title: "Nature", key:"region",sortable: true,
+              render:(h,p) => {
+              let str = "讀取中..."
+              that.siteList.forEach(item => {
+                  if (item.ID==p.row.siteId) {
+                    str = item.region
+                  }
+              })
+              return h('div',str)
+          }
+        },
         { title: "詳請", key:"description",sortable: true, },
         { title: "工頭", key:"supervisor",sortable: true,
           render:(h,p) => {
@@ -510,6 +529,7 @@ export default {
       emfm:[],
       SiteList:[],
       imple:[],
+      nature:[],
       sitetoc:[],
       pro:"",
       dis1:"",
@@ -519,6 +539,7 @@ export default {
       impleVal: "",
       dmaVal:"",
       emfmVal:"",
+      natureVal:"",
       sitetocVal:"",
       filterTime:""
     }
@@ -569,6 +590,7 @@ export default {
         this.disList2.push(item.sitecode2)
         this.disList3.push(item.sitecode3)
         this.imple.push(item.imple)
+        this.nature.push(item.region)
         this.sitetoc.push(item.sitetoc)
         this.dma.push(item.dma)
         this.emfm.push(item.emfm)
@@ -580,6 +602,7 @@ export default {
       this.disList2 = [...new Set(this.disList2)].filter(item => item)
       this.disList3 = [...new Set(this.disList3)].filter(item => item)
       this.imple = [...new Set(this.imple)].filter(item => item)
+      this.nature = [...new Set(this.nature)].filter(item => item)
       this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
       this.dma = [...new Set(this.dma)].filter(item => item)
       this.emfm = [...new Set(this.emfm)].filter(item => item)
@@ -620,6 +643,7 @@ export default {
             item.sitecode2 = site.siteCode2
             item.sitecode3 = site.siteCode3
             item.imple = site.imple
+            item.region = site.region
             item.sitetoc = site.sitetoc
             item.dma = site.dma
             item.emfm = site.emfm
@@ -714,6 +738,16 @@ export default {
         for(let key in item) {
           if ( typeof item[key] == "string") {
             if ( item[key].indexOf(this.impleVal) != -1 ) {
+              return true
+            }
+          }
+        }
+      })
+
+      this.dataList = this.dataList.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if ( item[key].indexOf(this.natureVal) != -1 ) {
               return true
             }
           }
