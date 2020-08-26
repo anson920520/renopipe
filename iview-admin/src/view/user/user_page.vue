@@ -408,6 +408,11 @@ export default {
 
       that.$refs.addForm.validate(flag => {
         if (flag) {
+          let load = this.$Message.loading({
+            content:"加載中...",
+            duration: 10
+          })
+
           that.$axios({
             url:'worker',
             method:"POST",
@@ -421,8 +426,10 @@ export default {
             } else {
               that.$Message.warning("新增失敗")
             }
+            load()
           }).catch(() => {
             that.$Message.error("新增失敗")
+            load()
           })
         }
         that.hideLoading()
@@ -431,7 +438,7 @@ export default {
     okEdit () {
       let that = this
 
-       let data = {
+      let data = {
               "company": that.editForm.company,
               "role": that.editForm.role,
               "fullname": that.editForm.fullname,
@@ -470,6 +477,11 @@ export default {
       //API call
       that.$refs.editForm.validate(flag => {
         if (flag) {
+          let load = this.$Message.loading({
+            content:"加載中...",
+            duration: 10
+          })
+
           that.$axios({
             url:'worker/' + that.current.ID,
             method:"PUT",
@@ -483,7 +495,9 @@ export default {
             } else {
               that.$Message.warning("修改失敗")
             }
+            load()
           }).catch(() => {
+            load()
             that.$Message.error("修改失敗")
           })
         }
