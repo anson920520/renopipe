@@ -255,6 +255,11 @@ export default {
       let that = this
       that.$refs.addForm.validate(flag => {
         if (flag) {
+          let load = this.$Message.loading({
+            content:"加載中...",
+            duration: 10
+          })
+
           that.$axios({
             url: window.baseURL.replace("/admin","") + 'signup/supervisor',
             // url:"http://119.8.42.40:8080/signup/supervisor",
@@ -272,6 +277,7 @@ export default {
             },  
           }).then(res => {
             console.log("add",res)
+            load()
             if (res.data) {
               that.$Message.success('已新增工頭賬戶')
               that.showTable()
@@ -280,6 +286,7 @@ export default {
               that.$Message.warning("新增失敗")
             }
           }).catch(() => {
+            load()
             that.$Message.error("新增失敗")
           })
         }
@@ -299,13 +306,18 @@ export default {
               return false
             }
           }
-          
+          let load = this.$Message.loading({
+            content:"加載中...",
+            duration: 10
+          })
+
           that.$axios({
             url:'supervisor/' + that.current.ID,
             method:"PUT",
             data:dataInfo,
           }).then(res => {
             console.log("add",res)
+            load()
             if (res.data) {
               that.$Message.success('已修改')
               that.showTable()
@@ -314,6 +326,7 @@ export default {
               that.$Message.warning("修改失敗")
             }
           }).catch(() => {
+            load()
             that.$Message.error("修改失敗")
           })
         }
