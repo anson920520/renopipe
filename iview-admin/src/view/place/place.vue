@@ -224,6 +224,10 @@ export default {
           title: "EMFM Ref.",
           key: "emfm" //need to adjust field name
         },
+                {
+          title: "Nature",
+          key: "region" //need to adjust field name
+        },
         {
           title: "操作",
           slot:"operation",
