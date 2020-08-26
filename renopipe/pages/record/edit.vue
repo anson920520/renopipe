@@ -195,7 +195,8 @@
 				<view class="border box scoll">
 					<div class="worker-main" v-for="(item,i) in machineOption" :key="i">
 						<div class="worktype-info-area">
-							<p class="worktype">{{item.name}}</p>
+							<input style="margin: 0" placeholder="自行填寫" v-if="item.type=='custom'" class="worktype" v-model='item.name' />
+							<p v-else class="worktype">{{item.name}}</p>
 						</div>
 						<div class="ju al" style="padding: 1.3rem 0.5rem;width: 30%;" >
 							<view class="addSubBtn ju al op" @click="addSub(true,i)">-</view>
@@ -349,6 +350,7 @@
 					{name:"30噸吊雞",number: 1,check:false},
 					{name:"5.5噸車",number: 1,check:false},
 					{name:"水泵",number: 1,check:false},
+					{name:"自行填寫",number: 1,check:false,type:"custom"},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
@@ -448,16 +450,26 @@
 					})
 					
 					this.attendenceData.machine.split(",").forEach(item => {
+						let b = this.machineOption.every(mach => {
+							console.log(mach.name, item.split(/[\d+]/)[0])
+							return mach.name != item.split(/[\d+]/)[0]
+						})
+						console.log(b)
+						if (b) {
+							this.machineOption.splice(this.machineOption.length-1, 1, {name: item.split(/[\d+]/)[0],number: 1,check:false,type:"custom"},)
+						}
+						
 						this.machineOption.forEach((type,i) => {
 							if (item.indexOf(type.name) != -1) {
 								type.check = true
-								let number = item.slice(-2,-1) * 1
+								// type.name = item.split(/[\d+]/)[0]
+								// let number = item.slice(-2,-1) * 1
+								let number = item.match(/[\d+]/) * 1
 								if (number) {
 									this.machineOption[i].number = number
 								} else {
 									this.machineOption[i].number = 1
 								}
-								
 							}
 						})
 					})
@@ -675,12 +687,8 @@
 							removeImageId: that.delImgs
 				}
 				console.log(data)
-				if (data.workerIds.length == 0 && that.attendenceData.rporsubCRP=='Renopipe') {
-					uni.showToast({ title: "請選擇工人", icon: "none" })
-				} else if (!data.worktype) {
+				if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
-				} else if (data.machine.length == 0) {
-					uni.showToast({ title: "請選擇機械", icon: "none" })
 				} else if (!data.description) {
 					uni.showToast({ title: "請填寫工作描述", icon: "none" })
 				} else {

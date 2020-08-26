@@ -66,25 +66,9 @@
 						</select>
 					</span>
 
-				
-				<!--<input  v-model="rporsubCRP" placeholder="">!-->
 			</view>
 
-			<!--<view class="body-padding">
-				機械:<input v-model="machine" placeholder="">
-					<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;">
-							<option id="1" value="發電機">發電機</option>
-							<option id="2" value="大電炮">大電炮</option>
-							<option id="3" value="細電炮">細電炮</option>
-							<option id="4" value="保路華">保路華</option>
-							<option id="2" value="跳鎚">跳鎚</option>
-							<option id="2" value="震船">震船</option>
-							<option id="2" value="9噸吊雞">9噸吊雞</option>
-							<option id="2" value="30噸吊雞">30噸吊雞</option>
-							<option id="2" value="30噸吊雞">5.5噸車</option>
-							<option id="2" value="30噸吊雞">水泵</option>
-					</select>
-			</view>!-->
+
 
 			<div class="hr">
 					<div class="blue-divider"></div>
@@ -193,9 +177,10 @@
 
 			<view class="body-padding mt20">
 				<view class="border box scoll">
-					<div class="worker-main" v-for="(item,i) in machineOption" :key="i">
+					<div class="worker-main al" v-for="(item,i) in machineOption" :key="i">
 						<div class="worktype-info-area">
-							<p class="worktype">{{item.name}}</p>
+							<input style="margin: 0" placeholder="自行填寫" v-if="item.type=='custom'" class="worktype" v-model='item.name' />
+							<p v-else class="worktype">{{item.name}}</p>
 						</div>
 						<div class="ju al" style="padding: 1.3rem 0.5rem;width: 30%;" >
 							<view class="addSubBtn ju al op" @click="addSub(true,i)">-</view>
@@ -319,6 +304,7 @@
 					{name:"30噸吊雞",number: 1,check:false},
 					{name:"5.5噸車",number: 1,check:false},
 					{name:"水泵",number: 1,check:false},
+					{name:"",number: 1,check:false,type:"custom"},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
