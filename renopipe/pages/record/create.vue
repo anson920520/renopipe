@@ -523,11 +523,14 @@
 				})
 				
 				let positions = ""
+				let num = 0
 				that.allPosition.forEach(item => {
 					if (item.check) {
+						num = num + Number(item.number)
 						positions = positions + item.position + item.number + "人,"
 					}
 				})
+				positions += "總人數" + num + "人,"
 				
 				// 職位拼接起來的string
 				//console.log(positions.slice(0,-1))
@@ -592,7 +595,8 @@
 							phone:"85292631429",
 							token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
 				}
-				//console.log(data)
+				console.log(data)
+				// return false
 				
 				if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })

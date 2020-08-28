@@ -661,11 +661,14 @@
 				})
 				
 				let positions = ""
+				let num = 0
 				that.allPosition.forEach(item => {
 					if (item.check) {
 						positions = positions + item.position + item.number + "人,"
+						num = num + Number(item.number)
 					}
 				})
+				positions += "總人數" + num + "人,"
 				// 職位拼接起來的string
 				console.log(positions.slice(0,-1))
 				// return false
