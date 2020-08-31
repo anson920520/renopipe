@@ -4,8 +4,9 @@ import axios from "axios"
 // // console.log(jwt)
 // axios.defaults.headers.common['Authorization'] = jwt? jwt: "null";  //所有請求帶上tokan
 axios.interceptors.request.use(config => {
+    
     let jwt = localStorage.getItem('jwt')
-
+    console.log(jwt)
     config.headers['Authorization'] = jwt? jwt: "null"
     return config
 })

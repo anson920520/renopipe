@@ -16,7 +16,11 @@ router.beforeEach((to, from, next) => {
 
   iView.LoadingBar.start()
   next()
-
+  let jwt = localStorage.getItem("jwt")
+  console.log(jwt)
+  if (!jwt) {
+    window.location.hash = "#/login"
+  }
 })
 
 router.afterEach(to => {
