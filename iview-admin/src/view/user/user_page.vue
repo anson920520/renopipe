@@ -61,7 +61,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.dob" placeholder="生日日期" />
         </FormItem>
 
-        <FormItem label="Group" prop="group">
+       <!-- <FormItem label="Group" prop="group">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.group" placeholder="請輸入Group (e.g: Engineer)" />
         </FormItem>
 
@@ -127,7 +127,7 @@
         
           <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
-        </FormItem> -->
+        </FormItem> 
 
         <FormItem label="Clawback Period" prop="clawbackperiod">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.clawbackperiod" placeholder="請輸入Clawback Period" />
@@ -151,7 +151,7 @@
 
         <FormItem label="Remark" prop="remark">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.remark" placeholder="Remark" />
-        </FormItem>
+        </FormItem>-->
       </Form>
     </Modal>
 
@@ -200,7 +200,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.dob" placeholder="生日日期" />
         </FormItem>
 
-        <FormItem label="Group" prop="group">
+       <!-- <FormItem label="Group" prop="group">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.group" placeholder="請輸入Group (e.g: Engineer)" />
         </FormItem>
 
@@ -266,7 +266,7 @@
         
           <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
-        </FormItem> -->
+        </FormItem> 
 
         <FormItem label="Clawback Period" prop="clawbackperiod">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.clawbackperiod" placeholder="請輸入Clawback Period" />
@@ -290,7 +290,7 @@
 
         <FormItem label="Remark" prop="remark">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.remark" placeholder="Remark" />
-        </FormItem>
+        </FormItem>!-->
       </Form>
     </Modal>
   </div>
@@ -379,7 +379,7 @@ export default {
               "nickname": that.addForm.nickname,
               "position": that.addForm.position,
               "dob":that.addForm.dob,
-              "group":that.addForm.group,
+              "group":"1",
               "team":that.addForm.team,
               "phone": that.addForm.phone,
               "address":that.addForm.address,
@@ -447,7 +447,7 @@ export default {
               "nickname": that.editForm.nickname,
               "position": that.editForm.position,
               "dob":that.editForm.dob,
-              "group":that.editForm.group,
+               "group":"1",
               "team":that.editForm.team,
               "phone": that.editForm.phone,
               "address":that.editForm.address,
