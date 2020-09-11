@@ -325,8 +325,9 @@ export default {
         "fullname": "",
         "cName": "",
         "nickname": "",
-        "idNo": "",
-        "position": ""
+        "idNo": "NA",
+        "position": "",
+        "phone":"NA"
       },
       editForm:{
         "fullname": "",
