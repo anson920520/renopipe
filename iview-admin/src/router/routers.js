@@ -84,7 +84,7 @@ export default [
     children: [
       {
         path: '/admin_page',
-        name: '管理員賬號',
+        name: '管理員賬號(登入adminpanel)',
         meta: {
           icon: 'ios-book',//MAYBE we can use font awesome?
           title: '管理員賬號',
@@ -124,15 +124,15 @@ export default [
       hideInBread: true,
       // access: ['superadmin', 'admin'],
       icon: 'ios-person',
-      title: '工頭賬戶管理'
+      title: '工頭賬戶管理(使用報工頁面)'
     },
     children: [
       {
         path: '/account_page',
-        name: '工頭賬戶管理',
+        name: '工頭賬戶管理(使用報工頁面)',
         meta: {
           icon: 'md-albums',//MAYBE we can use font awesome?
-          title: '工頭賬戶管理'
+          title: '工頭賬戶管理(使用報工頁面)'
         },
         component: () => import('@/view/account/account.vue')
       },

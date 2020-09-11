@@ -251,15 +251,19 @@ export default {
               return false
             }
           }
-          that.$axios({
-            url: window.baseURL.replace("/admin", "/") + "admin/" + this.id,
-            method: "PUT",
-            data: {
+
+        let data =  {
               fullname: that.editForm.fullname,
               nickname: that.editForm.nickname,
               phone: that.editForm.phone,
               password: that.editForm.pwd
             }
+        console.log(data)
+
+          that.$axios({
+            url: window.baseURL.replace("/admin", "/") + "admin/" + this.id,
+            method: "PUT",
+            data: data,
           })
           .then(res => {
             console.log(res);

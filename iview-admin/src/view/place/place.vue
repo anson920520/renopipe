@@ -26,17 +26,20 @@
       <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
         <img style="width:50%;display:flex;justify-content: center;" src="../../assets/images/ex.png"/>
         <small style=" display: flex;justify-content: center;">沒有*的欄位可以選填，有*的欄位如果沒有資料請填寫NA</small>
-        <FormItem label="項目編號" prop="">
-          <Input type="text" style="width: 300px;" v-model="addForm.project" placeholder="報工介面第一層過濾器選項" />
-        </FormItem>
+       
+       <!--custom style!-->
+        <label style="color:#921954;margin-left: 70px;" class="cus-item-label">項目編號</label>
+        <Input class="cus-item" type="text" style="width: 300px;" v-model="addForm.project" placeholder="報工介面第一層過濾器選項" />
+       
 
         <FormItem label="DIS(2)" prop="">
           <Input type="text" style="width: 300px;" v-model="addForm.siteCode1" placeholder="報工介面第二層過濾器選項" />
         </FormItem>
 
-        <FormItem label="DIS(2) 中文翻譯" prop="">
-          <Input type="text" style="width: 300px;" v-model="addForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
-        </FormItem>
+        <!--custom style!-->
+        <label style="color:#7d3f11;margin-left: 32px;" class="cus-item-label">DIS(2) 中文翻譯</label>
+          <Input class="cus-item"  type="text" style="width: 300px;" v-model="addForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
+
 
         <FormItem label="DIS(1)" prop="">
           <Input type="text" style="width: 300px;" v-model="addForm.siteCode3" placeholder="輸入DIS(1)" />
@@ -62,10 +65,10 @@
           <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.address" placeholder="Loc. Name (Eng)" />
         </FormItem>
 
-        <FormItem label="地盤中文全名" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.cname" placeholder=" 報工介面第三層過濾器選項" />
-        </FormItem>
-
+         <!--custom style!-->
+        <label style="color:#dc2222;margin-left: 45px;" class="cus-item-label">地盤中文全名</label>
+          <Input class="cus-item" @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.cname" placeholder=" 報工介面第三層過濾器選項" />
+       
          <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
           <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
         </FormItem>
@@ -86,19 +89,22 @@
     <Modal v-model="showEdit" 
       @on-ok="okEdit"
       :loading='loading'
-      title="编辑地盤">
+      title="編輯地盤">
       <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
-        <FormItem label="項目編號" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.project" placeholder="請輸入項目編號" />
-        </FormItem>
+        <img style="width:50%;display:flex;justify-content: center;" src="../../assets/images/ex.png"/>
+       <!--custom style!-->
+        <label style="color:#921954;margin-left: 70px;" class="cus-item-label">項目編號</label>
+        <Input class="cus-item" type="text" style="width: 300px;" v-model="editForm.project" placeholder="報工介面第一層過濾器選項" />
+       
 
         <FormItem label="DIS(2)" prop="">
           <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="輸入DIS(2)" />
         </FormItem>
 
-        <FormItem label="DIS(2) 中文翻譯" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode2" placeholder="請輸入DIS(2)的中文翻譯" />
-        </FormItem>
+        <!--custom style!-->
+        <label style="color:#7d3f11;margin-left: 32px;" class="cus-item-label">DIS(2) 中文翻譯</label>
+        <Input class="cus-item"  type="text" style="width: 300px;" v-model="editForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
+
 
         <FormItem label="DIS(1)" prop="">
           <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="輸入DIS(2)" />
@@ -124,9 +130,10 @@
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
-        <FormItem label="地盤中文地址" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.cname" placeholder="請輸入中文地址" />
-        </FormItem>
+         <!--custom style!-->
+        <label style="color:#dc2222;margin-left: 45px;" class="cus-item-label">地盤中文全名</label>
+          <Input class="cus-item" @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.cname" placeholder=" 報工介面第三層過濾器選項" />
+       
 
         <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
           <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
@@ -178,44 +185,29 @@ export default {
           key: "siteCode3"
         },*/
         {
-          title: "項目編號",
+          title: "項目編號(過濾器第一層)",
           key: "project"
         },
         {
-          title: "中文地址",
-          key: "cname"
+          title: "Dis(2)",
+          key: "siteCode1"
         },
         {
-          title: "地址",
-          key: "name"
-        },
-        /*{
-          title: "經度",
-          key: "longitude"
+          title: "Dis(2)中文(過濾器第二層)",
+          key: "siteCode2"
         },
         {
-          title: "緯度",
-          key: "latitude"
-        },*/
-         {
+          title: "Dis(1)",
+          key: "siteCode3"
+        },
+
+        {
           title: "Imple. TO",
           key: "imple"
         },
          {
           title: "Site C. TO.",
           key: "sitetoc"
-        },
-        {
-          title: "Dis(1)",
-          key: "siteCode1"
-        },
-        {
-          title: "Dis(1)中文",
-          key: "siteCode2"
-        },
-        {
-          title: "Dis(2)",
-          key: "siteCode3"
         },
         {
           title: "DMA",
@@ -225,7 +217,23 @@ export default {
           title: "EMFM Ref.",
           key: "emfm" //need to adjust field name
         },
-                {
+        {
+          title: "地址",
+          key: "name"
+        },
+        {
+          title: "中文地址 (過濾器第三層)",
+          key: "cname"
+        },
+        /*{
+          title: "經度",
+          key: "longitude"
+        },
+        {
+          title: "緯度",
+          key: "latitude"
+        },*/
+        {
           title: "Nature",
           key: "region" //need to adjust field name
         },
@@ -600,5 +608,20 @@ export default {
 }
 .createQRBtn {
   margin-right: 3px;
+}
+.cus-item{
+  margin-bottom: 24px;
+  vertical-align: top;
+  zoom: 1;
+}
+.cus-item-label{
+  text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 12px;
+    line-height: 1;
+    padding: 10px 12px 10px 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 </style>
