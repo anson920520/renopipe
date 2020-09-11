@@ -447,7 +447,7 @@ export default {
               "nickname": that.editForm.nickname,
               "position": that.editForm.position,
               "dob":that.editForm.dob,
-               "group":"1",
+              "group":"1",
               "team":that.editForm.team,
               "phone": that.editForm.phone,
               "address":that.editForm.address,
