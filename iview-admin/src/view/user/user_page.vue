@@ -125,7 +125,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem>
         
-          <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
+        <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem> 
 
@@ -264,7 +264,7 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem>
         
-          <!-- <FormItem label="星期六工作時間長度" prop="satarrange">
+        <FormItem label="星期六工作時間長度" prop="satarrange">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.satarrange" placeholder="請輸入星期六工作時間長度" />
         </FormItem> 
 
