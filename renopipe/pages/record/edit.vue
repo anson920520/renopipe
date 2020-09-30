@@ -2,6 +2,7 @@
 	<view class="Wrap sb la">
 		<!--header!-->
 		<Header></Header>
+		<cpimg ref="cpimg" @result="cpimgOk"  :number="2" :fixOrientation="true" :size="500" :maxWidth="1000" :ql="0.1" :type="'url'" />
 		<view class="flex10">
 			<!--title!-->
 			<view class="title-padding mt25">
@@ -284,6 +285,7 @@
 </template>
 
 <script>
+	import utils from '@/utils/utils.js';
 	export default {
 		data() {
 			return {
@@ -733,8 +735,45 @@
 				
 				
 			},
+			cpimgOk (e) {
+				console.log(e)
+				let that = this
+				e.forEach(item => {
+					if (item.includes("blob")) {
+						//未压缩的图片
+						
+						let img = new Image()
+						img.src = item
+						// console.log(img)
+						img.onload = function () {
+							var canvas = document.createElement("canvas");  
+							canvas.width = img.width;  
+							canvas.height = img.height;  
+							var ctx = canvas.getContext("2d");  
+							ctx.drawImage(img, 0, 0, img.width/2, img.height/2);  
+							var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
+							var dataURL = canvas.toDataURL("image/"+ext)
+							// console.log(dataURL)
+							that.imgs.push({
+								base64: dataURL
+							})
+						}
+						
+					} else {
+						this.imgs.push({
+							base64: item
+						})
+					}
+					
+				})
+				
+			},
 			chooseImg () {
 				let that = this
+				that.$refs.cpimg._changImg()
+				return false
+				
+				
 				uni.chooseImage({
 					count:9,
 					sourceType:["album","camera"],

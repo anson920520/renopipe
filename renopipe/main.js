@@ -7,7 +7,9 @@ import VueQrcodeReader from "vue-qrcode-reader";
 
 
 import Header from "./components/Header.vue"
+import cpimg from "./components/cpimg/cpimg.vue"
 
+Vue.component('cpimg',cpimg)
 Vue.component('Header',Header)
 
 // import plus from "plus"
