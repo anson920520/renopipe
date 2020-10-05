@@ -23,7 +23,7 @@
         <FormItem label="Company" prop="">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.company" placeholder="選擇公司" />
         </FormItem>
-          <FormItem label="Role" prop="">
+          <FormItem label="Role" prop="" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.role" placeholder="選擇Type of role" />
         </FormItem>
 
@@ -32,7 +32,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo">
+        <FormItem label="身份證號" prop="idNo" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.idNo" placeholder="請輸入身份證號" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -47,7 +47,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="聯繫電話" prop="phone">
+        <FormItem label="聯繫電話" prop="phone" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.phone" placeholder="請輸入聯繫電話" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -57,7 +57,7 @@
           <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
-         <FormItem label="生日日期" prop="dob">
+         <FormItem label="生日日期" prop="dob" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.dob" placeholder="生日日期" />
         </FormItem>
 
@@ -162,7 +162,7 @@
         <FormItem label="Company" prop="company">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.company" placeholder="選擇公司" />
         </FormItem>
-          <FormItem label="Role" prop="role">
+          <FormItem label="Role" prop="role" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.role" placeholder="選擇Type of role" />
         </FormItem>
 
@@ -171,7 +171,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo">
+        <FormItem label="身份證號" prop="idNo" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -186,7 +186,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
         
-        <FormItem label="聯繫電話" prop="phone">
+        <FormItem label="聯繫電話" prop="phone" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -196,7 +196,7 @@
            <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
-         <FormItem label="生日日期" prop="dob">
+         <FormItem label="生日日期" prop="dob" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.dob" placeholder="生日日期" />
         </FormItem>
 
@@ -313,7 +313,7 @@ export default {
         { title: "全名", key:"fullname" },
         { title: "中文名", key:"cName" },
         { title: "暱稱", key:"nickname" },
-        { title: "聯繫電話", key:"phone" },
+        //{ title: "聯繫電話", key:"phone" },
         { title: "職位", key:"position" },
         { title: "地址", key:"address" },
         
@@ -327,7 +327,9 @@ export default {
         "nickname": "",
         "idNo": "NA",
         "position": "",
-        "phone":"NA"
+        "phone":"NA",
+        "company":"Renopipe",
+        "role":"NA"
       },
       editForm:{
         "fullname": "",
@@ -370,19 +372,32 @@ export default {
   methods:{
     okAdd () {
       let that = this
+      //make telephone and id card not needed enter data
+      var chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',     
+              serialLength = 10,   
+              randomSerial = "",    
+              i,   
+              randomNumber;
+          
+          for (i = 0; i < serialLength; i = i + 1) { 
+              randomNumber = Math.floor(Math.random() * chars.length);
+              randomSerial += chars.substring(randomNumber, randomNumber + 1);
+          }
+          
+          console.log(randomSerial)
 
       let data = {
               "company": that.addForm.company,
               "role": that.addForm.role,
               "fullname": that.addForm.fullname,
-              "idNo": that.addForm.idNo,
+              "idNo": randomSerial,
               "cName": that.addForm.cName,
               "nickname": that.addForm.nickname,
               "position": that.addForm.position,
-              "dob":that.addForm.dob,
+              "dob":randomSerial,//that.addForm.dob,
               "group":"1",
               "team":that.addForm.team,
-              "phone": that.addForm.phone,
+              "phone": randomSerial,//that.addForm.phone,
               "address":that.addForm.address,
               "joindate":that.addForm.joindate,
               "leavedate":that.addForm.leavedate,
