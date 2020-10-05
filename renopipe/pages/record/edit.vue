@@ -58,13 +58,14 @@
 
 			<view class="body-padding">
 				判頭: <span class="">
-						<select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+					{{attendenceData.rporsubCRP}}
+						<!-- <select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
 							<option id="2" value="信雄">信雄</option>
 							<option id="3" value="信昌">信昌</option>
 							<option id="4" value="永富">永富</option>
 							<option id="2" value="Others">其他</option>
-						</select>
+						</select> -->
 					</span>
 
 				
@@ -155,6 +156,67 @@
 					<div class="blue-divider"></div>
 				</div>
 			</view>
+			
+			<!-- 副判头 -->
+			<view v-for="(item,i) in otherHead" :key="i">
+				<view class="body-padding">
+					副判頭（可多選）: 
+					<span class="">
+						<select @change="onChangeHead()" v-model="item.head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+							<option id="2" value="信雄">信雄</option>
+							<option id="3" value="信昌">信昌</option>
+							<option id="4" value="永富">永富</option>
+							<option id="5" value="平安地基">平安地基</option>
+							<option id="6" value="六盛">六盛</option>
+							<option id="2" value="Others">其他</option>
+						</select>
+					</span>
+				</view>
+				
+				
+				<view class="body-padding">
+					<div class="">
+						<p class="title">工人列表</p>
+						<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
+					</div>
+				</view>
+				<view class="body-padding mt20">
+					<view class="sb al">
+						<div class="tagpad">
+							<div class="jobTag">選擇工人</div>
+						</div>
+					</view>
+					<!-- 选择职位 -->
+					<view class="border box scoll">
+						<!--only need one worker-main when for loop!-->
+						<div class="worker-main al" v-for="(p,j) in item.position" :key="j">
+							<div class="worker-info-area">
+								<b>{{p.position}}</b>
+							</div>
+							<view class="ju al">
+								<view class="addSubBtn ju al op" @click="changePositionNum2(true,i,j)">-</view>
+								<input v-model="p.number" style="margin-bottom: 0;width: 80upx;text-align: center;" type="number" placeholder="1" step="1" />
+								<view class="addSubBtn ju al op" @click="changePositionNum2(false,i,j)">+</view>
+							</view>
+							
+							<view 
+								:class="['checkBox',{ check:p.check }]"
+								@click="checkPosition2(i,j)">
+							</view>
+						</div>
+						<hr/>
+					</view>
+					
+					
+					<div class="hr">
+						<div class="blue-divider"></div>
+					</div>
+				</view>
+			</view>
+			
+			
+			<view class="centerBtn ju al op" @click="addOtherHeads">+增加副判頭</view>
+			
 			
 			<!-- Work Type - worktypeOption!-->
 			<view class="body-padding">
@@ -362,6 +424,7 @@
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
 				delImgs:[],
+				otherHead:[]
 			}
 		},
 		onLoad(val) {
@@ -430,6 +493,43 @@
 			delImg(i) {
 				this.imgs.splice(i,1)
 			},
+			//點擊添加復副判頭
+			addOtherHeads () {
+				if (!this.allPosition.length) {
+					uni.showToast({
+						title:"數據加載中，請稍後",
+						icon:"none"
+					})
+				} else {
+					let position = JSON.parse(JSON.stringify(this.allPosition))
+					position.forEach(item => {
+						item.number = 1
+						item.check = false
+					})
+					this.otherHead.push({
+						head:"",
+						position
+					})
+				}
+				
+			},
+			changePositionNum2 (boo,i,j) {
+				if (boo) {
+					//減少
+					this.otherHead[i].position[j].number--
+				} else {
+					//增加
+					this.otherHead[i].position[j].number++
+				}
+				if (this.otherHead[i].position[j].number < 1) {
+					this.otherHead[i].position[j].number = 1
+				}
+				this.otherHead = [...this.otherHead]
+			},
+			checkPosition2 (i,j) {
+				this.otherHead[i].position[j].check = !this.otherHead[i].position[j].check
+				this.otherHead = [...this.otherHead]
+			},
 			checkData () {
 				setTimeout(() => {
 					// 勾选已存在工人
@@ -480,19 +580,59 @@
 							}
 						})
 					})
-					let remarkList = this.attendenceData.remark.split(',')
-					remarkList.forEach((item,i) => {
-						this.allPosition.forEach(position => {
-							console.log(position,item)
-							if (item.includes(position.position)) {
-								position.check = true
-								let re = /[\D+]/g
-								let num = item.replace(re,"")
-								position.number = num * 1
+					// let remarkList = this.attendenceData.remark.split(',')
+					// remarkList.forEach((item,i) => {
+					// 	this.allPosition.forEach(position => {
+					// 		// console.log(position,item)
+					// 		if (item.includes(position.position)) {
+					// 			position.check = true
+					// 			let re = /[\D+]/g
+					// 			let num = item.replace(re,"")
+					// 			position.number = num * 1
+					// 		}
+					// 	})
+					// })
+				},500)
+				let arr = this.attendenceData.remark.split(";")
+				arr.pop()
+				console.log("remarkArr", arr)
+				arr.forEach(item => {
+					let one = item.split(":")
+					
+					let position = JSON.parse(JSON.stringify(this.allPosition))
+					position.forEach(item => {
+						item.number = 1
+						item.check = false
+					})
+					
+					position.forEach(item => {
+						// console.log(item.position,one[1])
+						// if (one[1].includes(item.position)) {
+						// 	item.check = true
+						// }
+						
+						let names = one[1].split(",")
+						names.forEach(name => {
+							// console.log(name, item.position)
+							let key = name.split(/\d+/g)
+							// console.log(key[0], item.position)
+							if (key[0] == item.position) {
+								item.check = true
+								let num = name.match(/\d+/g)
+								item.number = Number(num[0])
 							}
 						})
+						
 					})
-				},500)
+					
+					
+					this.otherHead.push({
+						head: one[0],
+						position
+					})
+					
+					
+				})
 			},
 			getData () {
 				let that = this
@@ -668,16 +808,30 @@
 				})
 				
 				let positions = ""
-				let num = 0
-				that.allPosition.forEach(item => {
-					if (item.check) {
-						positions = positions + item.position + item.number + "人,"
-						num = num + Number(item.number)
-					}
+				// let num = 0
+				// that.allPosition.forEach(item => {
+				// 	if (item.check) {
+				// 		positions = positions + item.position + item.number + "人,"
+				// 		num = num + Number(item.number)
+				// 	}
+				// })
+				// positions += "總人數" + num + "人,"
+				let otherHead = this.otherHead.filter(p => p.head)
+				otherHead = otherHead.filter(p => {
+					let boo = p.position.every(key => !key.check)
+					return !boo
 				})
-				positions += "總人數" + num + "人,"
-				// 職位拼接起來的string
-				console.log(positions.slice(0,-1))
+				
+				otherHead.forEach(item => {
+					positions += item.head + ":"
+					let positionStr = ""
+					item.position.forEach(p => {
+						if (p.check) {
+							positionStr += p.position + p.number + "人,"
+						}
+					})
+					positions += positionStr.slice(0,-1) + ";"
+				})
 				// return false
 				
 				let data = {
@@ -693,7 +847,7 @@
 							description:that.attendenceData.description,
 							worktype:arr2.join(),
 							base64Images: base64,
-							remark:positions.slice(0,-1),
+							remark:positions,
 							removeImageId: that.delImgs
 				}
 				console.log(data)
@@ -1010,7 +1164,14 @@
 		width: 100%;
 		border:solid 1px #E8E8E8;
 	}
-	
+	.centerBtn {
+		width: 300upx;
+		border: solid;
+		background:#007AFF;
+		margin:30upx auto;
+		padding: 15upx;
+		color:#FFF;
+	}
 	.submit-padding{
 		padding:0.5rem;
 	}

@@ -522,9 +522,14 @@
 						icon:"none"
 					})
 				} else {
+					let position = JSON.parse(JSON.stringify(this.allPosition))
+					position.forEach(item => {
+						item.number = 1
+						item.check = false
+					})
 					this.otherHead.push({
 						head:"",
-						position: JSON.parse(JSON.stringify(this.allPosition))
+						position
 					})
 				}
 				
