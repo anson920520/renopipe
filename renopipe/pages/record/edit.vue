@@ -352,6 +352,11 @@
 					{name:"30噸吊雞",number: 1,check:false},
 					{name:"5.5噸車",number: 1,check:false},
 					{name:"水泵",number: 1,check:false},
+					{name:"雞頭(4噸)",number: 1,check:false},
+					{name:"雞頭(13噸)",number: 1,check:false},
+					{name:"雞頭(20噸)",number: 1,check:false},
+					{name:"火轆",number: 1,check:false},
+					{name:"風車鋸",number: 1,check:false},
 					{name:"自行填寫",number: 1,check:false,type:"custom"},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 

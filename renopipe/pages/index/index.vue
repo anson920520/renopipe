@@ -85,22 +85,33 @@
 		},
 		onLoad() {
 			// this.getSite()
+			let str;
 			let D = new Date()
 			let Y = D.getFullYear()
 			let M = D.getMonth();
 			/*handle date*/
 			let d = D.getDate()
-			if(d < 10){
+			if(d <= 9){
 				d = "0" + d.toString()
 				console.log(d)
 			}else{
 				d = d
 			}
 			
-			let str = Y + "-0" + (M+1) + "-" + d
+			if((M+1) > 9){
+				str = Y + "-" + (M+1) + "-" + d
+			}else{
+				str = Y + "-0" + (M+1) + "-" + d
+			}
+			
 			this.start.name = str
 			
-			this.start.id = Y.toString()+"0"+(M+1).toString()+d
+			if((M+1) > 9){
+				this.start.id = Y.toString()+(M+1).toString()+d
+			}else{
+				this.start.id = Y.toString()+"0"+(M+1).toString()+d
+			}
+
 			this.start.timesamp = new Date(str).getTime()/1000
 			
 			this.end = parseInt(this.start.id) - 1

@@ -63,6 +63,8 @@
 							<option id="2" value="信雄">信雄</option>
 							<option id="3" value="信昌">信昌</option>
 							<option id="4" value="永富">永富</option>
+							<option id="5" value="平安地基">平安地基</option>
+							<option id="6" value="六盛">六盛</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>
@@ -305,7 +307,12 @@
 					{name:"30噸吊雞",number: 1,check:false},
 					{name:"5.5噸車",number: 1,check:false},
 					{name:"水泵",number: 1,check:false},
-					{name:"",number: 1,check:false,type:"custom"},
+					{name:"雞頭(4噸)",number: 1,check:false},
+					{name:"雞頭(13噸)",number: 1,check:false},
+					{name:"雞頭(20噸)",number: 1,check:false},
+					{name:"火轆",number: 1,check:false},
+					{name:"風車鋸",number: 1,check:false},
+					{name:"自行填寫",number: 1,check:false,type:"custom"},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
@@ -599,7 +606,7 @@
 				console.log(data)
 				// return false
 				
-				if (!data.worktype) {
+				/*if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
 				} 
 				// else if (data.machine.length == 0) {
@@ -607,7 +614,7 @@
 				// } 
 				else if (!data.description) {
 					uni.showToast({ title: "請填寫工作描述", icon: "none" })
-				} else {
+				} else {*/
 					uni.request({
 						url:that.baseURL + "attendence",
 						method:"POST",
@@ -636,7 +643,7 @@
 						},
 						complete () { uni.hideLoading() }
 					})
-				}
+				//}
 				
 				
 			},
