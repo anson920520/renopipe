@@ -57,8 +57,8 @@
 			</view>
 
 			<view class="body-padding">
-				判頭: <span class="">
-						<select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+				判頭: <span class="">Renopipe
+						<!-- <select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
 							<option id="2" value="信雄">信雄</option>
 							<option id="3" value="信昌">信昌</option>
@@ -66,7 +66,7 @@
 							<option id="5" value="平安地基">平安地基</option>
 							<option id="6" value="六盛">六盛</option>
 							<option id="2" value="Others">其他</option>
-						</select>
+						</select> -->
 					</span>
 
 			</view>
@@ -84,6 +84,9 @@
 					<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
+			
+			
+			
 			
 			<view class="body-padding mt20">
 				<view class="sb al">
@@ -141,6 +144,72 @@
 					<div class="blue-divider"></div>
 				</div>
 			</view>
+			
+			
+			
+			<!-- 副判头 -->
+			<view v-for="(item,i) in otherHead" :key="i">
+				<view class="body-padding">
+					副判頭（可多選）: 
+					<span class="">
+						<select @change="onChangeHead()" v-model="item.head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+							<option id="2" value="信雄">信雄</option>
+							<option id="3" value="信昌">信昌</option>
+							<option id="4" value="永富">永富</option>
+							<option id="5" value="平安地基">平安地基</option>
+							<option id="6" value="六盛">六盛</option>
+							<option id="2" value="Others">其他</option>
+						</select>
+					</span>
+				</view>
+				
+				
+				<view class="body-padding">
+					<div class="">
+						<p class="title">工人列表</p>
+						<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
+					</div>
+				</view>
+				<view class="body-padding mt20">
+					<view class="sb al">
+						<div class="tagpad">
+							<div class="jobTag">選擇工人</div>
+						</div>
+					</view>
+					<!-- 选择职位 -->
+					<view class="border box scoll">
+						<!--only need one worker-main when for loop!-->
+						<div class="worker-main al" v-for="(p,j) in item.position" :key="j">
+							<div class="worker-info-area">
+								<b>{{p.position}}</b>
+							</div>
+							<view class="ju al">
+								<view class="addSubBtn ju al op" @click="changePositionNum2(true,i,j)">-</view>
+								<input v-model="p.number" style="margin-bottom: 0;width: 80upx;text-align: center;" type="number" placeholder="1" step="1" />
+								<view class="addSubBtn ju al op" @click="changePositionNum2(false,i,j)">+</view>
+							</view>
+							
+							<view 
+								:class="['checkBox',{ check:p.check }]"
+								@click="checkPosition2(i,j)">
+							</view>
+						</div>
+						<hr/>
+					</view>
+					
+					
+					<div class="hr">
+						<div class="blue-divider"></div>
+					</div>
+				</view>
+			</view>
+			
+			
+			<view class="centerBtn ju al op" @click="addOtherHeads">+增加副判頭</view>
+			
+			
+			
+			
 			
 			<!-- Work Type - worktypeOption!-->
 			<view class="body-padding">
@@ -316,7 +385,12 @@
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
-				
+				otherHead: [
+					// {
+					// 	head:"",
+					// 	position:[]
+					// }
+				]
 			}
 		},
 		onLoad(val) {
@@ -373,6 +447,19 @@
 				}
 				this.allPosition.splice(i,1,obj)
 			},
+			changePositionNum2 (boo,i,j) {
+				if (boo) {
+					//減少
+					this.otherHead[i].position[j].number--
+				} else {
+					//增加
+					this.otherHead[i].position[j].number++
+				}
+				if (this.otherHead[i].position[j].number < 1) {
+					this.otherHead[i].position[j].number = 1
+				}
+				this.otherHead = [...this.otherHead]
+			},
 			delImg(i) {
 				this.imgs.splice(i,1)
 			},
@@ -388,6 +475,10 @@
 				let obj = this.allPosition[i]
 				obj.check = !obj.check
 				this.allPosition.splice(i,1,obj)
+			},
+			checkPosition2 (i,j) {
+				this.otherHead[i].position[j].check = !this.otherHead[i].position[j].check
+				this.otherHead = [...this.otherHead]
 			},
 			// 选择position
 			choosePosition (e) {
@@ -422,6 +513,21 @@
 						}
 					}
 				})
+			},
+			//點擊添加復副判頭
+			addOtherHeads () {
+				if (!this.allPosition.length) {
+					uni.showToast({
+						title:"數據加載中，請稍後",
+						icon:"none"
+					})
+				} else {
+					this.otherHead.push({
+						head:"",
+						position: JSON.parse(JSON.stringify(this.allPosition))
+					})
+				}
+				
 			},
 			// 獲取所以地盤
 			getSite () {
@@ -531,14 +637,32 @@
 				})
 				
 				let positions = ""
-				let num = 0
-				that.allPosition.forEach(item => {
-					if (item.check) {
-						num = num + Number(item.number)
-						positions = positions + item.position + item.number + "人,"
-					}
+				// let num = 0
+				// that.allPosition.forEach(item => {
+				// 	if (item.check) {
+				// 		num = num + Number(item.number)
+				// 		positions = positions + item.position + item.number + "人,"
+				// 	}
+				// })
+				// positions += "總人數" + num + "人,"
+				
+				
+				let otherHead = this.otherHead.filter(p => p.head)
+				otherHead = otherHead.filter(p => {
+					let boo = p.position.every(key => !key.check)
+					return !boo
 				})
-				positions += "總人數" + num + "人,"
+				
+				otherHead.forEach(item => {
+					positions += item.head + ":"
+					let positionStr = ""
+					item.position.forEach(p => {
+						if (p.check) {
+							positionStr += p.position + p.number + "人,"
+						}
+					})
+					positions += positionStr.slice(0,-1) + ";"
+				})
 				
 				// 職位拼接起來的string
 				//console.log(positions.slice(0,-1))
@@ -596,7 +720,7 @@
 							//rebate:"",
 							//ce:"",
 							//other:this.head,
-							remark:positions.slice(0,-1),
+							remark:positions,
 							base64Images: base64,
 							//for whatsapp
 							groupId:groupId,
@@ -853,7 +977,14 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+	.centerBtn {
+		width: 300upx;
+		border: solid;
+		background:#007AFF;
+		margin:30upx auto;
+		padding: 15upx;
+		color:#FFF;
+	}
 	.Wrap {
 		min-height: 100vh;
 		// border: solid black 1px;

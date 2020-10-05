@@ -247,7 +247,7 @@
 	export default {
 		data() {
 			return {
-				attendenceData:{supervisors:[""], workers:[]},
+				attendenceData:{supervisors:[""], workers:[],createdAt:""},
 				imgs:[],
 				description: "",
 				workerList: [],
@@ -340,7 +340,7 @@
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
-						//console.log(res)
+						console.log('报工记录',res)
 						if(res){
 							that.attendenceData = res.data[0]
 							that.getSite(res);
