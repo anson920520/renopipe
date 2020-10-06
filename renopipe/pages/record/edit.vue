@@ -58,14 +58,11 @@
 
 			<view class="body-padding">
 				判頭: <span class="">
-					{{attendenceData.rporsubCRP}}
-						<!-- <select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+					<!-- {{attendenceData.rporsubCRP}} -->
+						<select @change="onChangeHead($event)" v-model="attendenceData.rporsubCRP" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
-							<option id="2" value="信雄">信雄</option>
-							<option id="3" value="信昌">信昌</option>
-							<option id="4" value="永富">永富</option>
-							<option id="2" value="Others">其他</option>
-						</select> -->
+							<option id="2" value="Others">外判</option>
+						</select>
 					</span>
 
 				
@@ -586,18 +583,18 @@
 							}
 						})
 					})
-					// let remarkList = this.attendenceData.remark.split(',')
-					// remarkList.forEach((item,i) => {
-					// 	this.allPosition.forEach(position => {
-					// 		// console.log(position,item)
-					// 		if (item.includes(position.position)) {
-					// 			position.check = true
-					// 			let re = /[\D+]/g
-					// 			let num = item.replace(re,"")
-					// 			position.number = num * 1
-					// 		}
-					// 	})
-					// })
+					let remarkList = this.attendenceData.remark.split(',')
+					remarkList.forEach((item,i) => {
+						this.allPosition.forEach(position => {
+							// console.log(position,item)
+							if (item.includes(position.position)) {
+								position.check = true
+								let re = /[\D+]/g
+								let num = item.replace(re,"")
+								position.number = num * 1
+							}
+						})
+					})
 				},500)
 				let arr = this.attendenceData.remark.split(";")
 				arr.pop()
