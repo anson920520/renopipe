@@ -160,7 +160,10 @@
 			<!-- 副判头 -->
 			<view v-for="(item,i) in otherHead" :key="i">
 				<view class="body-padding">
-					副判頭（可多選）: 
+					<view class="sb al">
+						<view>副判頭（可多選）: </view>
+						<view class="delBtn op" @click="delOtherHead(i)">刪除</view>
+					</view>
 					<span class="">
 						<select @change="onChangeHead()" v-model="item.head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="2" value="信雄">信雄</option>
@@ -470,6 +473,9 @@
 					obj.number = 1
 				}
 				this.allPosition.splice(i,1,obj)
+			},
+			delOtherHead (i) {
+				this.otherHead.splice(i,1)
 			},
 			addSub (boo, i) {
 				if (boo) {

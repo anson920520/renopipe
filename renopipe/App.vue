@@ -61,4 +61,9 @@
 		height: 45upx;
 		border: solid #CCC 1px;
 	}
+	.delBtn {
+		padding: 10upx 40upx;
+		background: #007AFF;
+		color:#FFF;
+	}
 </style>
