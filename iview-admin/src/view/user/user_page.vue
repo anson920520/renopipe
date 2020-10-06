@@ -37,12 +37,12 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="工人中文名" prop="cName">
+        <FormItem label="工人中文名" prop="cName" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.cName" placeholder="請輸入中文名" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="暱稱" prop="nickname">
+        <FormItem label="暱稱" prop="nickname" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.nickname" placeholder="請輸入暱稱" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -162,7 +162,7 @@
         <FormItem label="Company" prop="company">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.company" placeholder="選擇公司" />
         </FormItem>
-          <FormItem label="Role" prop="role" style="display:none">
+          <FormItem label="Role" prop="role" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.role" placeholder="選擇Type of role" />
         </FormItem>
 
@@ -171,22 +171,22 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo" style="display:none">
+        <FormItem label="身份證號" prop="idNo" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="工人中文名" prop="cName">
+        <FormItem label="工人中文名" prop="cName" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.cName" placeholder="請輸入中文名" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="暱稱" prop="nickname">
+        <FormItem label="暱稱" prop="nickname" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.nickname" placeholder="請輸入暱稱" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
         
-        <FormItem label="聯繫電話" prop="phone" style="display:none">
+        <FormItem label="聯繫電話" prop="phone" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -196,7 +196,7 @@
            <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
-         <FormItem label="生日日期" prop="dob" style="display:none">
+         <FormItem label="生日日期" prop="dob" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.dob" placeholder="生日日期" />
         </FormItem>
 
@@ -309,13 +309,13 @@ export default {
         // { title: "role", key:"role" },
         // { title: "group", key:"group" },
         // { title: "team", key:"team" },
-        { title: "身份證號", key:"idNo" },
+        //{ title: "身份證號", key:"idNo" },
         { title: "全名", key:"fullname" },
-        { title: "中文名", key:"cName" },
-        { title: "暱稱", key:"nickname" },
+        //{ title: "中文名", key:"cName" },
+        //{ title: "暱稱", key:"nickname" },
         //{ title: "聯繫電話", key:"phone" },
         { title: "職位", key:"position" },
-        { title: "地址", key:"address" },
+        //{ title: "地址", key:"address" },
         
         // { title: "工頭(經理)", key:"master" },
         { title: "操作", slot:"operation" },
@@ -343,19 +343,19 @@ export default {
           {required:true, message: "請輸入全名",trigger:"blur" },
         ],
         cName: [
-          {required:true, message: "請輸入中文名",trigger:"blur" },
+          //{required:true, message: "請輸入中文名",trigger:"blur" },
         ],
         nickname: [
-          {required:true, message: "請輸入暱稱",trigger:"blur" },
+        //  {required:true, message: "請輸入暱稱",trigger:"blur" },
         ],
         phone: [
-          {required:true, message: "請輸入聯繫電話",trigger:"blur" },
+        //  {required:true, message: "請輸入聯繫電話",trigger:"blur" },
         ],
         staffNo: [
-          {required:true, message: "請輸入工人編號",trigger:"blur" },
+        //  {required:true, message: "請輸入工人編號",trigger:"blur" },
         ],
         idNo: [
-          {required:true, message: "請輸入身份證號",trigger:"blur" },
+         // {required:true, message: "請輸入身份證號",trigger:"blur" },
         ],
         position: [
           //{required:true, message: "請輸入position",trigger:"blur" },
@@ -391,8 +391,8 @@ export default {
               "role": that.addForm.role,
               "fullname": that.addForm.fullname,
               "idNo": randomSerial,
-              "cName": that.addForm.cName,
-              "nickname": that.addForm.nickname,
+              "cName": that.addForm.fullname,
+              "nickname": that.addForm.fullname,
               "position": that.addForm.position,
               "dob":randomSerial,//that.addForm.dob,
               "group":"1",

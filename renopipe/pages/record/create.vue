@@ -57,16 +57,11 @@
 			</view>
 
 			<view class="body-padding">
-				判頭: <span class="">Renopipe
-						<!-- <select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
+				判頭: <span class=""><!--Renopipe!-->
+					 <select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="1" value="Renopipe">Renopipe</option>
-							<option id="2" value="信雄">信雄</option>
-							<option id="3" value="信昌">信昌</option>
-							<option id="4" value="永富">永富</option>
-							<option id="5" value="平安地基">平安地基</option>
-							<option id="6" value="六盛">六盛</option>
-							<option id="2" value="Others">其他</option>
-						</select> -->
+							<option id="2" value="Others">外判</option>
+						</select> 
 					</span>
 
 			</view>
@@ -78,17 +73,14 @@
 			</div>
 
 			<!--worker-list!-->
-			<view class="body-padding">
+			<view class="body-padding" v-if="head=='Renopipe'">
 				<div class="">
 					<p class="title">工人列表</p>
 					<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
 			
-			
-			
-			
-			<view class="body-padding mt20">
+			<view class="body-padding mt20" v-if="head=='Renopipe'">
 				<view class="sb al">
 					<div class="tagpad">
 						<div class="jobTag">選擇工人</div>
@@ -117,9 +109,9 @@
 					<hr/>
 				</view>
 				
-				<!-- 选择职位 -->
+				<!-- 选择职位 
 				<view class="border box scoll" v-else>
-					<!--only need one worker-main when for loop!-->
+					only need one worker-main when for loop
 					<div class="worker-main al" v-for="(item,i) in allPosition" :key="i">
 						<div class="worker-info-area">
 							<b>{{item.position}}</b>
@@ -133,11 +125,11 @@
 						<view 
 							:class="['checkBox',{ check:item.check }]"
 							@click="checkPosition(i)">
-							<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> -->
+							 <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> 
 						</view>
 					</div>
 					<hr/>
-				</view>
+				</view>-->
 				
 				
 				<div class="hr">
@@ -150,7 +142,7 @@
 			<!-- 副判头 -->
 			<view v-for="(item,i) in otherHead" :key="i">
 				<view class="body-padding">
-					副判頭（可多選）: 
+					其他判頭（可多選）: 
 					<span class="">
 						<select @change="onChangeHead()" v-model="item.head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
 							<option id="2" value="信雄">信雄</option>
@@ -205,7 +197,7 @@
 			</view>
 			
 			
-			<view class="centerBtn ju al op" @click="addOtherHeads">+增加副判頭</view>
+			<view class="centerBtn ju al op" @click="addOtherHeads">+增加其他判頭</view>
 			
 			
 			
@@ -842,6 +834,9 @@
 			},
 			onChangeHead(){
 				console.log(this.head)
+				if(this.head == "Others"){
+					this.addOtherHeads();
+				}
 				//console.log(e.target)
 				//this.head = this.head;
 			},
