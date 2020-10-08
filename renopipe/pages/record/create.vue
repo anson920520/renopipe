@@ -726,11 +726,11 @@
 							remark:positions,
 							base64Images: base64,
 							//for whatsapp
-							groupId:groupId,
-							phone:"85292631429",
-							token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
+							//groupId:groupId,
+							//phone:"85292631429",
+							//token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
 				}
-				console.log(data)
+				//console.log(data)
 				// return false
 				
 				/*if (!data.worktype) {
@@ -751,10 +751,18 @@
 						data: data,
 						success (res) {
 							console.log("新增",res)
-							if (!res.data.error) {
-								uni.navigateTo({
-									url: "/pages/record/complete"
-								})
+							if (res.statusCode == 200) {
+								if(res.data.ID){
+									uni.navigateTo({
+										url: "/pages/record/complete"
+									})
+								}
+								else{
+									uni.showToast({
+										title: "上傳錯誤，資料可能遺失請重新檢查",
+										icon:"none"
+									})
+								}
 							} else {
 								uni.showToast({
 									title: "創建失敗",
@@ -768,7 +776,7 @@
 								icon:"none"
 							})
 						},
-						complete () { uni.hideLoading() }
+						complete () { uni.hideLoading()}
 					})
 				//}
 				

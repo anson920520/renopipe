@@ -561,10 +561,8 @@
 					
 					this.attendenceData.machine.split(",").forEach(item => {
 						let b = this.machineOption.every(mach => {
-							console.log(mach.name, item.split(/[\d+]/)[0])
 							return mach.name != item.split(/[\d+]/)[0]
 						})
-						console.log(b)
 						if (b) {
 							this.machineOption.splice(this.machineOption.length-1, 1, {name: item.split(/[\d+]/)[0],number: 1,check:false,type:"custom"},)
 						}
@@ -851,7 +849,8 @@
 							worktype:arr2.join(),
 							base64Images: base64,
 							remark:positions,
-							removeImageId: that.delImgs
+							removeImageId: that.delImgs,
+						
 				}
 				console.log(data)
 				if (!data.worktype) {

@@ -8,6 +8,8 @@
 				<div class="main">
 					<p class="title">工作紀錄詳情</p>
 					<!--return btn!-->
+					<div class="btn-color customize-btn" @click="republish"> 重新報工</div>
+					<div class="btn-color customize-btn" @click="rephoto"> 圖片補充</div>
 					<div class="btn-color customize-btn" @click="toHome"> 返回</div>
 				</div>
 				<hr class="hr-line"/>
@@ -98,20 +100,10 @@
 			<!--worker-list!-->
 			<view class="body-padding">
 				<div class="">
-					<p  v-if="attendenceData.workers.length > 0" class="title">當值工人: {{attendenceData.workers.length}} 人</p>
+					<p  v-if="attendenceData.workers.length > 0" class="title">Renopipe當值工人: {{attendenceData.workers.length}} 人</p>
 					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
 				</div>
-			</view>
-			
-			<view class="body-padding">
-				<div class="">
-					<p v-if="attendenceData.remark" class="title">當值工人: {{attendenceData.remark}} </p>
-					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
-				</div>
-				
-			</view>
-				
-			
+			</view>			
 			
 			<view v-if="attendenceData.workers.length > 0" class="body-padding mt20">
 
@@ -133,6 +125,15 @@
 				
 				</view>
 			</view>
+			<br/><br/>
+			<view class="body-padding">
+				<div class="">
+					<p v-if="attendenceData.remark" class="title">其他判頭當值工人: <br/>{{attendenceData.remark}} </p>
+					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
+				</div>
+				
+			</view>
+				
 			
 			<view class="hr">
 				<div class="blue-divider"></div>
@@ -596,6 +597,130 @@
 				console.log(this.head)
 				//console.log(e.target)
 				//this.head = this.head;
+			},
+			republish(){
+				//check group id
+				let pjid = this.site.project
+				let groupId = "";
+				console.log(pjid)
+				
+				if(pjid == "J1005"){
+					groupId = "1598237648";
+				}else if(pjid == "J1003"){
+					groupId = "1598237623";
+				}else if(pjid == "J1008"){
+					groupId = "1598237673";
+				}else if(pjid == "J1009"){
+					groupId = "1598237699";
+				}else{
+					groupId = "not found";
+				}
+				
+				//update time
+				let updateTime = new Date();
+				console.log(updateTime)
+				
+				//token
+				var myHeaders = new Headers();
+				myHeaders.append("Authorization", "rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6");
+				myHeaders.append("Content-Type", "application/json");
+					
+				//workers
+				let workerslisting = this.attendenceData.workers;
+				let workerArr = [];
+				
+				for (let i = 0; i < this.attendenceData.workers.length; i++){
+					workerArr.push("\n" + this.attendenceData.workers[i].cName + "-" + this.attendenceData.workers[i].position)
+				}
+				
+				
+				var raw = JSON.stringify({
+					"groupId":groupId,
+					"phone":"85292631429",
+					"message":
+						"[報工記錄更新:" + updateTime + "]"+
+						"\n\n" + `時段 : ` + this.attendenceData.time +
+						"\n\n" + `項目編號 : ` + this.site.project +
+						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
+						"\n\n" + `DIS(2)  :` + this.site.siteCode3 +
+						"\n\n" + `判頭 : ` + this.attendenceData.subcontract +
+						"\n\n" + `創建者 : ` + this.attendenceData.supervisors[0].cName +
+						"\n\n" + `地盤名稱: ` + this.site.cname + " " + this.site.name +
+						"\n\n" + `EMFM: ` + this.site.emfm +
+						"\n\n" + `DMA: ` + this.site.dma +
+						"\n\n" + `Site C. To: ` + this.site.sitetoc +
+						"\n\n" + `Imple To: ` + this.site.imple +
+						"\n\n" + `機械:  ` + this.attendenceData.machine +
+						"\n\n" + `工人總數：` + this.attendenceData.workers.length +
+						"\n\n" + `工人：`+ workerArr +
+						"\n\n" + `工作種類:` + this.attendenceData.worktype +
+						"\n\n" + `工作內容:` + this.attendenceData.description +
+						"\n\n" + `其他判頭工人:` + "\n\n" + this.attendenceData.remark + ""
+					})
+					
+				console.log(raw)
+					
+				var requestOptions = {
+				  method: 'POST',
+				  headers: myHeaders,
+				  body: raw,
+				  redirect: 'follow'
+				};
+				
+				fetch("https://selo.wablas.com/api/send-group", requestOptions)
+				  .then(response => response.text())
+				  .then(result => console.log(result))
+				  .catch(error => console.log('error', error));
+			},
+			rephoto(){
+				const imgUrl = "https://renopipe.co/"
+				//imgUrl + this.attendenceData.images[i]filePath
+				for (let i = 0; i < this.attendenceData.images.length; i++){
+					console.log(i)
+					console.log(imgUrl + this.attendenceData.images[i].filePath)
+					let pjid = this.site.project
+					let groupId = "";
+					console.log(pjid)
+					
+					if(pjid == "J1005"){
+						groupId = "1598237648";
+					}else if(pjid == "J1003"){
+						groupId = "1598237623";
+					}else if(pjid == "J1008"){
+						groupId = "1598237673";
+					}else if(pjid == "J1009"){
+						groupId = "1598237699";
+					}else{
+						groupId = "not found";
+					}
+					
+					let updateTime = new Date().toJSON().slice(0,10);
+					console.log(updateTime)
+					
+					var myHeaders = new Headers();
+					myHeaders.append("Authorization", "rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6");
+					myHeaders.append("Content-Type", "application/json");
+					
+					var raw = JSON.stringify({
+							"groupId":groupId,
+							"phone":"85292631429",
+							"caption":"補充圖片"+ updateTime + this.site.cname + this.site.name,
+							"image":imgUrl + this.attendenceData.images[i].filePath
+						});
+					
+					var requestOptions = {
+					  method: 'POST',
+					  headers: myHeaders,
+					  body: raw,
+					  redirect: 'follow'
+					};
+					
+					fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
+					  .then(response => response.text())
+					  .then(result => console.log(result))
+					  .catch(error => console.log('error', error));
+				}
+
 			},
 			editNow(){
 				uni.navigateTo({

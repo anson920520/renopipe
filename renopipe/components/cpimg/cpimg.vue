@@ -77,7 +77,7 @@ export default {
 			uni.hideLoading();
 			// #endif
 			uni.showLoading({
-				title: `图片压缩中 ${_index + 1}/${_cgFile.length}`,
+				title: `圖片壓縮中 ${_index + 1}/${_cgFile.length}`,
 				mask: true
 			});
 			// 获取图片信息
