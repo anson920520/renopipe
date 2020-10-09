@@ -8,7 +8,7 @@
 				<div class="main">
 					<p class="title">工作紀錄詳情</p>
 					<!--return btn!-->
-					<div class="btn-color customize-btn" @click="republish"> 重新報工</div>
+					<div class="btn-color customize-btn" @click="republish"> 重發whatsapp</div>
 					<div class="btn-color customize-btn" @click="rephoto"> 圖片補充</div>
 					<div class="btn-color customize-btn" @click="toHome"> 返回</div>
 				</div>
@@ -599,7 +599,7 @@
 					"groupId":groupId,
 					"phone":"85292631429",
 					"message":
-						"[報工記錄更新:" + updateTime + "]"+
+						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+
 						"\n\n" + `時段 : ` + this.attendenceData.time +
 						"\n\n" + `項目編號 : ` + this.site.project +
 						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
@@ -628,60 +628,77 @@
 				  redirect: 'follow'
 				};
 				
-				fetch("https://selo.wablas.com/api/send-group", requestOptions)
+				/*fetch("https://selo.wablas.com/api/send-group", requestOptions)
 				  .then(response => response.text())
 				  .then(result => console.log(result))
-				  .catch(error => console.log('error', error));
+				  .then()
+				  .catch(error => console.log('error', error));*/
+				 
+				
+				uni.navigateTo({
+						url: "/pages/record/completeResend"
+				})
+				
 			},
 			rephoto(){
 				const imgUrl = "https://renopipe.co/"
 				//imgUrl + this.attendenceData.images[i]filePath
-				for (let i = 0; i < this.attendenceData.images.length; i++){
-					console.log(i)
-					console.log(imgUrl + this.attendenceData.images[i].filePath)
-					let pjid = this.site.project
-					let groupId = "";
-					console.log(pjid)
-					
-					if(pjid == "J1005"){
-						groupId = "1598237648";
-					}else if(pjid == "J1003"){
-						groupId = "1598237623";
-					}else if(pjid == "J1008"){
-						groupId = "1598237673";
-					}else if(pjid == "J1009"){
-						groupId = "1598237699";
+				console.log(this.attendenceData)
+				if(this.attendenceData.images){
+					for (let i = 0; i < this.attendenceData.images.length; i++){
+						console.log(i)
+						console.log(imgUrl + this.attendenceData.images[i].filePath)
+						let pjid = this.site.project
+						let groupId = "";
+						console.log(pjid)
+						
+						if(pjid == "J1005"){
+							groupId = "1598237648";
+						}else if(pjid == "J1003"){
+							groupId = "1598237623";
+						}else if(pjid == "J1008"){
+							groupId = "1598237673";
+						}else if(pjid == "J1009"){
+							groupId = "1598237699";
+						}else{
+							groupId = "not found";
+						}
+						
+						let updateTime = new Date().toJSON().slice(0,10);
+						console.log(updateTime)
+						
+						var myHeaders = new Headers();
+						myHeaders.append("Authorization", "rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6");
+						myHeaders.append("Content-Type", "application/json");
+						
+						var raw = JSON.stringify({
+								"groupId":groupId,
+								"phone":"85292631429",
+								"caption":"補充圖片"+ updateTime + this.site.cname + this.site.name,
+								"image":imgUrl + this.attendenceData.images[i].filePath
+							});
+						
+						var requestOptions = {
+						  method: 'POST',
+						  headers: myHeaders,
+						  body: raw,
+						  redirect: 'follow'
+						};
+						
+						/*fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
+						  .then(response => response.text())
+						  .then(result => console.log(result))
+						  .catch(error => console.log('error', error));*/
+						}
+						uni.navigateTo({
+								url: "/pages/record/completeResendIMG"
+						})
 					}else{
-						groupId = "not found";
+						uni.showToast({
+							title: "本記錄沒有任何圖片",
+							icon:"none"
+						})
 					}
-					
-					let updateTime = new Date().toJSON().slice(0,10);
-					console.log(updateTime)
-					
-					var myHeaders = new Headers();
-					myHeaders.append("Authorization", "rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6");
-					myHeaders.append("Content-Type", "application/json");
-					
-					var raw = JSON.stringify({
-							"groupId":groupId,
-							"phone":"85292631429",
-							"caption":"補充圖片"+ updateTime + this.site.cname + this.site.name,
-							"image":imgUrl + this.attendenceData.images[i].filePath
-						});
-					
-					var requestOptions = {
-					  method: 'POST',
-					  headers: myHeaders,
-					  body: raw,
-					  redirect: 'follow'
-					};
-					
-					fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
-					  .then(response => response.text())
-					  .then(result => console.log(result))
-					  .catch(error => console.log('error', error));
-				}
-
 			},
 			editNow(){
 				uni.navigateTo({

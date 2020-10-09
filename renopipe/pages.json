@@ -47,6 +47,17 @@
 				"navigationStyle":"custom"
 			}
         }
+        ,{
+            "path" : "pages/record/completeResend",
+            "style" : {
+            	"navigationStyle":"custom"
+            }
+        },{
+            "path" : "pages/record/completeResendIMG",
+            "style" : {
+            	"navigationStyle":"custom"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
