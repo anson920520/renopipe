@@ -857,7 +857,7 @@ export default {
     createImgDOM () {
       let oAbs = document.getElementsByClassName('imgAbso');
       if (this.current.images) {
-        this.absWidth = this.current.images.length*64 / 2
+        this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
       }
       
     },
