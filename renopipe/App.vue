@@ -66,4 +66,8 @@
 		background: #007AFF;
 		color:#FFF;
 	}
+	.input {
+		padding: 10upx;
+		margin: 5upx 0;
+	}
 </style>

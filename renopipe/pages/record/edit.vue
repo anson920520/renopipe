@@ -109,6 +109,9 @@
 						</view>
 					</picker>
 				</view>
+				<view>
+					<input type="text" class="input" @input="searchWorker" placeholder="搜索工人" />
+				</view>
 				
 				<view class="border box scoll" v-if="attendenceData.rporsubCRP=='Renopipe'">
 					<!--only need one worker-main when for loop!-->
@@ -456,6 +459,18 @@
 				let obj = this.allPosition[i]
 				obj.check = !obj.check
 				this.allPosition.splice(i,1,obj)
+			},
+			searchWorker (e) {
+				let arr = []
+				this.allPosition.forEach(po => {
+					po.workers.forEach(workers => {
+						// console.log(worders.cName, e.target.value)
+						if (String(workers.cName).includes(e.target.value)) {
+							arr.push(workers)
+						}
+					})
+				})
+				this.workerList = arr
 			},
 			changePositionNum (boo,i) {
 				let obj = this.allPosition[i]

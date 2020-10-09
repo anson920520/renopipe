@@ -127,11 +127,12 @@
 			</view>
 			<br/><br/>
 			<view class="body-padding">
-				<div class="">
-					<p v-if="attendenceData.remark" class="title">其他判頭當值工人: <br/>{{attendenceData.remark}} </p>
-					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
-				</div>
-				
+				<view>其他判頭當值工人: </view>
+				<view v-for="(item,i) in remark2" :key="i">
+					<view>{{item.title}}:</view>
+					<view v-for="(attr,j) in item.list" :key="j">{{attr}}</view>
+					<br>
+				</view>
 			</view>
 				
 			
@@ -139,63 +140,7 @@
 				<div class="blue-divider"></div>
 			</view>
 			
-			<!-- Work Type - worktypeOption
-			<view class="body-padding">
-				<div class="">
-					<p class="title">工作類型列表</p>
-				</div>
-			</view>
-			
-			<view class="body-padding mt20">
-				<view class="border box scoll">
-					<div class="worker-main" v-for="(item,i) in attendenceData.workers" :key="i">
-						<div class="worktype-info-area">
-							<p class="worktype">{{item.name}}</p>
-						</div>
-						<div class="chk-box-area">
-							<view
-								:class="['checkBox',{ check:item.check }]"
-								@click="chooseType(i)">
-								<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image> 
-							</view>
-						</div>
-					</div>
-					<hr/>
-				</view>
-				<div class="hr">
-					<div class="blue-divider"></div>
-				</div>
-			</view>!-->
 
-			<!--Machine selection
-			<view class="body-padding">
-				<div class="">
-					<p class="title">使用機械列表</p>
-					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
-				</div>
-			</view>
-
-			<view class="body-padding mt20">
-				<view class="border box scoll">
-					<div class="worker-main" v-for="(item,i) in machineOption" :key="i">
-						<div class="worktype-info-area">
-							<p class="worktype">{{item.name}}</p>
-						</div>
-						<div class="chk-box-area">
-							<view
-								:class="['checkBox',{ check:item.check }]"
-								@click="chooseMachine(i)">
-								<!-- <image v-show="item.check" class="checkBoxIcon" src="../../static/img/check2.png" mode="widthFix"></image>
-							</view>
-						</div>
-					</div>
-					<hr/>
-				</view>
-				<div class="hr">
-					<div class="blue-divider"></div>
-				</div>
-			</view>!-->
-			
 
 			<!--work description!-->
 			<view class="body-padding">
@@ -283,6 +228,7 @@
 					{name:"試制",check:false},
 					{name:"雜務",check:false}
 				],
+				remark2: [],
 				machineOption:[ //機械種類 machineOption
 					{name:"發電機",check:false},
 					{name:"大電炮",check:false},
@@ -345,6 +291,17 @@
 						if(res){
 							that.attendenceData = res.data[0]
 							that.getSite(res);
+							let arr = []
+							let remark = that.attendenceData.remark.split(";")
+							remark.pop()
+							console.log(remark)
+							remark.forEach(item => {
+								let obj = {}
+								obj.title = item.split(":")[0]
+								obj.list = (item.split(":")[1]).split(",")
+								arr.push(obj)
+							})
+							that.remark2 = arr
 						}else{
 							alert("暫時未有記錄")
 						}

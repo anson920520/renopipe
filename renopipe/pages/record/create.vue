@@ -92,10 +92,13 @@
 						</view>
 					</picker>
 				</view>
+				<view>
+					<input type="text" class="input" @input="searchWorker" placeholder="搜索工人" />
+				</view>
 				
 				<view class="border box scoll" v-if="head=='Renopipe'">
 					<!--only need one worker-main when for loop!-->
-					<div class="worker-main al" v-for="(item,i) in workerList" :key="i">
+					<div class="worker-main al" v-for="(item,i) in workerList" :key="i" v-show="!item.hide">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
 						<div class="worker-info-area">
 							<b>{{item.cName}} {{item.position}}</b>
@@ -483,6 +486,18 @@
 				this.currentPositionIndex = num
 				//console.log(that.currentPositionIndex)
 				that.workerList = this.allPosition[this.currentPositionIndex].workers
+			},
+			searchWorker (e) {
+				let arr = []
+				this.allPosition.forEach(po => {
+					po.workers.forEach(workers => {
+						// console.log(worders.cName, e.target.value)
+						if (String(workers.cName).includes(e.target.value)) {
+							arr.push(workers)
+						}
+					})
+				})
+				this.workerList = arr
 			},
 			//获取所有工种(包括工人)
 			getAllPosition () {
