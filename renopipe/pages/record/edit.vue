@@ -171,6 +171,7 @@
 							<option id="4" value="永富">永富</option>
 							<option id="5" value="平安地基">平安地基</option>
 							<option id="6" value="六盛">六盛</option>
+							<option id="7" value="英昌">英昌</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>

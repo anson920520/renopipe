@@ -156,6 +156,7 @@
 							<option id="4" value="永富">永富</option>
 							<option id="5" value="平安地基">平安地基</option>
 							<option id="6" value="六盛">六盛</option>
+							<option id="7" value="英昌">英昌</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>
@@ -741,9 +742,9 @@
 							remark:positions,
 							base64Images: base64,
 							//for whatsapp
-							//groupId:groupId,
-							//phone:"85292631429",
-							//token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
+							groupId:groupId,
+							phone:"85292631429",
+							token:"rXrBTOucGWXF8YJdDVtnM9x1aRz0GM3TXVUOvk3OS4vzXfRLztcYDVHDzi4riiR6"
 				}
 				//console.log(data)
 				// return false

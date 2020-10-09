@@ -103,6 +103,7 @@
 					<p  v-if="attendenceData.workers.length > 0" class="title">Renopipe當值工人: {{attendenceData.workers.length}} 人</p>
 					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
 				</div>
+				<hr class="hr-line"/><br/>
 			</view>			
 			
 			<view v-if="attendenceData.workers.length > 0" class="body-padding mt20">
@@ -126,10 +127,13 @@
 				</view>
 			</view>
 			<br/><br/>
-			<view class="body-padding">
-				<view>其他判頭當值工人: </view>
-				<view v-for="(item,i) in remark2" :key="i">
-					<view>{{item.title}}:</view>
+			
+			
+			<view v-if="remark2.length > 0" class="body-padding">
+				<view class="title">其他判頭當值工人: </view>
+				<hr class="hr-line"/><br/>
+				<view style="background:#F7F7F7;border: 1px solid #E8E8E8;" v-for="(item,i) in remark2" :key="i">
+					<view><h2>{{item.title}}:</h2></view>
 					<view v-for="(attr,j) in item.list" :key="j">{{attr}}</view>
 					<br>
 				</view>
