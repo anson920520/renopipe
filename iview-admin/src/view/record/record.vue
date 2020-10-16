@@ -269,7 +269,7 @@
      <br/>
       <br/>
     <!-- 表格展示 -->
-    <Table :columns="columns" ref="recordTable" :data="dataList" @on-row-click="showDetail">
+    <Table :columns="columns" ref="recordTable" :data="dataList" @on-row-click="showDetail" :loading="tableLoad">
       <template slot-scope="{row}" slot="operation">
         <div>
           <!-- <Button size="small" class="editBtn" @click.stop.prevent="edit(row)">編輯</Button> -->
@@ -587,7 +587,8 @@ export default {
       emfmVal:"",
       natureVal:"",
       sitetocVal:"",
-      filterTime:""
+      filterTime:"",
+      tableLoad: false
     }
   },
   created () {
@@ -662,6 +663,7 @@ export default {
         method:"GET"
       }).then(res => {
         console.log(res)
+        this.tableLoad = false
         if (res.data) {
           res.data.forEach(item => {
 
@@ -678,6 +680,7 @@ export default {
           // this.load()
         }
       }).catch(() => {
+          this.tableLoad = false
         // this.load()
       })
     },
@@ -843,6 +846,7 @@ export default {
     },
     //獲取所有site
     getSite (item,i) {
+        this.tableLoad = true
       this.$axios({
         url:"site",
         method:"GET"
@@ -852,8 +856,12 @@ export default {
           this.siteList = res.data
           this.showTable()
 
+        } else {
+            this.tableLoad = false
         }
-      })
+      }).catch(() => [
+          this.tableLoad = false
+      ])
     },
     showDetail(e) {
       this.currentImg = 0
@@ -997,38 +1005,39 @@ export default {
 
       //文件的內容
       //你要在這個地方整合好資料
-      let itemsNotFormatted = [
-          {
-            siteName:"TTA no.2N/A",
-            siteId:"J1003",
-            project:"WPR(環保道) NA", //英文＋中文
-            EMFM:"NA",
-            DMA:"NA",
-            impleto:"NA",
-            sitecto:"NA",
-            nature:"EC",
-            supvisiorName:"吳家軒 Ng Ka Hin",
-            createdAt:":2020/08/27 06:48",
-            machine:"發電機1部",
-            company:"Renopipe",
-            time:"上午",
-            worktype:"代工(試制)",
-            subcontract:"45345",
-            description:"測試報告",
-            workers:"聶國富 Nie Guofu - 什工 聶聶聶 NieNieNie - 木工",
-            remark:"信昌:什工1人 木工2人",
-            imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
-          },
-      ];
+    //   let itemsNotFormatted = [
+    //       {
+    //         siteName:"TTA no.2N/A",
+    //         siteId:"J1003",
+    //         project:"WPR(環保道) NA", //英文＋中文
+    //         EMFM:"NA",
+    //         DMA:"NA",
+    //         impleto:"NA",
+    //         sitecto:"NA",
+    //         nature:"EC",
+    //         supvisiorName:"吳家軒 Ng Ka Hin",
+    //         createdAt:":2020/08/27 06:48",
+    //         machine:"發電機1部",
+    //         company:"Renopipe",
+    //         time:"上午",
+    //         worktype:"代工(試制)",
+    //         subcontract:"45345",
+    //         description:"測試報告",
+    //         workers:"聶國富 Nie Guofu - 什工 聶聶聶 NieNieNie - 木工",
+    //         remark:"信昌:什工1人 木工2人",
+    //         imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
+    //       },
+    //   ];
+        let itemsNotFormatted = this.dataList
 
       var itemsFormatted = [];
 
       // format the data
       itemsNotFormatted.forEach((item) => {
           itemsFormatted.push({
-              siteName:item.siteName.replace(/,/g, ''),
+              siteName:String(item.siteName).replace(/,/g, ''),
               siteId:item.siteId,
-              project:item.project.replace(/,/g, ''),
+              project:String(item.project).replace(/,/g, ''),
               EMFM:item.EMFM,
               DMA:item.DMA,
               impleto:item.impleto,
@@ -1036,21 +1045,21 @@ export default {
               nature:item.nature,
               supvisiorName:item.supvisiorName,
               createdAt:item.createdAt,
-              machine:item.machine.replace(/,/g, ''),
+              machine:String(item.machine).replace(/,/g, ''),
               company:item.company,
               time:item.time,
-              worktype:item.worktype.replace(/,/g, ''),
+              worktype:String(item.worktype).replace(/,/g, ''),
               subcontract:item.subcontract,
               description:item.description,
-              workers:item.workers.replace(/,/g, ''),
-              remark:item.remark.replace(/,/g, ''),
-              imageUrl:item.imageUrl.replace(/,/g, ''),
+              workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
+              remark:String(item.remark).replace(/,/g, ''),
+              imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : ""
           });
       });
 
       let currentDate = new Date();
       var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
-
+        // console.log(itemsFormatted)
       this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
     downloadIMG(e){

@@ -8,7 +8,7 @@
       <Button type="info" class="addBtn" @click="showAdd=true">新增工頭賬戶</Button>
     </div>
     <!-- 表格展示 -->
-    <Table :columns="columns" :data="dataList" >
+    <Table :columns="columns" :data="dataList" :loading="tableLoad">
       <template slot-scope="{row}" slot="operation">
         <div>
           
@@ -216,6 +216,7 @@ export default {
       current:{},
       allData:[],
       searchVal:"",
+      tableLoad: false
     }
   },
   created () {
@@ -223,10 +224,12 @@ export default {
   },
   methods:{
     showTable () {
+        this.tableLoad = true
       this.$axios({
         url:"supervisor",
         method:"GET"
       }).then(res => {
+          this.tableLoad = false
         console.log(res,"supervisor")
         if (res.data) {
           res.data.forEach(item => {
@@ -236,6 +239,7 @@ export default {
           this.dataList = this.allData.slice(0)
         }
       }).catch(() => {
+          this.tableLoad = false
         this.$Message.error("獲取工賬戶失敗")
       })
     },

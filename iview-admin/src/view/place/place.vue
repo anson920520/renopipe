@@ -8,7 +8,7 @@
       <Button type="info" class="addBtn" @click="showAdd=true">新增地盤</Button>
     </div>
     <!-- 表格展示 -->
-    <Table :columns="columns" :data="dataList" >
+    <Table :columns="columns" :data="dataList" :loading="tableLoad">
       <template slot-scope="{row}" slot="operation">
         <div>
           <Button size="small" type="info" class="createQRBtn noBorder" @click="createQR(row)">生成二維碼</Button>
@@ -308,6 +308,7 @@ export default {
       currant: {},     // 當前數據
       allData:[],
       searchVal:"",
+      tableLoad: false
     }
   },
   created () {
@@ -325,6 +326,7 @@ export default {
       }
     },
     showTable () {
+        this.tableLoad = true
       this.$axios({
         url:"site",
         method:"GET",
@@ -335,7 +337,7 @@ export default {
         //   "Authorization": localStorage.getItem('tokan')
         // },
       }).then(res => {
-
+          this.tableLoad = false
         console.log(res)
         if (res.data.Message != 'cannot get authorization token') {
           res.data.forEach(item => {
@@ -346,6 +348,7 @@ export default {
         }
         
       }).catch(err => {
+          this.tableLoad = false
         console.log(err.response)
       })
     },

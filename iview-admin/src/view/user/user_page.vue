@@ -8,7 +8,7 @@
       <Button type="info" class="addBtn" @click="showAdd=true">新增工人</Button>
     </div>
     <!-- 表格展示 -->
-    <Table :columns="columns" :data="dataList" >
+    <Table :columns="columns" :data="dataList" :loading="tableLoad">
       <template slot-scope="{row}" slot="operation">
         <div>
           <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
@@ -300,6 +300,7 @@
 export default {
   data () {
     return {
+        tableLoad: false,
       showAdd: false,
       showEdit:false,
       loading: true,
@@ -578,11 +579,13 @@ export default {
       })
     },
     showTable () {
+        this.tableLoad = true
       this.$axios({
         url:"worker",
         method:"GET"
       }).then(res => {
         console.log(res,"worker")
+        this.tableLoad = false
         if (res.data) {
           res.data.forEach(item => {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
@@ -591,6 +594,7 @@ export default {
           this.dataList = this.allData.slice(0)
         }
       }).catch(() => {
+          this.tableLoad = false
         this.$Message.error("獲取工人失敗")
       })
     },

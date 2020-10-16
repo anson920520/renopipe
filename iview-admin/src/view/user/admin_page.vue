@@ -84,7 +84,7 @@
         </Form>
       </Modal>
 
-    <Table :columns="column" :data="dataList">
+    <Table :columns="column" :data="dataList" :loading="tableLoad">
       <template slot-scope="{row}" slot="operation">
         <div>
           <Button size="small" class="editBtn" @click="edit(row)">編輯</Button>
@@ -158,6 +158,7 @@ export default {
       id:"",
       allData:[],
       searchVal:"",
+      tableLoad: false
     };
   },
   created() {
@@ -165,11 +166,13 @@ export default {
   },
   methods: {
     showTable() {
+      this.tableLoad = true
       this.$axios({
         url: "/admin",
         method: "GET"
       }).then(res => {
         console.log(res, "admin");
+        this.tableLoad = false
         if (res.data) {
           res.data.forEach(item => {
             item.createdAt = item.createdAt
@@ -183,7 +186,9 @@ export default {
           this.allData = res.data
           this.dataList = this.allData.slice(0)
         }
-      });
+      }).catch(() => {
+          this.tableLoad = false
+      })
     },
     search () {
       this.dataList = this.allData.filter((item,i) => {
