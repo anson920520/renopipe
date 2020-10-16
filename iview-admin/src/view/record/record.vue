@@ -1052,6 +1052,7 @@ export default {
 
       // format the data
       itemsNotFormatted.forEach((item) => {
+          
           itemsFormatted.push({
                 DMA:item.dma,
                 EMFM:item.emfm,
@@ -1072,10 +1073,15 @@ export default {
                 time:item.time,
                 workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
                 worktype:String(item.worktype).replace(/,/g, ''),
-              
-              
-          });
+          })
+          
       });
+    //   itemsFormatted.forEach(item => {
+    //       for(let key in item) {
+    //           item[key] = String(item[key]) + "."
+    //       }
+    //   })
+
 
       let currentDate = new Date();
       var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
