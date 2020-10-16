@@ -185,17 +185,7 @@
         <Button @click="search"  type="info">搜索</Button>
       </div>
 
-      <Button type="info" class="editBtn" @click="exportData">導出CSV</Button>
-
-      <download-excel
-        class="btn btn-default"
-        :data="this.json_data"
-        :fields="this.json_fields"
-        worksheet="My Worksheet"
-        name="filename.xls"
-      >
-       導出CSV
-      </download-excel>
+      <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button>
 
 
     </div>
@@ -930,10 +920,137 @@ export default {
         }
       }
     },
-    exportData () {
+    exportData () { // 不再使用
       this.$refs.recordTable.exportCsv({
         filename: "報工記錄"
       });
+    },
+    convertToCSV(objArray){
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
+
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (var index in array[i]) {
+                    if (line != '') line += ','
+
+                    line += array[i][index];
+                }
+
+                str += line + '\r\n';
+            }
+
+            return str;
+    },
+    exportCSVFile(headers, items, fileTitle) {
+          if (headers) {
+              items.unshift(headers);
+          }
+
+          // Convert Object to JSON
+          var jsonObject = JSON.stringify(items);
+
+          var csv = this.convertToCSV(jsonObject);
+
+          var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+          var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          if (navigator.msSaveBlob) { // IE 10+
+              navigator.msSaveBlob(blob, exportedFilenmae);
+          } else {
+              var link = document.createElement("a");
+              if (link.download !== undefined) { // feature detection
+                  // Browsers that support HTML5 download attribute
+                  var url = URL.createObjectURL(blob);
+                  link.setAttribute("href", url);
+                  link.setAttribute("download", exportedFilenmae);
+                  link.style.visibility = 'hidden';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+              }
+          }
+    },
+    exportData2 () { //新的導出報功記錄功能
+      //文件的title
+      let headers = {
+          siteName:"地盤名稱".replace(/,/g, ''),
+          siteId:"地盤項目編號",
+          project:"地盤名稱",
+          EMFM:"EMFM",
+          DMA:"DMA",
+          impleto:"Imple To.",
+          sitecto:"Site C To",
+          nature:"Nature",
+          supvisiorName:"創建者",
+          createdAt:"創建日期",
+          machine:"使用機械",
+          company:"判頭",
+          time:"時段",
+          worktype:"工作種類",
+          subcontract:"副項目編號",
+          description:"工作內容",
+          workers:"Renopipe工人",
+          remark:"其他公司工人",
+          imageUrl:"相關圖片連結"
+      };
+
+      //文件的內容
+      let itemsNotFormatted = [
+          {
+            siteName:"TTA no.2N/A",
+            siteId:"J1003",
+            project:"WPR(環保道) , NA", //英文＋中文
+            EMFM:"NA",
+            DMA:"NA",
+            impleto:"NA",
+            sitecto:"NA",
+            nature:"EC",
+            supvisiorName:"吳家軒 Ng Ka Hin",
+            createdAt:":2020/08/27 06:48",
+            machine:"發電機1部",
+            company:"Renopipe",
+            time:"上午",
+            worktype:"代工(試制)",
+            subcontract:"45345",
+            description:"測試報告",
+            workers:"聶國富 Nie Guofu - 什工, 聶聶聶 NieNieNie - 木工",
+            remark:"信昌:什工1人,木工2人;",
+            imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
+          },
+      ];
+
+      var itemsFormatted = [];
+
+      // format the data
+      itemsNotFormatted.forEach((item) => {
+          itemsFormatted.push({
+              siteName:item.siteName.replace(/,/g, ''),
+              siteId:item.siteId,
+              project:item.project, 
+              EMFM:item.EMFM,
+              DMA:item.DMA,
+              impleto:item.impleto,
+              sitecto:item.sitecto,
+              nature:item.nature,
+              supvisiorName:item.supvisiorName,
+              createdAt:item.createdAt,
+              machine:item.machine,
+              company:item.company,
+              time:item.time,
+              worktype:item.worktype,
+              subcontract:item.subcontract,
+              description:item.description,
+              workers:item.workers,
+              remark:item.remark,
+              imageUrl:item.imageUrl
+          });
+      });
+
+      let currentDate = new Date();
+      var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
+
+      this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
     downloadIMG(e){
       this.msg = "下載中...請稍候"
@@ -948,9 +1065,6 @@ export default {
         })
       }
     },
-    abc(){
-      
-    }
 }
 </script>
 
