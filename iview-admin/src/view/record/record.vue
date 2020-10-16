@@ -954,10 +954,9 @@ export default {
           if (headers) {
               items.unshift(headers);
           }
-
+            // console.log(items)
           // Convert Object to JSON
           var jsonObject = JSON.stringify(items);
-
           var csv = this.convertToCSV(jsonObject);
 
           var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
@@ -982,25 +981,43 @@ export default {
     exportData2 () { //新的導出報功記錄功能
       //文件的title
       let headers = {
-          siteName:"地盤名稱".replace(/,/g, ''),
-          siteId:"地盤項目編號",
-          project:"地盤名稱",
-          EMFM:"EMFM",
-          DMA:"DMA",
-          impleto:"Imple To.",
-          sitecto:"Site C To",
-          nature:"Nature",
-          supvisiorName:"創建者",
-          createdAt:"創建日期",
-          machine:"使用機械",
-          company:"判頭",
-          time:"時段",
-          worktype:"工作種類",
-          subcontract:"副項目編號",
-          description:"工作內容",
-          workers:"Renopipe工人",
-          remark:"其他公司工人",
-          imageUrl:"相關圖片連結"
+        //   siteName:"地盤名稱",
+        //   siteId:"地盤編號",
+        //   project:"項目編號",
+        //   EMFM:"EMFM",
+        //   DMA:"DMA",
+        //   impleto:"Imple To.",
+        //   sitecto:"Site C To",
+        //   nature:"Nature",
+        //   supvisiorName:"創建者",
+        //   createdAt:"創建日期",
+        //   machine:"使用機械",
+        //   company:"判頭",
+        //   time:"時段",
+        //   worktype:"工作種類",
+        //   subcontract:"副項目編號",
+        //   description:"工作內容",
+        //   workers:"Renopipe工人",
+        //   remark:"其他公司工人",
+
+            DMA: "DMA",
+            EMFM: "EMFM",
+            company: "判頭",
+            createdAt: "創建日期",
+            description: "工作內容",
+            impleto: "Imple To.",
+            machine: "使用機械",
+            nature: "Nature",
+            project: "項目編號",
+            remark: "其他公司工人",
+            siteId: "地盤編號",
+            siteName: "地盤名稱",
+            sitecto: "Site C To",
+            subcontract: "副項目編號",
+            supvisiorName: "創建者",
+            time: "時段",
+            workers: "Renopipe工人",
+            worktype: "工作種類",
       };
 
       //文件的內容
@@ -1035,31 +1052,32 @@ export default {
       // format the data
       itemsNotFormatted.forEach((item) => {
           itemsFormatted.push({
-              siteName:String(item.siteName).replace(/,/g, ''),
-              siteId:item.siteId,
-              project:String(item.project).replace(/,/g, ''),
-              EMFM:item.EMFM,
-              DMA:item.DMA,
-              impleto:item.impleto,
-              sitecto:item.sitecto,
-              nature:item.nature,
-              supvisiorName:item.supvisiorName,
-              createdAt:item.createdAt,
-              machine:String(item.machine).replace(/,/g, ''),
-              company:item.company,
-              time:item.time,
-              worktype:String(item.worktype).replace(/,/g, ''),
-              subcontract:item.subcontract,
-              description:item.description,
-              workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
-              remark:String(item.remark).replace(/,/g, ''),
+                DMA:item.dma,
+                EMFM:item.emfm,
+                company:item.rporsubCRP,
+                createdAt:item.createdAt,
+                description:item.description,
+                impleto:item.imple,
+                machine:String(item.machine).replace(/,/g, ''),
+                nature:item.region,  // undefiend
+                project:String(item.project).replace(/,/g, ''),
+                remark:String(item.remark).replace(/,/g, ''),
+                siteId:item.siteId,
+                siteName:String(item.siteName).replace(/,/g, ''),
+                sitecto:item.sitetoc,
+                subcontract:item.subcontract,
+                supvisiorName:String(item.cName),
+                time:item.time,
+                workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
+                worktype:String(item.worktype).replace(/,/g, ''),
+              
             //   imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : ""
           });
       });
 
       let currentDate = new Date();
       var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
-        // console.log(itemsFormatted)
+        console.log(itemsFormatted)
       this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
     downloadIMG(e){

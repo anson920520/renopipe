@@ -855,8 +855,11 @@
 					})
 					positions += positionStr.slice(0,-1) + ";"
 				})
-				// return false
 				
+				// return false
+				let removeWorkerIds = this.oldWorkerIds.filter(item => {
+					return arr.indexOf(item) == -1
+				})
 				let data = {
 							workerIds: arr,
 							siteId: this.attendenceData.siteId,
@@ -872,10 +875,11 @@
 							base64Images: base64,
 							remark:positions,
 							removeImageId: that.delImgs,
-							removeWorkerIds: that.oldWorkerIds
+							removeWorkerIds: removeWorkerIds
 						
 				}
 				console.log(data)
+				// return false
 				/*if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
 				} else if (!data.description) {
