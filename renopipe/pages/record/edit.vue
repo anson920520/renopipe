@@ -172,6 +172,9 @@
 							<option id="5" value="平安地基">平安地基</option>
 							<option id="6" value="六盛">六盛</option>
 							<option id="7" value="英昌">英昌</option>
+							<option id="8" value="江記">江記</option>
+							<option id="9" value="風煤焊機">風煤</option>
+							<option id="10" value="焊機">焊機</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>
@@ -869,11 +872,11 @@
 						
 				}
 				console.log(data)
-				if (!data.worktype) {
+				/*if (!data.worktype) {
 					uni.showToast({ title: "請選擇工作種類", icon: "none" })
 				} else if (!data.description) {
 					uni.showToast({ title: "請填寫工作描述", icon: "none" })
-				} else {
+				} else {*/
 					
 					// console.log(uni.getStorageSync('token'))
 					// return false
@@ -908,7 +911,7 @@
 						complete () { uni.hideLoading() }
 					})
 					
-				}
+				//}
 				
 				
 			},

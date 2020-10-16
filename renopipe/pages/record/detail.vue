@@ -13,6 +13,8 @@
 					<div class="btn-color customize-btn" @click="toHome"> 返回</div>
 				</div>
 				<hr class="hr-line"/>
+				<small>重發功能跟編輯功能沒有直接關係，請在編輯完成並儲存後再使用重發whatsapp，發出訊息。</small>
+				<hr class="hr-line"/>
 			</view>
 			
 			<!--body!-->
@@ -612,8 +614,8 @@
 						"\n\n" + `Site C. To: ` + this.site.sitetoc +
 						"\n\n" + `Imple To: ` + this.site.imple +
 						"\n\n" + `機械:  ` + this.attendenceData.machine +
-						"\n\n" + `工人總數：` + this.attendenceData.workers.length +
-						"\n\n" + `工人：`+ workerArr +
+						"\n\n" + `Renopipe工人總數：` + this.attendenceData.workers.length +
+						"\n\n" + `Renopipe工人：`+ workerArr +
 						"\n\n" + `工作種類:` + this.attendenceData.worktype +
 						"\n\n" + `工作內容:` + this.attendenceData.description +
 						"\n\n" + `其他判頭工人:` + "\n\n" + this.attendenceData.remark + ""
@@ -628,11 +630,11 @@
 				  redirect: 'follow'
 				};
 				
-				/*fetch("https://selo.wablas.com/api/send-group", requestOptions)
+				fetch("https://selo.wablas.com/api/send-group", requestOptions)
 				  .then(response => response.text())
 				  .then(result => console.log(result))
 				  .then()
-				  .catch(error => console.log('error', error));*/
+				  .catch(error => console.log('error', error));
 				 
 				
 				uni.navigateTo({
@@ -685,10 +687,10 @@
 						  redirect: 'follow'
 						};
 						
-						/*fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
+						fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
 						  .then(response => response.text())
 						  .then(result => console.log(result))
-						  .catch(error => console.log('error', error));*/
+						  .catch(error => console.log('error', error));
 						}
 						uni.navigateTo({
 								url: "/pages/record/completeResendIMG"

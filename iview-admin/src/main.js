@@ -8,6 +8,7 @@ import iView from 'iview'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
+import JsonExcel from "vue-json-excel";
 import { directive as clickOutside } from 'v-click-outside-x'
 import installPlugin from '@/plugin'
 import './index.less'
@@ -22,7 +23,7 @@ import QR from "qrcodejs2"
 
 
 
-
+Vue.component("downloadExcel", JsonExcel);
 Vue.use(VueCookie)
 
 require('@/mock')

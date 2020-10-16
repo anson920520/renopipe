@@ -61,11 +61,11 @@
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.dob" placeholder="生日日期" />
         </FormItem>
 
-       <!-- <FormItem label="Group" prop="group">
+        <FormItem label="Group" prop="group"  style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.group" placeholder="請輸入Group (e.g: Engineer)" />
         </FormItem>
 
-         <FormItem label="Team" prop="team">
+        <!-- <FormItem label="Team" prop="team">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.team" placeholder="請輸入Tean (e.g: Head office)" />
         </FormItem>
 
@@ -329,7 +329,8 @@ export default {
         "position": "",
         "phone":"NA",
         "company":"Renopipe",
-        "role":"NA"
+        "role":"NA",
+        "group":"1"
       },
       editForm:{
         "fullname": "",
