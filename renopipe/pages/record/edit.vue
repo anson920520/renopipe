@@ -363,6 +363,7 @@
 				siteList: [],
 				siteId:"",
 				site: {},
+				oldWorkerIds: [],
 				start: {
 					name: "",
 					timesamp: 0
@@ -565,6 +566,7 @@
 								// console.log(worderId, man.ID)
 								if (worderId == man.ID) {
 									man.check = true
+									this.oldWorkerIds.push(man.ID)
 								}
 							})
 						})
@@ -653,6 +655,7 @@
 					
 					
 				})
+				
 			},
 			getData () {
 				let that = this
@@ -869,6 +872,7 @@
 							base64Images: base64,
 							remark:positions,
 							removeImageId: that.delImgs,
+							removeWorkerIds: that.oldWorkerIds
 						
 				}
 				console.log(data)

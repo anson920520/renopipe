@@ -1053,7 +1053,7 @@ export default {
               description:item.description,
               workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
               remark:String(item.remark).replace(/,/g, ''),
-              imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : ""
+            //   imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : ""
           });
       });
 
