@@ -1005,6 +1005,7 @@ export default {
             company: "判頭",
             createdAt: "創建日期",
             description: "工作內容",
+            imageUrl: "圖片",
             impleto: "Imple To.",
             machine: "使用機械",
             nature: "Nature",
@@ -1057,6 +1058,7 @@ export default {
                 company:item.rporsubCRP,
                 createdAt:item.createdAt,
                 description:item.description,
+                imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
                 impleto:item.imple,
                 machine:String(item.machine).replace(/,/g, ''),
                 nature:item.region,  // undefiend
@@ -1071,7 +1073,7 @@ export default {
                 workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
                 worktype:String(item.worktype).replace(/,/g, ''),
               
-            //   imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : ""
+              
           });
       });
 
