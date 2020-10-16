@@ -83,13 +83,13 @@
         "devServer" : {
             "https" : true,
             "port" : "",
-			"proxy" :{
-				"/selo":{
-					"target": "https://selo.wablas.com",
-					"changeOrigin": true,
-					"secure":false
-				}
-			}
+            "proxy" : {
+                "/selo" : {
+                    "target" : "https://selo.wablas.com",
+                    "changeOrigin" : true,
+                    "secure" : false
+                }
+            }
         },
         "optimization" : {
             "treeShaking" : {
@@ -104,12 +104,12 @@
             "enable" : false
         },
         "domain" : "renopipe.co",
-		"proxy" :{
-			"/selo":{
-				"target": "https://selo.wablas.com",
-				"changeOrigin": true,
-				"secure":false
-			}
-		}
+        "proxy" : {
+            "/selo" : {
+                "target" : "https://selo.wablas.com",
+                "changeOrigin" : true,
+                "secure" : false
+            }
+        }
     }
 }

@@ -1058,7 +1058,7 @@ export default {
                 EMFM:item.emfm,
                 company:item.rporsubCRP,
                 createdAt:item.createdAt,
-                description:String(item.description).replace(/,/g," ").replace(/，/g," "),
+                description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
                 imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
                 impleto:item.imple,
                 machine:String(item.machine).replace(/,/g, ''),
