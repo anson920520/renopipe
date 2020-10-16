@@ -996,6 +996,7 @@ export default {
       };
 
       //文件的內容
+      //你要在這個地方整合好資料
       let itemsNotFormatted = [
           {
             siteName:"TTA no.2N/A",
@@ -1014,8 +1015,8 @@ export default {
             worktype:"代工(試制)",
             subcontract:"45345",
             description:"測試報告",
-            workers:"聶國富 Nie Guofu - 什工, 聶聶聶 NieNieNie - 木工",
-            remark:"信昌:什工1人,木工2人;",
+            workers:"聶國富 Nie Guofu - 什工 聶聶聶 NieNieNie - 木工",
+            remark:"信昌:什工1人 木工2人",
             imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
           },
       ];
@@ -1035,15 +1036,15 @@ export default {
               nature:item.nature,
               supvisiorName:item.supvisiorName,
               createdAt:item.createdAt,
-              machine:item.machine,
+              machine:item.machine.replace(/,/g, ''),
               company:item.company,
               time:item.time,
-              worktype:item.worktype,
+              worktype:item.worktype.replace(/,/g, ''),
               subcontract:item.subcontract,
               description:item.description,
-              workers:item.workers,
-              remark:item.remark,
-              imageUrl:item.imageUrl
+              workers:item.workers.replace(/,/g, ''),
+              remark:item.remark.replace(/,/g, ''),
+              imageUrl:item.imageUrl.replace(/,/g, ''),
           });
       });
 
