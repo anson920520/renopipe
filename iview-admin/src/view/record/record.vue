@@ -1001,7 +1001,7 @@ export default {
           {
             siteName:"TTA no.2N/A",
             siteId:"J1003",
-            project:"WPR(環保道) , NA", //英文＋中文
+            project:"WPR(環保道) NA", //英文＋中文
             EMFM:"NA",
             DMA:"NA",
             impleto:"NA",
@@ -1028,7 +1028,7 @@ export default {
           itemsFormatted.push({
               siteName:item.siteName.replace(/,/g, ''),
               siteId:item.siteId,
-              project:item.project, 
+              project:item.project.replace(/,/g, ''),
               EMFM:item.EMFM,
               DMA:item.DMA,
               impleto:item.impleto,
