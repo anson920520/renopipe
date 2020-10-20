@@ -312,7 +312,7 @@ export default {
         // { title: "team", key:"team" },
         //{ title: "身份證號", key:"idNo" },
         { title: "全名", key:"fullname" },
-        //{ title: "中文名", key:"cName" },
+        { title: "中文名", key:"cName" },
         //{ title: "暱稱", key:"nickname" },
         //{ title: "聯繫電話", key:"phone" },
         { title: "職位", key:"position" },
