@@ -8,7 +8,9 @@ import VueQrcodeReader from "vue-qrcode-reader";
 
 import Header from "./components/Header.vue"
 import cpimg from "./components/cpimg/cpimg.vue"
+import Modal from "./components/uni-popup/uni-popup.vue"
 
+Vue.component('Modal',Modal)
 Vue.component('cpimg',cpimg)
 Vue.component('Header',Header)
 

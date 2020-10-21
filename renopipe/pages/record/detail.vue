@@ -9,7 +9,7 @@
 					<p class="title">工作紀錄詳情</p>
 					<!--return btn!-->
 					<div class="btn-color customize-btn" @click="republish"> 重發whatsapp</div>
-					<div class="btn-color customize-btn" @click="rephoto"> 圖片補充</div>
+					<div class="btn-color customize-btn" @click="showModal"> 圖片補充</div>
 					<div class="btn-color customize-btn" @click="toHome"> 返回</div>
 				</div>
 				<hr class="hr-line"/>
@@ -192,6 +192,18 @@
 		<view class="footer btmBorder">
 			©RenoPipe Construction Co. Ltd. Copyright © 2020
 		</view>
+		<Modal ref="Modal">
+			<view class="width500">
+				<view class="blueBg">請選擇需要補充的圖片</view>
+				<scroll-view scroll-y class="ModalBox">
+					<view class="imgWrap ju al" v-for="(item,i) in attendenceData.images" :key="i" @click.stop="clickImg(item)">
+						<image :src="baseURL + item.filePath" class="height100" mode="aspectFill"></image>
+						<view :class="['radio', { check: item.check }]"></view>
+					</view>
+				</scroll-view>
+				<view class="blueBg ju op" @click="rephoto">發送補充圖片</view>
+			</view>
+		</Modal>
 	</view>
 </template>
 
@@ -201,6 +213,10 @@
 			return {
 				attendenceData:{supervisors:[""], workers:[],createdAt:""},
 				imgs:[],
+				images: [],  // 補充圖片使用
+				selectIMG: {
+					images: []
+				},   // 選擇圖片存在此
 				description: "",
 				workerList: [],
 				siteList: [],
@@ -308,6 +324,11 @@
 								arr.push(obj)
 							})
 							that.remark2 = arr
+							if (that.attendenceData.images) {
+								that.images = that.attendenceData.images.map(img => {
+									return that.$store.state.baseURL + img.filePath
+								})
+							}
 						}else{
 							alert("暫時未有記錄")
 						}
@@ -331,6 +352,12 @@
 				this.currentPositionIndex = num
 				console.log(that.currentPositionIndex)
 				that.workerList = this.allPosition[this.currentPositionIndex].workers
+			},
+			clickImg (item) {
+				item.check = !item.check
+				this.attendenceData.images=[...this.attendenceData.images]
+				// console.log(item.check)
+				this.selectIMG.images = this.attendenceData.images.filter(img => img.check)
 			},
 			//获取所有工种(包括工人)
 			getAllPosition () {
@@ -642,6 +669,16 @@
 				})
 				
 			},
+			showModal () {
+				this.$refs.Modal.open()
+			},
+			loopImgAndSend () {
+				this.attendenceData.images.forEach(img => {
+					if (img.check) {
+						
+					}
+				})
+			},
 			rephoto(){
 				const imgUrl = "https://renopipe.co/"
 				//imgUrl + this.attendenceData.images[i]filePath
@@ -687,6 +724,8 @@
 						  redirect: 'follow'
 						};
 						
+						console.log(requestOptions)
+						return false
 						fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
 						  .then(response => response.text())
 						  .then(result => console.log(result))
@@ -971,5 +1010,44 @@
 	}
 	.whiteColor {
 		color: white;
+	}
+	.blueBg {
+		padding: 15upx;
+		background: #3A75BB;
+		color: #FFF;
+	}
+	.width500 {
+		width: 600upx;
+		background: #FFF;
+	}
+	.ModalBox {
+		padding: 20upx;
+		height:500upx;
+		overflow: auto;
+	}
+	.imgWrap {
+		width: 28%;
+		height: 150upx;
+		border: solid #CCC 1px;
+		position: relative;
+		display: inline-block;
+		margin: 9upx;
+	}
+	.height100 {
+		height: 100%;
+		width: 100%;
+	}
+	.radio {
+		width: 25upx;
+		height: 25upx;
+		border: solid #CCC 2px;
+		position: absolute;
+		right:-10upx;
+		top: -10upx;
+		border-radius: 50%;background: #FFF;
+	}
+	.check {
+		background: #93CE7E !important;
+		border: solid #93CE7E 2px !important;
 	}
 </style>
