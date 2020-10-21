@@ -173,6 +173,7 @@
 							<option id="6" value="六盛">六盛</option>
 							<option id="7" value="英昌">英昌</option>
 							<option id="8" value="江記">江記</option>
+							<option id="9" value="安泰">安泰</option>
 							<option id="2" value="Others">其他</option>
 						</select>
 					</span>

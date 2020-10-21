@@ -358,6 +358,7 @@
 				this.attendenceData.images=[...this.attendenceData.images]
 				// console.log(item.check)
 				this.selectIMG.images = this.attendenceData.images.filter(img => img.check)
+				console.log(this.selectIMG)
 			},
 			//获取所有工种(包括工人)
 			getAllPosition () {
@@ -682,11 +683,13 @@
 			rephoto(){
 				const imgUrl = "https://renopipe.co/"
 				//imgUrl + this.attendenceData.images[i]filePath
-				console.log(this.attendenceData)
-				if(this.attendenceData.images){
-					for (let i = 0; i < this.attendenceData.images.length; i++){
+				console.log(this.attendenceData.images)
+				console.log(this.selectIMG.images)
+				
+				if(this.selectIMG.images){
+					for (let i = 0; i < this.selectIMG.images.length; i++){
 						console.log(i)
-						console.log(imgUrl + this.attendenceData.images[i].filePath)
+						console.log(imgUrl + this.selectIMG.images[i].filePath)
 						let pjid = this.site.project
 						let groupId = "";
 						console.log(pjid)
@@ -725,7 +728,7 @@
 						};
 						
 						console.log(requestOptions)
-						return false
+
 						fetch("https://selo.wablas.com/api/send-image-group", requestOptions)
 						  .then(response => response.text())
 						  .then(result => console.log(result))
