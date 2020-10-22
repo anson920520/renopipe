@@ -50,10 +50,15 @@
 						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
 					</select>
 				</view>
+				<br/>
+				<hr/>
+				<br/>
 				<view>
 					<view>關鍵字搜索</view>
 					<input class="keywordSearch" v-model="keyword" type="text" placeholder="搜索地盤" />
+					<small style="color:red">所有關鍵字大小不可以寫錯以及必須要以繁體字輸入<br/>(e.g:可輸入"T0050", "AKK-DMA10A", "王屋村", 等等)</small>
 				</view>
+				
 				<br/>
 				<div class="btn-color customize-btn" @click="search" long> <span class="word-in-btn">搜索</span></div>
 				<!-- <view>選擇地盤</view>
