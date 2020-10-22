@@ -50,9 +50,11 @@
 						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
 					</select>
 				</view>
-				<br/>
-				<hr/>
-				<br/>
+				<view class="ju al" style="padding: 20upx 0;">
+					<view style="border-top:dashed #333333 2px;flex:10;"></view>
+					<view style="padding:0 20upx">或</view>
+					<view style="border-top:dashed #333333 2px;flex:10;"></view>
+				</view>
 				<view>
 					<view>關鍵字搜索</view>
 					<input class="keywordSearch" v-model="keyword" type="text" placeholder="搜索地盤" />
