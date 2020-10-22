@@ -117,7 +117,7 @@
 		},
 		watch:{
 			pro (val) {
-				// this.search()
+				this.search()
 				let that=this
 				that.disList1 = []
 				that.sitename = []
@@ -148,10 +148,10 @@
 				// that.disList1 = [...new Set(that.disList1)]
 				that.sitename = [...new Set(that.sitename)]
 				// that.dis2 = ""
-				// this.search()
+				this.search()
 			},
 			dis2 (val) {
-				// this.search()
+				this.search()
 			},
 		},
 		computed: {
