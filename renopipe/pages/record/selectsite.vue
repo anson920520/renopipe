@@ -50,6 +50,10 @@
 						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
 					</select>
 				</view>
+				<view>
+					<view>關鍵字搜索</view>
+					<input class="keywordSearch" v-model="keyword" type="text" placeholder="搜索地盤" />
+				</view>
 				<br/>
 				<div class="btn-color customize-btn" @click="search" long> <span class="word-in-btn">搜索</span></div>
 				<!-- <view>選擇地盤</view>
@@ -65,6 +69,7 @@
 			<!-- <div class="btn-color customize-btn" @click="toCreate"> <span class="word-in-btn">下一步</span></div> -->
 			<br/>
 			<view class="body-padding scrollSection">
+				<view class="ju" style="padding: 20upx;" v-if="noData">暫無數據</view>
 				<view class="siteBorder op" v-for="(item,i) in siteList" :key="i" :value="item.ID" @click="toCreate(item)">
 					<b style="color:#007AFF">{{item.name}} | {{item.cname}} </b> <br/>
 					{{item.siteCode1}}({{item.siteCode2}}) | {{item.siteCode3}} <br/>
@@ -96,6 +101,8 @@
 				pro:"",
 				dis1:"",
 				dis2:"",
+				keyword:"",
+				noData: false,
 			}
 		},
 		onLoad() {
@@ -103,7 +110,7 @@
 		},
 		watch:{
 			pro (val) {
-				this.search()
+				// this.search()
 				let that=this
 				that.disList1 = []
 				that.sitename = []
@@ -134,10 +141,10 @@
 				// that.disList1 = [...new Set(that.disList1)]
 				that.sitename = [...new Set(that.sitename)]
 				// that.dis2 = ""
-				this.search()
+				// this.search()
 			},
 			dis2 (val) {
-				this.search()
+				// this.search()
 			},
 		},
 		computed: {
@@ -194,6 +201,21 @@
 						}
 					}
 				})
+				that.siteList = that.siteList.filter(item => {
+					for(let key in item) {
+						if (typeof item[key] == 'string') {
+							if (item[key].indexOf(that.keyword) != -1) {
+								return true
+							} 
+						}
+					}
+				})
+				if (that.siteList.length == 0) {
+					that.noData = true
+				} else {
+					that.noData = false
+				}
+				
 				// that.getFilterData()
 				// that.proList = []
 				// that.disList1 = []
@@ -395,7 +417,10 @@
 		display: flex;
 		justify-content: center;
 	}
-	
+	.keywordSearch {
+		border: solid #666 1px;
+		padding: 10upx;
+	}
 	.Wrap {
 		min-height: 100vh;
 		// border: solid black 1px;
