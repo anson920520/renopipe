@@ -308,7 +308,6 @@
 				<div class="">
 					<p class="title">已上載傳圖片</p>
 				</div>
-				<view class="al"><view class="uploadBtn op" @click="chooseImg">選擇圖片</view></view>
 				<view class="imgsWrap al">
 					<view class="imgBox" v-for="(item,i) in attendenceData.images" :key="i">
 						<image src="../../static/img/close.png" class="delImg" @click="delImg2(item.ID,i)" mode="widthFix"></image>
