@@ -608,8 +608,10 @@
 				}
 				
 				//update time
-				let updateTime = new Date();
-				console.log(updateTime)
+				let updateTime = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString();
+				let updateTimeReFine = updateTime.split(".")[0]
+				
+				console.log(updateTimeReFine)
 				
 				//token
 				var myHeaders = new Headers();
@@ -624,18 +626,37 @@
 					workerArr.push("\n" + this.attendenceData.workers[i].cName + "-" + this.attendenceData.workers[i].position)
 				}
 				
+				//supplier
+				let supplierList = this.attendenceData.remark
+				let supplierToArray = supplierList.split(";")
+				const reducer = (accumulator, currentValue) => accumulator + currentValue
+				let supplierArr = [];
+				let supplierWorkerNums = [];
 				
+				
+				for (let i = 0; i < supplierToArray.length; i++){
+					if(supplierToArray[i] !== ""){
+						let number = supplierToArray[i].match(/\d+/g).map(Number)
+						supplierArr.push("\n" + supplierToArray[i] + " 總共人數:" + number.reduce(reducer))
+						supplierWorkerNums.push(number.reduce(reducer))
+					}
+				}
+				
+				let totalWorkers = this.attendenceData.workers.length + supplierWorkerNums.reduce(reducer);
+				console.log(totalWorkers);
+
 				var raw = JSON.stringify({
 					"groupId":groupId,
 					"phone":"85292631429",
 					"message":
 						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+
-						"[報工記錄更新: 更新時間 - " + updateTime + "]"+
+						"\n" + "[舊紀錄發佈時間: " + this.attendenceData.createdAt.split("+")[0].replace("T", " ") + "]"+
+						"\n" + "[報工記錄更新時間: " + updateTimeReFine.replace("T", " ") + "]"+
 						"\n\n" + `時段 : ` + this.attendenceData.time +
 						"\n\n" + `項目編號 : ` + this.site.project +
 						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
 						"\n\n" + `DIS(2)  :` + this.site.siteCode3 +
-						"\n\n" + `判頭 : ` + this.attendenceData.subcontract +
+						"\n\n" + `副項目編號: ` + this.attendenceData.subcontract +
 						"\n\n" + `創建者 : ` + this.attendenceData.supervisors[0].cName +
 						"\n\n" + `地盤名稱: ` + this.site.cname + " " + this.site.name +
 						"\n\n" + `EMFM: ` + this.site.emfm +
@@ -643,15 +664,16 @@
 						"\n\n" + `Site C. To: ` + this.site.sitetoc +
 						"\n\n" + `Imple To: ` + this.site.imple +
 						"\n\n" + `機械:  ` + this.attendenceData.machine +
-						"\n\n" + `*Renopipe工人總數*：` + this.attendenceData.workers.length +
-						"\n\n" + `Renopipe工人：`+ workerArr +
-						"\n\n" + `*其他判頭工人*:` + "\n\n" + this.attendenceData.remark +
+						"\n\n" + `*Renopipe工人總數：` + this.attendenceData.workers.length + `*`+
+						"\n" + `Renopipe工人：`+ workerArr +
+						"\n\n" + `*其他判頭工人:*` + supplierArr +
+						"\n\n" + `總人數:` + totalWorkers +
 						"\n\n" + `工作種類:` + this.attendenceData.worktype +
 						"\n\n" + `工作內容:` + this.attendenceData.description + ""
 					})
 					
 				console.log(raw)
-					
+				
 				var requestOptions = {
 				  method: 'POST',
 				  headers: myHeaders,
