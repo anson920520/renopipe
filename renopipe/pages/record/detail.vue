@@ -740,7 +740,7 @@
 								"groupId":groupId,
 								"phone":"85292631429",
 								"caption":"補充圖片"+ updateTime + this.site.cname + this.site.name,
-								"image":imgUrl + this.attendenceData.images[i].filePath
+								"image":imgUrl + this.selectIMG.images[i].filePath
 							});
 						
 						var requestOptions = {
@@ -756,16 +756,16 @@
 						  .then(response => response.text())
 						  .then(result => console.log(result))
 						  .catch(error => console.log('error', error));
-						}
-						uni.navigateTo({
-								url: "/pages/record/completeResendIMG"
-						})
-					}else{
-						uni.showToast({
-							title: "本記錄沒有任何圖片",
-							icon:"none"
-						})
 					}
+					uni.navigateTo({
+						url: "/pages/record/completeResendIMG"
+					})
+				}else{
+					uni.showToast({
+						title: "本記錄沒有任何圖片",
+						icon:"none"
+					})
+				}
 			},
 			editNow(){
 				uni.navigateTo({
