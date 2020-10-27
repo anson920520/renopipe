@@ -630,6 +630,7 @@
 					"phone":"85292631429",
 					"message":
 						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+
+						"[報工記錄更新: 更新時間 - " + updateTime + "]"+
 						"\n\n" + `時段 : ` + this.attendenceData.time +
 						"\n\n" + `項目編號 : ` + this.site.project +
 						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
@@ -642,11 +643,11 @@
 						"\n\n" + `Site C. To: ` + this.site.sitetoc +
 						"\n\n" + `Imple To: ` + this.site.imple +
 						"\n\n" + `機械:  ` + this.attendenceData.machine +
-						"\n\n" + `Renopipe工人總數：` + this.attendenceData.workers.length +
+						"\n\n" + `*Renopipe工人總數*：` + this.attendenceData.workers.length +
 						"\n\n" + `Renopipe工人：`+ workerArr +
+						"\n\n" + `*其他判頭工人*:` + "\n\n" + this.attendenceData.remark +
 						"\n\n" + `工作種類:` + this.attendenceData.worktype +
-						"\n\n" + `工作內容:` + this.attendenceData.description +
-						"\n\n" + `其他判頭工人:` + "\n\n" + this.attendenceData.remark + ""
+						"\n\n" + `工作內容:` + this.attendenceData.description + ""
 					})
 					
 				console.log(raw)
