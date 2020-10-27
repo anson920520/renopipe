@@ -429,6 +429,7 @@ export default {
       msg:"下載圖片",
       columns: [
         { title: "日期", key:"createdAt" ,sortable: true},
+        { title: "報工記錄編號", key:"ID" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
         { title: "項目", key:"siteId",sortable: true,
               render:(h,p) => {
