@@ -37,14 +37,20 @@
 						<!--<th>時段</th>!-->
 						<th>地盤</th> 
 						<th>工作</th>
+						<th>訊息狀態</th>
 					  </tr>
 					  
 					  <tr v-for="(item,i) in dataList" :key="i" v-bind:id="item.ID" @click="toDetail(item.ID)">
 						<!--<td >{{item.time}}</td>!-->
 						
-						<td style="width: 80%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
-						<td>{{item.worktype}}</td>
-					  </tr>
+						<td style="width: 40%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
+						<td style="width: 30%;">{{item.worktype}}</td>
+		
+						<td style="color:green" v-if="item.log && JSON.parse(item.log).message == 'successfully sent group text'">已送出</td>
+						<td style="color:red" v-else-if="item.log && JSON.parse(item.log).message !== 'successfully sent group text'">whatsapp未發送，需要重發</td>
+						<td style="color:red" v-else>Selo Whatsapp Gateway 發生錯誤，請聯絡Tesla Chong 60814693</td>
+				
+					 </tr>
 					  
 					</table>
 					<view v-if="dataList.length==0" class="ju al noData">

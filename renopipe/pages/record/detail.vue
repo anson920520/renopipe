@@ -632,6 +632,7 @@
 				const reducer = (accumulator, currentValue) => accumulator + currentValue
 				let supplierArr = [];
 				let supplierWorkerNums = [];
+				let totalWorkers;
 				
 				
 				for (let i = 0; i < supplierToArray.length; i++){
@@ -642,7 +643,12 @@
 					}
 				}
 				
-				let totalWorkers = this.attendenceData.workers.length + supplierWorkerNums.reduce(reducer);
+				if(supplierWorkerNums.length > 0){
+					totalWorkers = this.attendenceData.workers.length + supplierWorkerNums.reduce(reducer);
+				}else{
+					totalWorkers = this.attendenceData.workers.length
+				}
+				
 				console.log(totalWorkers);
 
 				var raw = JSON.stringify({
