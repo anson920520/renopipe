@@ -218,9 +218,12 @@
 					<p class="title">工作類型列表</p>
 				</div>
 			</view>
-			
+			<view>
+				<input type="text" class="input" @input="searchWorkeType" placeholder="搜索工作類型" />
+			</view>
 			<view class="body-padding mt20">
 				<view class="border box scoll">
+					<view class="ju" style="padding:30upx;" v-if="worktypeOption.length==0">暫無數據</view>
 					<div class="worker-main" v-for="(item,i) in worktypeOption" :key="i">
 						<div class="worktype-info-area">
 							<p class="worktype">{{item.name}}</p>
@@ -247,10 +250,12 @@
 					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
-			
-
+			<view>
+				<input type="text" class="input" @input="searchMachine" placeholder="搜索器械" />
+			</view>
 			<view class="body-padding mt20">
 				<view class="border box scoll">
+					<view class="ju" style="padding:30upx;" v-if="machineOption.length==0">暫無數據</view>
 					<div class="worker-main al" v-for="(item,i) in machineOption" :key="i">
 						<div class="worktype-info-area">
 							<input style="margin: 0" placeholder="自行填寫" v-if="item.type=='custom'" class="worktype" v-model='item.name' />
@@ -352,7 +357,7 @@
 				selected: '',
 				head:'Renopipe', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
-				worktypeOption:[ //工作種類 worktype
+				allworktypeOption:[ //工作種類 worktype
 					{name:"代工(試制)",check:false},
 					{name:"代工(開井蓋)",check:false},
 					{name:"代工(其他)",check:false},
@@ -367,9 +372,10 @@
 					{name:"雜務",check:false},
 					{name:"其他",check:false},
 				],
-				machineOption:[ //機械種類 machineOption
-					{name:"大發電機",number: 1, check:false},
-					{name:"細發電機",number: 1, check:false},
+				worktypeOption: [],
+				machineOption: [],
+				allmachineOption:[ //機械種類 machineOption
+					{name:"發電機",number: 1, check:false},
 					{name:"大電炮",number: 1,check:false},
 					{name:"細電炮",number: 1,check:false},
 					{name:"保路華",number: 1,check:false},
@@ -399,6 +405,8 @@
 			}
 		},
 		onLoad(val) {
+			this.machineOption = this.allmachineOption
+			this.worktypeOption = this.allworktypeOption
 			this.siteId = Number(val.siteId)
 			this.getAllPosition()
 			// this.getWorders()
@@ -423,6 +431,20 @@
 			baseURL () { return this.$store.state.baseURL }
 		},
 		methods:{
+			searchMachine (e) {
+				this.machineOption = this.allmachineOption.filter(item => {
+					if (item.name.includes(e.target.value)) {
+						return true
+					}
+				})
+			},
+			searchWorkeType (e) {
+				this.worktypeOption = this.allworktypeOption.filter(item => {
+					if (item.name.includes(e.target.value)) {
+						return true
+					}
+				})
+			},
 			addSub (boo, i) {
 				if (boo) {
 					// 减
