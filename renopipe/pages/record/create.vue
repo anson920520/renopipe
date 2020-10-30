@@ -375,7 +375,8 @@
 				worktypeOption: [],
 				machineOption: [],
 				allmachineOption:[ //機械種類 machineOption
-					{name:"發電機",number: 1, check:false},
+					{name:"大發電機",number: 1, check:false},
+					{name:"細發電機",number: 1, check:false},
 					{name:"大電炮",number: 1,check:false},
 					{name:"細電炮",number: 1,check:false},
 					{name:"保路華",number: 1,check:false},
