@@ -247,6 +247,7 @@
 					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
+			
 
 			<view class="body-padding mt20">
 				<view class="border box scoll">
@@ -367,7 +368,8 @@
 					{name:"其他",check:false},
 				],
 				machineOption:[ //機械種類 machineOption
-					{name:"發電機",number: 1, check:false},
+					{name:"大發電機",number: 1, check:false},
+					{name:"細發電機",number: 1, check:false},
 					{name:"大電炮",number: 1,check:false},
 					{name:"細電炮",number: 1,check:false},
 					{name:"保路華",number: 1,check:false},

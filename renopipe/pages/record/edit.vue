@@ -259,7 +259,8 @@
 					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
 				</div>
 			</view>
-
+			
+			
 			<view class="body-padding mt20">
 				<view class="border box scoll">
 					<div class="worker-main" v-for="(item,i) in machineOption" :key="i">
@@ -410,7 +411,8 @@
 					// {name:"30噸吊雞",check:false},
 					// {name:"5.5噸車",check:false},
 					// {name:"水泵",check:false},
-					{name:"發電機",number: 1, check:false},
+					{name:"大發電機",number: 1, check:false},
+					{name:"細發電機",number: 1, check:false},
 					{name:"大電炮",number: 1,check:false},
 					{name:"細電炮",number: 1,check:false},
 					{name:"保路華",number: 1,check:false},
