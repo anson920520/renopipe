@@ -962,7 +962,7 @@ export default {
 
           var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
 
-          var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          var blob = new Blob(["\uFEFF"+csv], {type: 'text/csv; charset=utf-18'});
           if (navigator.msSaveBlob) { // IE 10+
               navigator.msSaveBlob(blob, exportedFilenmae);
           } else {

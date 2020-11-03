@@ -159,7 +159,8 @@
 							<option id="7" value="英昌">英昌</option>
 							<option id="8" value="江記">江記</option>
 							<option id="9" value="安泰">安泰</option>
-							<option id="2" value="Others">其他</option>
+							<option id="10" value="洪興">洪興</option>
+							<option id="11" value="Others">其他</option>
 						</select>
 					</span>
 				</view>
