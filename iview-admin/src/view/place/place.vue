@@ -22,13 +22,14 @@
     <Modal v-model="showAdd" 
       @on-ok="okAdd"
       :loading='loading'
+      :width="700"
       title="新增地盤">
-      <Form :model="addForm" ref="addForm" :rules='rule' :label-width="130">
+      <Form :model="addForm" ref="addForm" :rules='rule' :label-width="230">
         <img style="width:50%;display:flex;justify-content: center;" src="../../assets/images/ex.png"/>
         <small style=" display: flex;justify-content: center;">沒有*的欄位可以選填，有*的欄位如果沒有資料請填寫NA</small>
        
        <!--custom style!-->
-        <label style="color:#921954;margin-left: 70px;" class="cus-item-label">項目編號</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">項目編號(第一層過濾器)</label>
         <Input class="cus-item" type="text" style="width: 300px;" v-model="addForm.project" placeholder="報工介面第一層過濾器選項" />
        
 
@@ -37,7 +38,7 @@
         </FormItem>
 
         <!--custom style!-->
-        <label style="color:#7d3f11;margin-left: 32px;" class="cus-item-label">DIS(2) 中文翻譯</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">DIS(2) 中文 地盤地區 (過濾器第二層)</label>
           <Input class="cus-item"  type="text" style="width: 300px;" v-model="addForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
 
 
@@ -66,7 +67,7 @@
         </FormItem>
 
          <!--custom style!-->
-        <label style="color:#dc2222;margin-left: 45px;" class="cus-item-label">地盤中文全名</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">地盤地址(過濾器第三層)</label>
           <Input class="cus-item" @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="addForm.cname" placeholder=" 報工介面第三層過濾器選項" />
        
          <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
@@ -89,62 +90,63 @@
     <Modal v-model="showEdit" 
       @on-ok="okEdit"
       :loading='loading'
+      :width="700"
       title="編輯地盤">
-      <Form :model="editForm" ref='editForm' :rules='rule' :label-width="130">
+      <Form :model="editForm" ref='editForm' :rules='rule' :label-width="230">
         <img style="width:50%;display:flex;justify-content: center;" src="../../assets/images/ex.png"/>
        <!--custom style!-->
-        <label style="color:#921954;margin-left: 70px;" class="cus-item-label">項目編號</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">項目編號(第一層過濾器)</label>
         <Input class="cus-item" type="text" style="width: 300px;" v-model="editForm.project" placeholder="報工介面第一層過濾器選項" />
        
 
         <FormItem label="DIS(2)" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode1" placeholder="輸入DIS(2)" />
+          <Input type="text" style="width: 300px;" v-model="editForm.siteCode1" placeholder="輸入DIS(2)" />
         </FormItem>
 
         <!--custom style!-->
-        <label style="color:#7d3f11;margin-left: 32px;" class="cus-item-label">DIS(2) 中文翻譯</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">DIS(2) 中文 地盤地區 (過濾器第二層)</label>
         <Input class="cus-item"  type="text" style="width: 300px;" v-model="editForm.siteCode2" placeholder="DIS(2)的中文翻譯 *報工介面第二層過濾器選項" />
 
 
         <FormItem label="DIS(1)" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.siteCode3" placeholder="輸入DIS(2)" />
+          <Input type="text" style="width: 300px;" v-model="editForm.siteCode3" placeholder="輸入DIS(2)" />
         </FormItem>
 
         <FormItem label="Site C. To" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.sitetoc" placeholder="請輸入地盤Site C. To" />
+          <Input type="text" style="width: 300px;" v-model="editForm.sitetoc" placeholder="請輸入地盤Site C. To" />
         </FormItem>
 
         <FormItem label="Imple To." prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.imple" placeholder="請輸入地盤Imple To." />
+          <Input type="text" style="width: 300px;" v-model="editForm.imple" placeholder="請輸入地盤Imple To." />
         </FormItem>
 
         <FormItem label="DMA" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.dma" placeholder="請輸入地盤DMA" />
+          <Input type="text" style="width: 300px;" v-model="editForm.dma" placeholder="請輸入地盤DMA" />
         </FormItem>
 
         <FormItem label="EMFM" prop="">
-          <Input type="text" style="width: 250px;" v-model="editForm.emfm" placeholder="請輸入地盤EMFM" />
+          <Input type="text" style="width: 300px;" v-model="editForm.emfm" placeholder="請輸入地盤EMFM" />
         </FormItem>
 
         <FormItem label="地盤地址" prop="address">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.address" placeholder="請輸入地盤地址" />
         </FormItem>
 
          <!--custom style!-->
-        <label style="color:#dc2222;margin-left: 45px;" class="cus-item-label">地盤中文全名</label>
+        <label style="color:#921954;width:230px;text-align:right;" class="cus-item-label">地盤地址(過濾器第三層)</label>
           <Input class="cus-item" @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.cname" placeholder=" 報工介面第三層過濾器選項" />
        
 
         <FormItem label="Nature(MM/ EC/ NC/MC)" prop="">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.region" placeholder="請輸入 Nature(MM/ EC/ NC/MC)" />
         </FormItem>
 
         <FormItem label="地盤經度" prop="lo">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.lo" placeholder="請輸入地盤經度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.lo" placeholder="請輸入地盤經度" />
         </FormItem>
 
         <FormItem label="地盤緯度" prop="la">
-          <Input @on-keyup.enter="keydown" type="text" style="width: 250px;" v-model="editForm.la" placeholder="請輸入地盤緯度" />
+          <Input @on-keyup.enter="keydown" type="text" style="width: 300px;" v-model="editForm.la" placeholder="請輸入地盤緯度" />
         </FormItem>
         <div id="placeMap2"></div>
       </Form>

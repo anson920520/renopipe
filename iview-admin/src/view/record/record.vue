@@ -431,7 +431,7 @@ export default {
         { title: "日期", key:"createdAt" ,sortable: true},
         { title: "報工記錄編號", key:"ID" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
-        { title: "地盤項目編號(過濾器第一層)", key:"siteId",sortable: true,
+        { title: "項目", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -453,7 +453,7 @@ export default {
               return h('div',str)
           }
         },
-        { title: "DIS(2)地盤地區(過濾器第二層)", key:"siteId",sortable: true,
+        { title: "DIS(2)", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
@@ -464,7 +464,7 @@ export default {
               return h('div',str)
           }
         },
-         { title: "地盤地址(過濾器第三層)", key:"siteId",sortable: true,
+         { title: "地盤", key:"siteId",sortable: true,
               render:(h,p) => {
               let str = "讀取中..."
               that.siteList.forEach(item => {
