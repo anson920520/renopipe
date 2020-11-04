@@ -187,7 +187,7 @@ export default {
           key: "siteCode3"
         },*/
         {
-          title: "項目編號(過濾器第一層)",
+          title: "地盤項目編號(過濾器第一層)",
           key: "project"
         },
         {
@@ -195,7 +195,7 @@ export default {
           key: "siteCode1"
         },
         {
-          title: "Dis(2)中文(過濾器第二層)",
+          title: "Dis(2) 中文 地盤地區 (過濾器第二層)",
           key: "siteCode2"
         },
         {
@@ -224,7 +224,7 @@ export default {
           key: "name"
         },
         {
-          title: "中文地址 (過濾器第三層)",
+          title: "地盤地址 (過濾器第三層)",
           key: "cname"
         },
         /*{
