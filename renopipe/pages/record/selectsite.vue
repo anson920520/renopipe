@@ -32,21 +32,21 @@
 				<view>
 					<view>地盤項目編號搜索:</view>
 					<select v-model="pro">
-						<option value="">全部</option>
+						<option value="">第一層過濾器</option>
 						<option v-for="(item,i) in proList" :value="item">{{item}}</option>
 					</select>
 				</view>
 				<view>
 					<view>地盤地區搜索:</view>
 					<select v-model="dis1" >
-						<option value="">全部</option>
+						<option value="">第二層過濾器</option>
 						<option v-for="(item,i) in disList1" :value="item">{{item}}</option>
 					</select>
 				</view>
 				<view>
 					<view>地盤地址搜索:</view>
 					<select v-model="dis2" >
-						<option value="">全部</option>
+						<option value="">第三層過濾器</option>
 						<option v-for="(item,i) in sitename" :value="item">{{item}}</option>
 					</select>
 				</view>
