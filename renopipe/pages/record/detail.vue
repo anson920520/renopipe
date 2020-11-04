@@ -659,21 +659,21 @@
 						"\n" + "[舊紀錄發佈時間: " + this.attendenceData.createdAt.split("+")[0].replace("T", " ") + "]"+
 						"\n" + "[報工記錄更新時間: " + updateTimeReFine.replace("T", " ") + "]"+
 						"\n\n" + `時段 : ` + this.attendenceData.time +
-						"\n\n" + `項目編號 : ` + this.site.project +
-						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
-						"\n\n" + `DIS(2)  :` + this.site.siteCode3 +
-						"\n\n" + `副項目編號: ` + this.attendenceData.subcontract +
-						"\n\n" + `創建者 : ` + this.attendenceData.supervisors[0].cName +
-						"\n\n" + `地盤名稱: ` + this.site.cname + " " + this.site.name +
+						"\n\n" + `地盤項目編號 : ` + this.site.project +
+						"\n\n" + `Imple To: ` + this.site.imple +
+						"\n\n" + `Site C. To: ` + this.site.sitetoc +
 						"\n\n" + `EMFM: ` + this.site.emfm +
 						"\n\n" + `DMA: ` + this.site.dma +
-						"\n\n" + `Site C. To: ` + this.site.sitetoc +
-						"\n\n" + `Imple To: ` + this.site.imple +
-						"\n\n" + `機械:  ` + this.attendenceData.machine +
+						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
+						"\n\n" + `DIS(2)  :` + this.site.siteCode3 +
+						"\n\n" + `Loc. Name(Chi) 地盤地址: ` + this.site.cname + " " + this.site.name +
+						"\n\n" + `副項目編號: ` + this.attendenceData.subcontract +
+						"\n\n" + `創建者 : ` + this.attendenceData.supervisors[0].cName +
 						"\n\n" + `*Renopipe工人總數：` + this.attendenceData.workers.length + `*`+
 						"\n" + `Renopipe工人：`+ workerArr +
 						"\n\n" + `*其他判頭工人:*` + supplierArr +
 						"\n\n" + `總人數:` + totalWorkers +
+						"\n\n" + `機械:  ` + this.attendenceData.machine +
 						"\n\n" + `工作種類:` + this.attendenceData.worktype +
 						"\n\n" + `工作內容:` + this.attendenceData.description + ""
 					})
