@@ -18,8 +18,8 @@
 			<view class="body-padding">
 				<p>工頭名稱: {{username}}</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
-				<picker mode="date" @change="startTime">
-					<view>今日日期: {{start.name}}</view>
+				<picker mode="date" @change="startTime" style="margin-top: 6px;margin-bottom: 6px;">
+					<view >更改日期: <span style="border: solid 1px;padding: 1px 10px;">{{this.workingTime}}</span></view>
 				</picker>
 				時段: &nbsp;&nbsp;
 				<span class="selectpadding">
@@ -358,6 +358,7 @@
 		data() {
 			return {
 				attendenceData:"",
+				workingTime:null,
 				imgs:[],
 				description: "",
 				workerList: [],
@@ -411,25 +412,39 @@
 					// {name:"30噸吊雞",check:false},
 					// {name:"5.5噸車",check:false},
 					// {name:"水泵",check:false},
-					{name:"大發電機",number: 1, check:false},
-					{name:"細發電機",number: 1, check:false},
-					{name:"大電炮",number: 1,check:false},
-					{name:"細電炮",number: 1,check:false},
-					{name:"保路華",number: 1,check:false},
-					{name:"跳鎚",number: 1,check:false},
-					{name:"震船",number: 1,check:false},
-					{name:"9噸吊雞",number: 1,check:false},
-					{name:"30噸吊雞",number: 1,check:false},
-					{name:"5.5噸車",number: 1,check:false},
-					{name:"水泵",number: 1,check:false},
-					{name:"雞頭(4噸)",number: 1,check:false},
-					{name:"雞頭(13噸)",number: 1,check:false},
-					{name:"雞頭(20噸)",number: 1,check:false},
-					{name:"火轆",number: 1,check:false},
-					{name:"風車鋸",number: 1,check:false},
-					{name:"風煤",number: 1,check:false},
-					{name:"焊機",number: 1,check:false},
-					{name:"自行填寫",number: 1,check:false,type:"custom"},
+						{name:"雞頭(1噸)",number: 1, check:false},		
+						{name:"雞頭(1.5噸)",number: 1, check:false},		
+						{name:"雞頭(1.8噸)",number: 1,check:false},		
+						{name:"雞頭(3噸)",number: 1,check:false},		
+						{name:"雞頭(4噸)",number: 1,check:false},		
+						{name:"雞頭(5噸)",number: 1,check:false},		
+						{name:"雞頭(7噸)",number: 1,check:false},		
+						{name:"雞頭(12噸)",number: 1,check:false},		
+						{name:"雞頭(13噸)",number: 1,check:false},		
+						{name:"雞頭(20噸)",number: 1,check:false},		
+						{name:"5.5噸車",number: 1,check:false},		
+						{name:"9噸吊雞",number: 1,check:false},		
+						{name:"30噸夾車",number: 1,check:false},		
+						{name:"30噸吊雞",number: 1,check:false},		
+						{name:"30噸排卡",number: 1,check:false},		
+						{name:"細電炮",number: 1,check:false},		
+						{name:"大電炮",number: 1,check:false},		
+						{name:"HILTI大電炮",number: 1,check:false},		
+						{name:"HILTI充電式震鑽",number: 1,check:false},		
+						{name:"細發電機",number: 1,check:false},		
+						{name:"大發電機",number: 1,check:false},		
+						{name:"震船",number: 1,check:false},		
+						{name:"跳鎚",number: 1,check:false},		
+						{name:"火轆",number: 1,check:false},		
+						{name:"水泵",number: 1,check:false},		
+						{name:"風車鋸",number: 1,check:false},		
+						{name:"風煤",number: 1,check:false},		
+						{name:"焊機",number: 1,check:false},		
+						{name:"風機，風炮",number: 1,check:false},		
+						{name:"保路華",number: 1,check:false},		
+						{name:"石屎震機",number: 1,check:false},		
+						{name:"田螺斗",number: 1,check:false},		
+						{name:"自行填寫",number: 1,check:false,type:"custom"},
 				],//發電機  大電炮 細電炮 保路華  跳鎚 震船 9噸吊雞 30噸吊雞 5.5噸車 水泵
 				allPosition:[],      // 按工种分类好了的工人 
 				currentPositionIndex:0,
@@ -673,6 +688,9 @@
 					success (res) {
 						if(res){
 							that.attendenceData = res.data[0]
+							let dd= new Date(res.data[0].startTimestamp * 1000);
+							console.log(res.data[0].startTimestamp);
+							that.workingTime = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
 							that.getSite(res);
 							// console.log(this.attendenceData);
 							that.checkData()
@@ -684,7 +702,8 @@
 				})
 			},
 			startTime (e) {
-				this.start.name = e.detail.value
+				console.log(e)
+				this.workingTime = e.detail.value
 				this.start.timesamp = new Date(e.detail.value).getTime()/1000
 			},
 			endTime (e) {
@@ -866,7 +885,7 @@
 							workerIds: arr,
 							siteId: this.attendenceData.siteId,
 							supervisorId:parseInt(this.attendenceData.supervisorId),
-							startTimestamp: this.attendenceData.startTimestamp,
+							startTimestamp: parseInt(new Date(this.workingTime).getTime() / 1000) +"",
 							endTimestamp:this.attendenceData.endTimestamp,
 							time:this.attendenceData.time,
 							subcontract: this.attendenceData.subcontract ? this.attendenceData.subcontract : " ",

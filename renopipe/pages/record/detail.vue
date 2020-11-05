@@ -22,7 +22,7 @@
 				<p>工頭名稱: {{attendenceData.supervisors[0].cName}}</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
 				<picker mode="date" @change="startTime">
-					<view>今日日期: {{attendenceData.createdAt.split("T")[0]}}</view>
+					<view>工作日期: {{this.workingTime}}</view>
 				</picker>
 				<p>時段: {{attendenceData.time}}</p>
 				<!--<span class="selectpadding">
@@ -212,6 +212,7 @@
 		data() {
 			return {
 				attendenceData:{supervisors:[""], workers:[],createdAt:""},
+				workingTime:"123",
 				imgs:[],
 				images: [],  // 補充圖片使用
 				selectIMG: {
@@ -309,9 +310,13 @@
 						Authorization:uni.getStorageSync('token')
 					},
 					success (res) {
-						console.log('报工记录',res)
+						console.log('报工记录',res.data[0])
 						if(res){
 							that.attendenceData = res.data[0]
+							let dd= new Date(res.data[0].startTimestamp * 1000);
+							console.log(res.data[0].startTimestamp);
+							that.workingTime = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
+							
 							that.getSite(res);
 							let arr = []
 							let remark = that.attendenceData.remark.split(";")
@@ -337,7 +342,8 @@
 				})
 			},
 			startTime (e) {
-				this.start.name = e.detail.value
+				console.log(e)
+				this.workingTime = e.detail.value
 				this.start.timesamp = new Date(e.detail.value).getTime()/1000
 			},
 			endTime (e) {
@@ -657,7 +663,8 @@
 					"message":
 						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+
 						"\n" + "[舊紀錄發佈時間: " + this.attendenceData.createdAt.split("+")[0].replace("T", " ") + "]"+
-						"\n" + "[報工記錄更新時間: " + updateTimeReFine.replace("T", " ") + "]"+
+						"\n\n" + "[報工記錄更新時間: " + updateTimeReFine.replace("T", " ") + "]"+
+						"\n\n" + `時段 : ` + this.workingTime +
 						"\n\n" + `時段 : ` + this.attendenceData.time +
 						"\n\n" + `地盤項目編號 : ` + this.site.project +
 						"\n\n" + `Imple To: ` + this.site.imple +
