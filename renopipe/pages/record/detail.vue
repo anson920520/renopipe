@@ -664,7 +664,7 @@
 						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+
 						"\n" + "[舊紀錄發佈時間: " + this.attendenceData.createdAt.split("+")[0].replace("T", " ") + "]"+
 						"\n\n" + "[報工記錄更新時間: " + updateTimeReFine.replace("T", " ") + "]"+
-						"\n\n" + `時段 : ` + this.workingTime +
+						"\n\n" + `工作日期 : ` + this.workingTime +
 						"\n\n" + `時段 : ` + this.attendenceData.time +
 						"\n\n" + `地盤項目編號 : ` + this.site.project +
 						"\n\n" + `Imple To: ` + this.site.imple +

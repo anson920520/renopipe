@@ -428,7 +428,8 @@ export default {
       thisSite:"",
       msg:"下載圖片",
       columns: [
-        { title: "日期", key:"createdAt" ,sortable: true},
+        { title: "創建日期", key:"createdAt" ,sortable: true},
+        { title: "工作日期", key:"startTimestamp" ,sortable: true},
         { title: "報工記錄編號", key:"ID" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
         { title: "地盤項目編號", key:"siteId",sortable: true,
