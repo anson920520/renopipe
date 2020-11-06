@@ -182,7 +182,7 @@
         </div>
 
         <div style="padding-right: 10px;">
-          <DatePicker type="date" @on-change="changeDate" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
+          <DatePicker type="date" @on-change="changeDate2" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
         </div>
 
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
@@ -433,7 +433,7 @@ export default {
       msg:"下載圖片",
       columns: [
         { title: "創建日期", key:"createdAt" ,sortable: true},
-        { title: "工作日期", key:"startTimestamp" ,sortable: true},
+        { title: "工作日期", key:"workDate" ,sortable: true},
         { title: "報工記錄編號", key:"ID" ,sortable: true},
         // { title: "圖片預覽", slot:"preview" },
         { title: "地盤項目編號", key:"siteId",sortable: true,
@@ -594,6 +594,7 @@ export default {
       natureVal:"",
       sitetocVal:"",
       filterTime:"",
+      filterTime2:"",
       tableLoad: false
     }
   },
@@ -612,6 +613,11 @@ export default {
   },
   
   methods:{
+      changeDate2 (e) {
+          console.log(e)
+          this.filterTime2 = e
+            this.search()
+      },
     changeDate (e) {
       // console.log(e)
       let start = e.replace("-","/").replace("-","/")
@@ -676,11 +682,17 @@ export default {
               item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
               item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-
+              let D = new Date(item.startTimestamp*1000)
+              let Y = D.getFullYear()
+              let M = D.getMonth() + 1
+              M = M<10 ? "0" + M : M
+              let d = D.getDate()
+              d = d<10 ? "0" + d : d
+              item.workDate = Y + "-" + M + '-' + d
               // console.log(new Date())
               this.loopData(item)
           })
-          this.allData = res.data
+          this.allData = res.data.slice(0,50)
           this.dataList = this.allData.slice(0)
           
           // this.load()
@@ -831,8 +843,14 @@ export default {
         }
       })
       this.dataList = this.dataList.filter(item => {
-        console.log(item.createdAt, this.filterTime)
+        // console.log(item.createdAt, this.filterTime)
         if (item.createdAt.indexOf(this.filterTime) != -1) {
+          return true
+        }
+      })
+      this.dataList = this.dataList.filter(item => {
+        // console.log(item.createdAt, this.filterTime)
+        if (item.workDate.indexOf(this.filterTime2) != -1) {
           return true
         }
       })
