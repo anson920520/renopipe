@@ -181,6 +181,10 @@
           <DatePicker type="date" @on-change="changeDate" placeholder="搜索日期" style="width: 200px"></DatePicker>
         </div>
 
+        <div style="padding-right: 10px;">
+          <DatePicker type="date" @on-change="changeDate" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
+        </div>
+
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
         <Button @click="search"  type="info">搜索</Button>
       </div>
