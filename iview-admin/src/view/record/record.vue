@@ -689,10 +689,10 @@ export default {
               let d = D.getDate()
               d = d<10 ? "0" + d : d
               item.workDate = Y + "-" + M + '-' + d
-              // console.log(new Date())
+              // console.log(new Date()),123
               this.loopData(item)
           })
-          this.allData = res.data.slice(0,50)
+          this.allData = res.data
           this.dataList = this.allData.slice(0)
           
           // this.load()
