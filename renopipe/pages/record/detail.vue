@@ -686,7 +686,7 @@
 					})
 					
 				console.log(raw)
-				
+				console.log(this.baseURL + "attendence/"+ this.$route.query.id + "/updateMsg")
 				var requestOptions = {
 				  method: 'POST',
 				  headers: myHeaders,
@@ -694,16 +694,28 @@
 				  redirect: 'follow'
 				};
 				
-				fetch("https://selo.wablas.com/api/send-group", requestOptions)
-				  .then(response => response.text())
-				  .then(result => console.log(result))
-				  .then()
-				  .catch(error => console.log('error', error));
-				 
+				let logUrl = this.baseURL + "attendence/"+ this.$route.query.id + "/updateMsg"
 				
-				uni.navigateTo({
-						url: "/pages/record/completeResend"
-				})
+				fetch("https://selo.wablas.com/api/send-group", requestOptions)
+				  .then(function(response) {
+				    if(response.status === 200) {
+						console.log(logUrl)
+						uni.request({
+						   	url:logUrl ,
+						   	method:"PUT",
+						   	header:{
+						   		Authorization:uni.getStorageSync('token')
+						   	},
+						   	success: {},
+						})
+						uni.navigateTo({
+							url: "/pages/record/completeResend"
+						})
+				    }else{
+						alert("未能成功發送請再試!")
+					}
+				   })
+				  .then(result => console.log(result))
 				
 			},
 			showModal () {
