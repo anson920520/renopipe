@@ -21,7 +21,7 @@
 					<!--顯示前一天的所有記錄，做一個漂亮一點的箭嘴!-->
 					<!--<span class="arrow" @click="yesterday"> &#8678; </span>!--
 					<!--顯示當前日期改讓客戶透過picker選擇想要觀看的日期!-->
-					<label  style="font-size: 20px;">選擇日期 : </label>
+					<label  style="font-size: 20px;">創建日期 : </label>
 					<picker class="selectedDate" mode="date" @change="attendenceDate">
 						<input style="font-size: 20px;" class="dateBox" type="date" disabled="disabled" v-model="start.name" />
 					</picker>
@@ -34,7 +34,7 @@
 				<view class="box scoll">
 					<table class="" id="t01">
 					  <tr id="header">
-						<!--<th>時段</th>!-->
+						<th>工作日期</th>
 						<th>地盤</th> 
 						<th>工作</th>
 						<th>訊息狀態</th>
@@ -42,9 +42,9 @@
 					  
 					  <tr v-for="(item,i) in dataList" :key="i" v-bind:id="item.ID" @click="toDetail(item.ID)">
 						<!--<td >{{item.time}}</td>!-->
-						
-						<td style="width: 40%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
-						<td style="width: 30%;">{{item.worktype}}</td>
+						<td style="width: 30%;">{{workingTime}}</td>
+						<td style="width: 30%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
+						<td style="width: 20%;">{{item.worktype}}</td>
 						<td style="color:green" v-if="item.log && JSON.parse(item.log).message == 'successfully sent group text'">已送出</td>
 						<td style="color:red" v-else-if="item.log && JSON.parse(item.log).message !== 'successfully sent group text'">whatsapp未發送，需要重發</td>
 						<td style="color:red" v-else>Selo Whatsapp Gateway 發生錯誤，請聯絡Tesla Chong 60814693</td>
@@ -77,6 +77,7 @@
 				dataList: [],    // 過濾後記錄
 				siteList: [],     //地盘
 				val:"",       // 搜索关键字
+				workingTime:"",
 				allData:[],      // 所有記錄
 				start: {
 					name: "",
@@ -164,6 +165,9 @@
 								item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
 							})
 							that.allData.forEach(item => {
+								let dd= new Date(item.startTimestamp * 1000);
+								let fin = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
+								
 								that.siteList.forEach(attr => {
 									if (item.siteId == attr.ID) {
 										item.site = attr.name
@@ -178,9 +182,11 @@
 										item.project = attr.project
 									}
 								})
+								return that.workingTime = fin;
 							})
 							that.dataList = that.allData
 							//get site data by site ID
+							
 						}else{
 							//alert("暫時未有記錄")
 							this.loaderMSG = "所選擇的日期沒有數據"
