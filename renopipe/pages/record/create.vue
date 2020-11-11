@@ -431,7 +431,15 @@
 			let Y = D.getFullYear()
 			let M = D.getMonth();
 			let d = D.getDate()
-			let str = Y + "-" + (M+1) + "-0" + d
+			let str;
+			
+			if(d >= 10){
+				str =  Y + "-" + (M+1)+ "-" + d
+			}
+			else{
+				str =  Y + "-" + (M+1) + "-0" + d
+			}
+			
 			this.start.name = str
 			this.start.timesamp = new Date(str).getTime()/1000
 			
