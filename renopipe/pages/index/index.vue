@@ -45,14 +45,13 @@
 						<td style="width: 30%;">{{workingTime}}</td>
 						<td style="width: 30%;"><b style="color:#007AFF">{{item.siteName}}({{item.site}})</b>, {{item.sitecode1}}, {{item.sitecode3}}, {{item.sitetoc}}, {{item.imple}}, {{item.dma}}, {{item.emfm}}</td>
 						<td style="width: 20%;">{{item.worktype}}</td>
-						<td style="color:green" v-if="item.log == '<html>'">
+						<td style="color:green" v-if="item.log">
 							已送出
 						</td>
-						<td style="color:green" v-else-if="JSON.parse(item.log).message == 'successfully sent group text'">已送出</td>
-							<!--<span v-if="JSON.parse(item.log).message == 'successfully sent group text'">已送出 </span>!-->
-						
-						<td style="color:red" v-else-if="item.log && JSON.parse(item.log).message !== 'successfully sent group text'">whatsapp未發送，需要重發</td>
-						<td style="color:red" v-else>Selo Whatsapp Gateway 發生錯誤，請聯絡Tesla Chong 60814693</td>
+						<!--<td style="color:green" v-else-if="JSON.parse(item.log).message == 'successfully sent group text'">已送出</td>
+				
+						<td style="color:red" v-else-if="item.log && JSON.parse(item.log).message !== 'successfully sent group text'">Selo Whatsapp Gateway 發生錯誤，請聯絡Tesla Chong 60814693 </td>!-->
+						<td style="color:red" v-else>whatsapp未發送，需要重發</td>
 				
 					 </tr>
 					  
