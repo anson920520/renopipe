@@ -10,6 +10,7 @@ import {
   getRouteTitleHandled,
   localSave,
   localRead
+  
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
@@ -33,13 +34,17 @@ export default {
     local: localRead('local'),
     errorList: [],
     hasReadErrorPage: false,
-    isLogin: false
+    isLogin: false,
+    site: [],
   },
   getters: {
     menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
     errorCount: state => state.errorList.length
   },
   mutations: {
+      setState (state,data) {
+        state[data.key] = data.value
+      },
     setIsLogin (state) {
       state.isLogin = true
     },

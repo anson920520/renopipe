@@ -288,6 +288,11 @@
       </template>
 
     </Table>
+    <br>
+    <div style="text-align:right">
+       <Page :page="page" :page-size="20" :total='total' @on-change="changePage"></Page> 
+    </div>
+    
 
     <!-- 顯示詳細 -->
     <Modal v-model="showBox" :width="1300">
@@ -381,262 +386,253 @@
 import JsonExcel from "vue-json-excel";
 
 export default {
-  data () {
-    let that = this
-    return {
-        json_fields: {
-          "Complete name": "name",
-          City: "city",
-          Telephone: "phone.mobile",
-          "Telephone 2": {
-            field: "phone.landline",
-            callback: (value) => {
-              return `Landline Phone - ${value}`;
+    data () {
+        let that = this
+        return {
+            page: 0,
+            total:1030,
+            json_fields: {
+            "Complete name": "name",
+            City: "city",
+            Telephone: "phone.mobile",
+            "Telephone 2": {
+                field: "phone.landline",
+                callback: (value) => {
+                return `Landline Phone - ${value}`;
+                },
             },
-          },
-        json_data: [
-          {
-            name: "Tony Peña",
-            city: "New York",
-            country: "United States",
-            birthdate: "1978-03-15",
-            phone: {
-              mobile: "1-541-754-3010",
-              landline: "(541) 754-3010",
-            },
-          },
-          {
-            name: "Thessaloniki",
-            city: "Athens",
-            country: "Greece",
-            birthdate: "1987-11-23",
-            phone: {
-              mobile: "+1 855 275 5071",
-              landline: "(2741) 2621-244",
-            },
-          },
-        ],
-        json_meta: [
-          [
+            json_data: [
             {
-              key: "charset",
-              value: "utf-8",
+                name: "Tony Peña",
+                city: "New York",
+                country: "United States",
+                birthdate: "1978-03-15",
+                phone: {
+                mobile: "1-541-754-3010",
+                landline: "(541) 754-3010",
+                },
             },
-          ],
+            {
+                name: "Thessaloniki",
+                city: "Athens",
+                country: "Greece",
+                birthdate: "1987-11-23",
+                phone: {
+                mobile: "+1 855 275 5071",
+                landline: "(2741) 2621-244",
+                },
+            },
+            ],
+            json_meta: [
+            [
+                {
+                key: "charset",
+                value: "utf-8",
+                },
+            ],
+            ],
+        },
+        //the above is for export
+        showBox: false,
+        showBig: false,
+        url:"",
+        thisSite:"",
+        msg:"下載圖片",
+        columns: [
+            { title: "創建日期", key:"createdAt" ,sortable: true},
+            { title: "工作日期", key:"workDate" ,sortable: true},
+            { title: "報工記錄編號", key:"ID" ,sortable: true},
+            // { title: "圖片預覽", slot:"preview" },
+            { title: "地盤項目編號", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.project
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "DIS(1)", key:"siteId" ,sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.siteCode3
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "DIS(2)地盤地區", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.siteCode1
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "地盤地址", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.cname
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "Imple.", key:"siteId" ,sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.imple
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "Site C.", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.sitetoc
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "DMA", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.dma
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "EMFM", key:"siteId",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.emfm
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "Nature", key:"region",sortable: true,
+                render:(h,p) => {
+                let str = "讀取中..."
+                that.siteList.forEach(item => {
+                    if (item.ID==p.row.siteId) {
+                        str = item.region
+                    }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "詳請", key:"description",sortable: true, },
+            { title: "工頭", key:"supervisor",sortable: true,
+            render:(h,p) => {
+                let str = "暫無"
+                that.superList.forEach(item => {
+                if (item.ID==p.row.supervisorId) {
+                    str = item.cName
+                    //console.log(str)
+                }
+                })
+                return h('div',str)
+            }
+            },
+            { title: "操作", slot:"operation" },
+            // "data:image/jpeg;base64,
         ],
-      },
-      //the above is for export
-      showBox: false,
-      showBig: false,
-      url:"",
-      thisSite:"",
-      msg:"下載圖片",
-      columns: [
-        { title: "創建日期", key:"createdAt" ,sortable: true},
-        { title: "工作日期", key:"workDate" ,sortable: true},
-        { title: "報工記錄編號", key:"ID" ,sortable: true},
-        // { title: "圖片預覽", slot:"preview" },
-        { title: "地盤項目編號", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.project
-                  }
-              })
-              return h('div',str)
-          }
+        dataList: [],
+        current:{
+            images:[""
+            // "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
+            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
+            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
+            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+            // "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
+            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+            ],
+            supervisors:[""]
         },
-        { title: "DIS(1)", key:"siteId" ,sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.siteCode3
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "DIS(2)地盤地區", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.siteCode1
-                  }
-              })
-              return h('div',str)
-          }
-        },
-         { title: "地盤地址", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.cname
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "Imple.", key:"siteId" ,sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.imple
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "Site C.", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.sitetoc
-                  }
-              })
-              return h('div',str)
-          }
-        },
-          { title: "DMA", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.dma
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "EMFM", key:"siteId",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.emfm
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "Nature", key:"region",sortable: true,
-              render:(h,p) => {
-              let str = "讀取中..."
-              that.siteList.forEach(item => {
-                  if (item.ID==p.row.siteId) {
-                    str = item.region
-                  }
-              })
-              return h('div',str)
-          }
-        },
-        { title: "詳請", key:"description",sortable: true, },
-        { title: "工頭", key:"supervisor",sortable: true,
-          render:(h,p) => {
-            let str = "暫無"
-            that.superList.forEach(item => {
-              if (item.ID==p.row.supervisorId) {
-                str = item.cName
-                //console.log(str)
-              }
-            })
-            return h('div',str)
-          }
-        },
-        { title: "操作", slot:"operation" },
-        // "data:image/jpeg;base64,
-      ],
-      dataList: [],
-      current:{
-        images:[""
-          // "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-          // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-          // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-          // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-          // "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-          // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-        ],
-        supervisors:[""]
-      },
-      absWidth:1000,
-      left:0,
-      currentImg:0,
-      superList:[],
-      siteList:[],
-      load:function(){},
-      allData:[],
-      searchVal:"",
+        absWidth:1000,
+        left:0,
+        currentImg:0,
+        superList:[],
+        // siteList:[],
+        load:function(){},
+        allData:[],
+        searchVal:"",
 
-      // 五个搜索框
-      proList:[],
-      disList1:[],
-      disList2:[],
-      disList3:[],
-      dma:[],
-      emfm:[],
-      SiteList:[],
-      imple:[],
-      nature:[],
-      sitetoc:[],
-      pro:"",
-      dis1:"",
-      dis2:"",
-      site:'',
-      cName:"",
-      impleVal: "",
-      dmaVal:"",
-      emfmVal:"",
-      natureVal:"",
-      sitetocVal:"",
-      filterTime:"",
-      filterTime2:"",
-      tableLoad: false
-    }
-  },
-  created () {
-    this.url = window.baseURL
-    this.getSuper()
-    this.getSite()
-  },
-  mounted () {
-    // this.load = this.$Message.loading({
-    //   content:"獲取記錄中...",
-    //   duration:10
-    // })
-    
-    
-  },
-  
+        // 五个搜索框
+        proList:[],
+        disList1:[],
+        disList2:[],
+        disList3:[],
+        dma:[],
+        emfm:[],
+        SiteList:[],
+        imple:[],
+        nature:[],
+        sitetoc:[],
+        pro:"",
+        dis1:"",
+        dis2:"",
+        site:'',
+        cName:"",
+        impleVal: "",
+        dmaVal:"",
+        emfmVal:"",
+        natureVal:"",
+        sitetocVal:"",
+        filterTime:"",
+        filterTime2:"",
+        tableLoad: false
+        }
+    },
+    created () {
+        this.url = window.baseURL
+        this.getSuper()
+        if (this.siteList.length) {
+            this.showTable()
+        } else {
+            this.getSite()
+        }
+        // this.getSite()
+    },
+    computed: {
+        siteList () { return this.$store.state.app.site }
+    },
   methods:{
+      changePage (e) {
+          this.page = e
+          document.getElementsByClassName("content-wrapper")[0].scrollTop = 0
+          this.showTable2()
+      },
       changeDate2 (e) {
           console.log(e)
           this.filterTime2 = e
             this.search()
       },
     changeDate (e) {
-      // console.log(e)
       let start = e.replace("-","/").replace("-","/")
-      // this.dataList = this.allData.filter(item => {
-      //   // console.log(item.createdAt, start)
-      //   if (item.createdAt.indexOf(start) != -1) {
-      //     return true
-      //   }
-      // })
       this.filterTime = start
       this.search()
-      // let D = new Date(new Date(e).getTime() + 86400000)
-      // let y = D.getFullYear()
-      // let M = D.getMonth() < 9 ? "0" + (D.getMonth()+1) : (D.getMonth()+1)
-      // let d = D.getDate() < 10 ? "0" + D.getDate() : D.getDate()
-      // let end = y + M + d
-      // // console.log(end)
-      // let params = "?start=" + start + "&end=" + end
-      // this.showTable(params)
     },
     createSearchData () {
       this.proList = []
@@ -669,38 +665,89 @@ export default {
 
 
     },
-    showTable (params="") {
-      this.$axios({
-        url:"attendence" + params,
-        method:"GET"
-      }).then(res => {
-        console.log(res)
-        this.tableLoad = false
-        if (res.data) {
-          res.data.forEach(item => {
+    //有分页
+    showTable2 () {
+        this.tableLoad = true
+        return new Promise((resolve,reject) => {
+            this.$axios({
+                url:"attendence?action=preload&page=" + this.page,
+                method:"GET"
+            }).then(res => {
+                console.log(res)
+                this.tableLoad = false
+                if (res.data) {
+                    res.data.forEach(item => {
 
-              item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-              item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-              item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-              let D = new Date(item.startTimestamp*1000)
-              let Y = D.getFullYear()
-              let M = D.getMonth() + 1
-              M = M<10 ? "0" + M : M
-              let d = D.getDate()
-              d = d<10 ? "0" + d : d
-              item.workDate = Y + "-" + M + '-' + d
-              // console.log(new Date()),123
-              this.loopData(item)
-          })
-          this.allData = res.data
-          this.dataList = this.allData.slice(0)
-          
-          // this.load()
-        }
-      }).catch(() => {
-          this.tableLoad = false
-        // this.load()
-      })
+                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        let D = new Date(item.startTimestamp*1000)
+                        let Y = D.getFullYear()
+                        let M = D.getMonth() + 1
+                        M = M<10 ? "0" + M : M
+                        let d = D.getDate()
+                        d = d<10 ? "0" + d : d
+                        item.workDate = Y + "-" + M + '-' + d
+                        // console.log(new Date()),123
+                        this.loopData(item)
+                    })
+                    this.allData = res.data
+                    this.dataList = this.allData.slice(0)
+                    resolve()
+                } else {
+                    reject()
+                }
+            }).catch(() => {
+                this.tableLoad = false
+                reject()
+            })
+        })
+      
+    },
+    showTable () {
+        let load = this.$Message.loading({
+            content:"加载中...",
+            duration:1000000
+        })
+        this.tableLoad = true
+        return new Promise((resolve,reject) => {
+            this.$axios({
+                url:"attendence",
+                method:"GET"
+            }).then(res => {
+                console.log(res)
+                load()
+                this.tableLoad = false
+                if (res.data) {
+                    res.data.forEach(item => {
+
+                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        let D = new Date(item.startTimestamp*1000)
+                        let Y = D.getFullYear()
+                        let M = D.getMonth() + 1
+                        M = M<10 ? "0" + M : M
+                        let d = D.getDate()
+                        d = d<10 ? "0" + d : d
+                        item.workDate = Y + "-" + M + '-' + d
+                        // console.log(new Date()),123
+                        this.loopData(item)
+                    })
+                    this.allData = res.data
+                    this.dataList = this.allData.slice(0)
+                    resolve()
+                    // this.load()
+                } else {
+                    load()
+                    reject()
+                }
+            }).catch(() => {
+                this.tableLoad = false
+                reject()
+            })
+        })
+      
     },
     loopData (item) {
       setTimeout(() => {
@@ -728,132 +775,133 @@ export default {
 
       },200)
     },
-    search () {
-      this.dataList = this.allData.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.cName) != -1 ) {
-              return true
+    async search () {
+        await this.showTable()
+        this.dataList = this.allData.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.cName) != -1 ) {
+                return true
+                }
             }
-          }
-        }
-      })
-
-
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.site) != -1 ) {
-              return true
             }
-          }
-        }
-      })
+        })
 
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.dis1) != -1 ) {
-              return true
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.site) != -1 ) {
+                return true
+                }
             }
-          }
-        }
-      })
-
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.dis2) != -1 ) {
-              return true
             }
-          }
-        }
-      })
+        })
 
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.pro) != -1 ) {
-              return true
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.dis1) != -1 ) {
+                return true
+                }
             }
-          }
-        }
-      })
-
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.emfmVal) != -1 ) {
-              // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
-              return true
             }
-          }
-        }
-      })
+        })
 
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.dmaVal) != -1 ) {
-              return true
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.dis2) != -1 ) {
+                return true
+                }
             }
-          }
-        }
-      })
-
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.impleVal) != -1 ) {
-              return true
             }
-          }
-        }
-      })
+        })
 
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.natureVal) != -1 ) {
-              return true
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.pro) != -1 ) {
+                return true
+                }
             }
-          }
-        }
-      })
-
-
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if ( item[key].indexOf(this.sitetocVal) != -1) {
-              return true
             }
-          }
-        }
-      })
+        })
 
-      this.dataList = this.dataList.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            // console.log(item[key], this.searchVal)
-            if ( item[key].indexOf(this.searchVal) != -1) {
-              return true
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.emfmVal) != -1 ) {
+                // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
+                return true
+                }
             }
-          }
-        }
-      })
-      this.dataList = this.dataList.filter(item => {
-        // console.log(item.createdAt, this.filterTime)
-        if (item.createdAt.indexOf(this.filterTime) != -1) {
-          return true
-        }
-      })
-      this.dataList = this.dataList.filter(item => {
-        // console.log(item.createdAt, this.filterTime)
-        if (item.workDate.indexOf(this.filterTime2) != -1) {
-          return true
-        }
-      })
+            }
+        })
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.dmaVal) != -1 ) {
+                return true
+                }
+            }
+            }
+        })
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.impleVal) != -1 ) {
+                return true
+                }
+            }
+            }
+        })
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.natureVal) != -1 ) {
+                return true
+                }
+            }
+            }
+        })
+
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                if ( item[key].indexOf(this.sitetocVal) != -1) {
+                return true
+                }
+            }
+            }
+        })
+
+        this.dataList = this.dataList.filter((item,i) => {
+            for(let key in item) {
+            if ( typeof item[key] == "string") {
+                // console.log(item[key], this.searchVal)
+                if ( item[key].indexOf(this.searchVal) != -1) {
+                return true
+                }
+            }
+            }
+        })
+        this.dataList = this.dataList.filter(item => {
+            // console.log(item.createdAt, this.filterTime)
+            if (item.createdAt.indexOf(this.filterTime) != -1) {
+            return true
+            }
+        })
+        this.dataList = this.dataList.filter(item => {
+            // console.log(item.createdAt, this.filterTime)
+            if (item.workDate.indexOf(this.filterTime2) != -1) {
+            return true
+            }
+        })
 
     },
     //獲取所有工頭
@@ -878,7 +926,7 @@ export default {
         // console.log(res,123)
         if (res.data) {
           this.siteList = res.data
-          this.showTable()
+          this.showTable2()
 
         } else {
             this.tableLoad = false

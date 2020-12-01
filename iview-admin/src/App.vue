@@ -6,12 +6,25 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
+    name: 'App',
+    data () {
+        return {
 
+        }
+    },
+    created () {
+        this.$axios({
+            url: "site",
+            headers: {
+                Authorization: "JWT null2"
+            }
+        }).then(res => {
+            console.log('site123',res)
+            if (res.data) {
+                this.$store.commit("setState",{ key: 'site', value:res.data })
+            }
+        })
     }
-  }
 }
 </script>
 
