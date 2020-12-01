@@ -164,7 +164,7 @@
 }
 
 .selectBox{
-  padding:20px;
+  padding:20px 20px 10px 20px;
 }
 
 
@@ -268,6 +268,7 @@
             </select>
           </div>
       </div>
+      <small style="color: #E50000;">* 過濾器只過濾本頁的內容，並非全部記錄。</small>
         <!--<Button @change="search"  type="info">搜索</Button>!-->
     </div>
      <br/>
