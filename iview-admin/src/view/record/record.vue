@@ -784,7 +784,7 @@ export default {
       },200)
     },
     async search () {
-        await this.showTable()
+        // await this.showTable2()
         this.dataList = this.allData.filter((item,i) => {
             for(let key in item) {
             if ( typeof item[key] == "string") {
@@ -907,9 +907,14 @@ export default {
         this.dataList = this.dataList.filter(item => {
             // console.log(item.createdAt, this.filterTime)
             if (item.workDate.indexOf(this.filterTime2) != -1) {
-            return true
+                return true
             }
         })
+        if (this.dataList.length == this.allData.length) {
+            this.getCount()
+        } else {
+            this.total= this.dataList.length
+        }
 
     },
     //獲取所有工頭
