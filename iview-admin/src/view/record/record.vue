@@ -290,7 +290,7 @@
     </Table>
     <br>
     <div style="text-align:right">
-       <Page :page="page" :page-size="20" :total='total' @on-change="changePage"></Page> 
+       <Page :page="page" :page-size="20" :total='total' @on-change="changePage" show-total></Page> 
     </div>
     
 
@@ -390,7 +390,7 @@ export default {
         let that = this
         return {
             page: 0,
-            total:1030,
+            total:0,
             json_fields: {
             "Complete name": "name",
             City: "city",
@@ -609,16 +609,24 @@ export default {
         this.url = window.baseURL
         this.getSuper()
         if (this.siteList.length) {
-            this.showTable()
+            this.showTable2()
         } else {
             this.getSite()
         }
-        // this.getSite()
+        this.getCount()
     },
     computed: {
         siteList () { return this.$store.state.app.site }
     },
   methods:{
+      getCount () {
+          this.$axios({
+              url: "attendence/count",
+          }).then(res => {
+              console.log(res)
+              this.total = res.data
+          })
+      },
       changePage (e) {
           this.page = e
           document.getElementsByClassName("content-wrapper")[0].scrollTop = 0
