@@ -625,9 +625,23 @@ export default {
     },
   methods:{
       init () {
-          this.allData this.dataList = []
+          this.allData = this.dataList = []
           this.filterTime = ""
-          this.showTable()
+          this.pro = "",
+          this.dis1 = "",
+          this.dis2 = "",
+          this.site = '',
+          this.cName = "",
+          this.impleVal =  "",
+          this.dmaVal = "",
+          this.emfmVal = "",
+          this.natureVal = "",
+          this.sitetocVal = "",
+          this.filterTime = "",
+          this.filterTime2 = "",
+          this.page = 0
+          this.getCount()
+          this.showTable2()
       },
       getCount () {
           this.$axios({
