@@ -1008,6 +1008,10 @@ export default {
         // console.log(res,123)
         if (res.data) {
           this.superList = res.data
+          this.allData.forEach(item => {
+              this.loopData(item)
+          })
+          
         }
       })
     },
@@ -1184,6 +1188,7 @@ export default {
             subcontract: "副項目編號",
             supvisiorName: "創建者",
             time: "時段",
+            workDate: "工作日期",
             workers: "Renopipe工人",
             worktype: "工作種類",
       };
@@ -1219,27 +1224,28 @@ export default {
 
       // format the data
       itemsNotFormatted.forEach((item) => {
-          
           itemsFormatted.push({
-                DMA:item.dma,
-                EMFM:item.emfm,
-                company:item.rporsubCRP,
-                createdAt:item.createdAt,
+                DMA:String(item.dma) ,
+                EMFM:String(item.emfm) ,
+                company:String(item.rporsubCRP),
+                createdAt: String(item.createdAt) ,
                 description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
                 imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
-                impleto:item.imple,
+                impleto:String(item.imple),
                 machine:String(item.machine).replace(/,/g, ''),
-                nature:item.region,  // undefiend
+                nature: String(item.region) ,  // undefiend
                 project:String(item.project).replace(/,/g, ''),
                 remark:String(item.remark).replace(/,/g, ''),
-                siteId:item.siteId,
+                siteId:String(item.siteId) ,
                 siteName:String(item.siteName).replace(/,/g, ''),
-                sitecto:item.sitetoc,
-                subcontract:item.subcontract,
+                sitecto: String(item.sitetoc) ,
+                subcontract: String(item.subcontract) ,
                 supvisiorName:String(item.cName),
-                time:item.time,
+                time: String(item.time) ,
+                workDate: String(item.workDate),
                 workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
                 worktype:String(item.worktype).replace(/,/g, ''),
+                
           })
           
       });
@@ -1255,9 +1261,9 @@ export default {
       if (this.filterTime) {
           str = this.filterTime
       }
-      console.log(this.filterTime)
+      console.log(itemsNotFormatted)
       var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
-        console.log(itemsFormatted)
+        // console.log(itemsFormatted)
       this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
     downloadIMG(e){
