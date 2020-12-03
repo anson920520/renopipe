@@ -173,9 +173,10 @@
 
 <template>
   <div><!--關鍵字搜索!-->
-    <div class="sb al">
+    <small style="color: #E50000">* 記錄繁多選擇之後請稍候。</small>
+    <div class="sb al" style=";padding-top: 10px;">
       
-
+      
       <div class="ju al">
         <div style="padding-right: 10px;">
           <DatePicker type="month" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
