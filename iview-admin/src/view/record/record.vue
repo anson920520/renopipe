@@ -164,7 +164,7 @@
 }
 
 .selectBox{
-  padding:20px;
+  padding:20px 20px 10px 20px;
 }
 
 
@@ -178,15 +178,16 @@
 
       <div class="ju al">
         <div style="padding-right: 10px;">
-          <DatePicker type="date" @on-change="changeDate" placeholder="搜索日期" style="width: 200px"></DatePicker>
+          <DatePicker type="month" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
         </div>
+        <Button type="info" class="editBtn" @click="init">重置頁面</Button>
 
-        <div style="padding-right: 10px;">
+        <!-- <div style="padding-right: 10px;">
           <DatePicker type="date" @on-change="changeDate2" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
         </div>
 
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
-        <Button @click="search"  type="info">搜索</Button>
+        <Button @click="search"  type="info">搜索</Button> -->
       </div>
 
       <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button>
@@ -268,6 +269,7 @@
             </select>
           </div>
       </div>
+      <small style="color: #E50000;">* 過濾器只過濾本頁的內容，並非全部記錄。</small>
         <!--<Button @change="search"  type="info">搜索</Button>!-->
     </div>
      <br/>
@@ -616,9 +618,31 @@ export default {
         this.getCount()
     },
     computed: {
-        siteList () { return this.$store.state.app.site }
+        siteList: {
+            get () { return this.$store.state.app.site },
+            set () {}
+        }
     },
   methods:{
+      init () {
+          this.allData = this.dataList = []
+          this.filterTime = ""
+          this.pro = "",
+          this.dis1 = "",
+          this.dis2 = "",
+          this.site = '',
+          this.cName = "",
+          this.impleVal =  "",
+          this.dmaVal = "",
+          this.emfmVal = "",
+          this.natureVal = "",
+          this.sitetocVal = "",
+          this.filterTime = "",
+          this.filterTime2 = "",
+          this.page = 0
+          this.getCount()
+          this.showTable2()
+      },
       getCount () {
           this.$axios({
               url: "attendence/count",
@@ -640,7 +664,7 @@ export default {
     changeDate (e) {
       let start = e.replace("-","/").replace("-","/")
       this.filterTime = start
-      this.search()
+    //   this.search()
     },
     createSearchData () {
       this.proList = []
@@ -672,6 +696,54 @@ export default {
       this.SiteList = [...new Set(this.SiteList)].filter(item => item)
 
 
+    },
+    //過濾時間
+    filterDateData (e) {
+        let load = this.$Message.loading({
+            content:"加载中...",
+            duration:1000000
+        })
+        this.filterTime = e
+        // console.log(e)  //  yyyy-mm
+        let month = e.split("-")[1] * 1
+        this.tableLoad = true
+        return new Promise((resolve,reject) => {
+            this.$axios({
+                url:"attendence?filterDate=filterDate&month=" + month,
+                method:"GET"
+            }).then(res => {
+                console.log(res)
+                this.tableLoad = false
+                load()
+                if (res.data) {
+                    res.data.forEach(item => {
+
+                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        let D = new Date(item.startTimestamp*1000)
+                        let Y = D.getFullYear()
+                        let M = D.getMonth() + 1
+                        M = M<10 ? "0" + M : M
+                        let d = D.getDate()
+                        d = d<10 ? "0" + d : d
+                        item.workDate = Y + "-" + M + '-' + d
+                        // console.log(new Date()),123
+                        this.loopData(item)
+                    })
+                    this.allData = res.data
+                    this.dataList = this.allData.slice(0)
+                    resolve()
+                } else {
+                    reject()
+                }
+            }).catch(() => {
+                load()
+                this.tableLoad = false
+                reject()
+            })
+        })
+      
     },
     //有分页
     showTable2 () {
@@ -784,7 +856,7 @@ export default {
       },200)
     },
     async search () {
-        await this.showTable()
+        // await this.showTable2()
         this.dataList = this.allData.filter((item,i) => {
             for(let key in item) {
             if ( typeof item[key] == "string") {
@@ -888,28 +960,32 @@ export default {
             }
         })
 
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                // console.log(item[key], this.searchVal)
-                if ( item[key].indexOf(this.searchVal) != -1) {
-                return true
-                }
-            }
-            }
-        })
-        this.dataList = this.dataList.filter(item => {
-            // console.log(item.createdAt, this.filterTime)
-            if (item.createdAt.indexOf(this.filterTime) != -1) {
-            return true
-            }
-        })
-        this.dataList = this.dataList.filter(item => {
-            // console.log(item.createdAt, this.filterTime)
-            if (item.workDate.indexOf(this.filterTime2) != -1) {
-            return true
-            }
-        })
+        // this.dataList = this.dataList.filter((item,i) => {
+        //     for(let key in item) {
+        //         if ( typeof item[key] == "string") {
+        //             // console.log(item[key], this.searchVal)
+        //             if ( item[key].indexOf(this.searchVal) != -1) {
+        //             return true
+        //             }
+        //         }
+        //     }
+        // })
+        // this.dataList = this.dataList.filter(item => {
+        //     // console.log(item.createdAt, this.filterTime)
+        //     if (item.createdAt.indexOf(this.filterTime) != -1) {
+        //     return true
+        //     }
+        // })
+        // this.dataList = this.dataList.filter(item => {
+        //     if (item.workDate.indexOf(this.filterTime2) != -1) {
+        //         return true
+        //     }
+        // })
+        if (this.dataList.length == this.allData.length) {
+            this.getCount()
+        } else {
+            this.total= this.dataList.length
+        }
 
     },
     //獲取所有工頭
@@ -1164,7 +1240,12 @@ export default {
 
 
       let currentDate = new Date();
-      var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
+      let str = ""
+      if (this.filterTime) {
+          str = this.filterTime
+      }
+      console.log(this.filterTime)
+      var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
         console.log(itemsFormatted)
       this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
