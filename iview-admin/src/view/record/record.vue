@@ -703,6 +703,7 @@ export default {
             content:"加载中...",
             duration:1000000
         })
+        this.filterTime = e
         // console.log(e)  //  yyyy-mm
         let month = e.split("-")[1] * 1
         this.tableLoad = true
@@ -1239,7 +1240,12 @@ export default {
 
 
       let currentDate = new Date();
-      var fileTitle = 'Renopipe報工記錄' + currentDate; // or 'my-unique-title'
+      let str = ""
+      if (this.filterTime) {
+          str = this.filterTime
+      }
+      console.log(this.filterTime)
+      var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
         console.log(itemsFormatted)
       this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
