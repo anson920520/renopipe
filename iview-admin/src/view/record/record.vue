@@ -291,7 +291,7 @@
 
     </Table>
     <br>
-    <div style="text-align:right">
+    <div style="text-align:right" v-if="showPage">
        <Page :page="page" :page-size="20" :total='total' @on-change="changePage" show-total></Page> 
     </div>
     
@@ -604,7 +604,8 @@ export default {
         sitetocVal:"",
         filterTime:"",
         filterTime2:"",
-        tableLoad: false
+        tableLoad: false,
+        showPage: true,
         }
     },
     created () {
@@ -640,8 +641,10 @@ export default {
           this.filterTime = "",
           this.filterTime2 = "",
           this.page = 0
+          this.showPage = true
           this.getCount()
           this.showTable2()
+          
       },
       getCount () {
           this.$axios({
@@ -669,7 +672,6 @@ export default {
     createSearchData () {
       this.proList = []
       this.disList1 = []
-
       this.allData.forEach(item => {
         // console.log(item,item.sitecode1)
         this.proList.push(item.project)
@@ -699,12 +701,20 @@ export default {
     },
     //過濾時間
     filterDateData (e) {
+        
+        this.filterTime = e
+        // console.log(e)  //  yyyy-mm
+        if (!e) {
+            this.showPage = true
+            this.page = 0
+            this.showTable2()
+            return false
+        }
+        this.showPage = false
         let load = this.$Message.loading({
             content:"加载中...",
             duration:1000000
         })
-        this.filterTime = e
-        // console.log(e)  //  yyyy-mm
         let month = e.split("-")[1] * 1
         this.tableLoad = true
         return new Promise((resolve,reject) => {
