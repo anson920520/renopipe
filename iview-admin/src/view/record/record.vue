@@ -858,7 +858,7 @@ export default {
         })
         this.superList.forEach(supervisor => {
           if (supervisor.ID == item.supervisorId) {
-            item.cName = supervisor.cName
+            item.cName = supervisor.cName ? supervisor.cName : "N/A"
           }
         })
 
@@ -1225,26 +1225,26 @@ export default {
       // format the data
       itemsNotFormatted.forEach((item) => {
           itemsFormatted.push({
-                DMA:String(item.dma) ,
-                EMFM:String(item.emfm) ,
-                company:String(item.rporsubCRP),
-                createdAt: String(item.createdAt) ,
+                DMA:item.dma ? String(item.dma) : "N/A" ,
+                EMFM:item.emfm ?  String(item.emfm)  : "N/A",
+                company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
+                createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
                 description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
                 imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
-                impleto:String(item.imple),
-                machine:String(item.machine).replace(/,/g, ''),
-                nature: String(item.region) ,  // undefiend
-                project:String(item.project).replace(/,/g, ''),
+                impleto:item.imple ? String(item.imple) : "N/A",
+                machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
+                nature:item.region ?  String(item.region)  : "N/A",  // undefiend
+                project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
                 remark:String(item.remark).replace(/,/g, ''),
-                siteId:String(item.siteId) ,
-                siteName:String(item.siteName).replace(/,/g, ''),
-                sitecto: String(item.sitetoc) ,
-                subcontract: String(item.subcontract) ,
-                supvisiorName:String(item.cName),
-                time: String(item.time) ,
-                workDate: String(item.workDate),
+                siteId:item.siteId ? String(item.siteId)  : "N/A",
+                siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
+                sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
+                subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
+                supvisiorName:item.cName ? String(item.cName) : "N/A",
+                time:item.time ?  String(item.time)  : "N/A",
+                workDate:item.workDate ?  String(item.workDate) : "N/A",
                 workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
-                worktype:String(item.worktype).replace(/,/g, ''),
+                worktype: String(item.worktype).replace(/,/g, ''),
                 
           })
           
