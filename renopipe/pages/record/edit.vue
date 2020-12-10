@@ -19,7 +19,7 @@
 				<p>工頭名稱: {{username}}</p>
 				<!-- <p>日期: 2020-06-21 SS:MM:HHHH</p> -->
 				<picker mode="date" @change="startTime" style="margin-top: 6px;margin-bottom: 6px;">
-					<view >更改日期: <span style="border: solid 1px;padding: 1px 10px;">{{this.workingTime}}</span></view>
+					<view >更改日期: <span style="border: solid 1px;padding: 1px 10px;">{{workingTime}}</span></view>
 				</picker>
 				時段: &nbsp;&nbsp;
 				<span class="selectpadding">
@@ -453,6 +453,7 @@
 			}
 		},
 		onLoad(val) {
+			
 			this.siteId = Number(val.siteId)
 			this.getAllPosition()
 			// this.getWorders()
@@ -689,8 +690,16 @@
 						if(res){
 							that.attendenceData = res.data[0]
 							let dd= new Date(res.data[0].startTimestamp * 1000);
-							console.log(res.data[0].startTimestamp);
-							that.workingTime = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
+							let day = "";
+							if(dd.getDate() > 9){
+								day = dd.getDate()
+							}else{
+								day = "0"+dd.getDate()
+							}
+							that.workingTime = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+day
+							console.log(dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+day)
+							//init timepciker
+							
 							that.getSite(res);
 							// console.log(this.attendenceData);
 							that.checkData()
@@ -704,7 +713,9 @@
 			startTime (e) {
 				console.log(e)
 				this.workingTime = e.detail.value
+				
 				this.start.timesamp = new Date(e.detail.value).getTime()/1000
+				console.log(new Date(e.detail.value).getTime()/1000)
 			},
 			endTime (e) {
 				this.end.name = e.detail.value
@@ -812,7 +823,7 @@
 			},
 			submit() { //this shall be change to API for Create new record
 				uni.showLoading({
-					title:"加载中..."
+					title:"上傳記錄中..."
 				})
 				let that = this
 				let arr = []        // 已勾選工人
@@ -881,6 +892,8 @@
 				let removeWorkerIds = this.oldWorkerIds.filter(item => {
 					return arr.indexOf(item) == -1
 				})
+				
+				
 				let data = {
 							workerIds: arr,
 							siteId: this.attendenceData.siteId,

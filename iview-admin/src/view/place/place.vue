@@ -187,6 +187,10 @@ export default {
           key: "siteCode3"
         },*/
         {
+          title: "系統編號",
+          key: "ID"
+        },
+        {
           title: "地盤項目編號(過濾器第一層)",
           key: "project"
         },
