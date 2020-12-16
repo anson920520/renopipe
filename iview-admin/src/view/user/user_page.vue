@@ -162,7 +162,7 @@
         <FormItem label="Company" prop="company">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.company" placeholder="選擇公司" />
         </FormItem>
-          <FormItem label="Role" prop="role" style="display:block">
+          <FormItem label="Role" prop="role" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.role" placeholder="選擇Type of role" />
         </FormItem>
 
@@ -171,22 +171,22 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="身份證號" prop="idNo" style="display:block">
+        <FormItem label="身份證號" prop="idNo" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.idNo" placeholder="請輸入身份證號" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="工人中文名" prop="cName" style="display:block">
+        <FormItem label="工人中文名" prop="cName" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.cName" placeholder="請輸入中文名" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="暱稱" prop="nickname" style="display:block">
+        <FormItem label="暱稱" prop="nickname" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.nickname" placeholder="請輸入暱稱" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
         
-        <FormItem label="聯繫電話" prop="phone" style="display:block">
+        <FormItem label="聯繫電話" prop="phone" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.phone" placeholder="請輸入聯繫電話" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -196,7 +196,7 @@
            <small style="display:block;">*必須填寫，如果只想新增職位就請在這個欄位填寫職位名稱</small>
         </FormItem>
 
-         <FormItem label="生日日期" prop="dob" style="display:block">
+         <FormItem label="生日日期" prop="dob" style="display:none">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.dob" placeholder="生日日期" />
         </FormItem>
 
