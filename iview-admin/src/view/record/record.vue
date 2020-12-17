@@ -686,7 +686,7 @@ export default {
         this.emfm.push(item.emfm)
         this.SiteList.push(item.siteName)
       })
-      // console.log(123,this.proList)
+      
       this.proList = [...new Set(this.proList)].filter(item => item)
       this.disList1 = [...new Set(this.disList1)].filter(item => item)
       this.disList2 = [...new Set(this.disList2)].filter(item => item)
