@@ -26,7 +26,7 @@ import QR from "qrcodejs2"
 Vue.component("downloadExcel", JsonExcel);
 Vue.use(VueCookie)
 
-// require('@/mock')
+require('@/mock')
 
 
 Vue.use(iView, {
