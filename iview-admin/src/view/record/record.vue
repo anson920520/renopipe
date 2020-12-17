@@ -358,7 +358,7 @@
 
             <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
-          <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">{{this.msg}}</Button>
+          <!-- <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">{{this.msg}}</Button> -->
         </div>
 
         <!-- 右邊工人列表 -->
