@@ -179,7 +179,7 @@
       
       <div class="ju al">
         <div style="padding-right: 10px;">
-          <DatePicker type="month" :value="filterTime" @on-change="filterDateData" placeholder="過濾月份" style="width: 200px"></DatePicker>
+          <DatePicker type="month" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
         </div>
         <Button type="info" class="editBtn" @click="init">重置頁面</Button>
 
@@ -190,11 +190,8 @@
         <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
         <Button @click="search"  type="info">搜索</Button> -->
       </div>
-      <div style="text-align: right;">
-         <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button><br>
-         <small style="color: #E50000">* 導出數據前請先過濾月份。</small>
-      </div>
-      
+
+      <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button>
 
 
     </div>
@@ -296,7 +293,7 @@
     </Table>
     <br>
     <div style="text-align:right" v-if="showPage">
-       <Page :current="page+1" :page-size="20" :total='total' @on-change="changePage" show-total></Page> 
+       <Page :page="page" :page-size="20" :total='total' @on-change="changePage" show-total></Page> 
     </div>
     
 
@@ -358,7 +355,7 @@
 
             <li style="border:solid 1px lightgray;padding:10px;"><span>{{current.description}}</span></li>
           </ul>
-          <!-- <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">{{this.msg}}</Button> -->
+          <Button class="addBtn" :v-id="current.ID" type="info" @click="downloadIMG(current.ID)">{{this.msg}}</Button>
         </div>
 
         <!-- 右邊工人列表 -->
@@ -395,7 +392,7 @@ export default {
     data () {
         let that = this
         return {
-            page:0,
+            page: 0,
             total:0,
             json_fields: {
             "Complete name": "name",
@@ -652,14 +649,9 @@ export default {
           })
       },
       changePage (e) {
-          this.page = e-1
+          this.page = e
           document.getElementsByClassName("content-wrapper")[0].scrollTop = 0
-          if (this.filterTime) {
-              this.getDataByMonthAndPage()
-          } else {
-              this.showTable2()
-          }
-          
+          this.showTable2()
       },
       changeDate2 (e) {
           console.log(e)
@@ -687,7 +679,7 @@ export default {
         this.emfm.push(item.emfm)
         this.SiteList.push(item.siteName)
       })
-      // console.log(123,this.proList)
+      
       this.proList = [...new Set(this.proList)].filter(item => item)
       this.disList1 = [...new Set(this.disList1)].filter(item => item)
       this.disList2 = [...new Set(this.disList2)].filter(item => item)
@@ -701,12 +693,14 @@ export default {
 
 
     },
+    //過濾時間
     filterDateData (e) {
+        
         this.filterTime = e
         // console.log(e)  //  yyyy-mm
-        this.page = 0
         if (!e) {
             this.showPage = true
+            this.page = 0
             this.showTable2()
             // this.getCount()
             return false
@@ -728,11 +722,11 @@ export default {
             content:"加载中...",
             duration:1000000
         })
-        let month = this.filterTime.split("-")[1] * 1
+        let month = e.split("-")[1] * 1
         this.tableLoad = true
         return new Promise((resolve,reject) => {
             this.$axios({
-                url:"attendence?filterDate=filterDate&month=" + month + "&page=" + this.page,
+                url:"attendence?filterDate=filterDate&month=" + month,
                 method:"GET"
             }).then(res => {
                 console.log(res)
@@ -1162,128 +1156,122 @@ export default {
           }
     },
     exportData2 () { //新的導出報功記錄功能
-      if (!this.filterTime) {
-          this.$Message.warning("未選擇需要導出的月份")
-      } else {
-          let load = this.$Message.loading({
-            content:"加载中...",
-            duration:1000000
+      //文件的title
+      let headers = {
+        //   siteName:"地盤名稱",
+        //   siteId:"地盤編號",
+        //   project:"項目編號",
+        //   EMFM:"EMFM",
+        //   DMA:"DMA",
+        //   impleto:"Imple To.",
+        //   sitecto:"Site C To",
+        //   nature:"Nature",
+        //   supvisiorName:"創建者",
+        //   createdAt:"創建日期",
+        //   machine:"使用機械",
+        //   company:"判頭",
+        //   time:"時段",
+        //   worktype:"工作種類",
+        //   subcontract:"副項目編號",
+        //   description:"工作內容",
+        //   workers:"Renopipe工人",
+        //   remark:"其他公司工人",
+            
+
+            createdAt: "創建日期",
+            workDate: "工作日期",
+            time: "時段",
+            project: "項目編號",
+            siteName: "地盤地址",
+            impleto: "Imple To.",
+            sitecto: "Site C To",
+            DMA: "DMA",
+            EMFM: "EMFM",
+            nature: "Nature",
+            company: "判頭",
+            description: "工作內容",
+            machine: "使用機械",
+            remark: "其他公司工人",
+            siteId: "地盤編號",
+            subcontract: "副項目編號",
+            supvisiorName: "創建者",
+            workers: "Renopipe工人",
+            worktype: "工作種類",
+            imageUrl: "圖片",
+      };
+
+      //文件的內容
+      //你要在這個地方整合好資料
+    //   let itemsNotFormatted = [
+    //       {
+    //         siteName:"TTA no.2N/A",
+    //         siteId:"J1003",
+    //         project:"WPR(環保道) NA", //英文＋中文
+    //         EMFM:"NA",
+    //         DMA:"NA",
+    //         impleto:"NA",
+    //         sitecto:"NA",
+    //         nature:"EC",
+    //         supvisiorName:"吳家軒 Ng Ka Hin",
+    //         createdAt:":2020/08/27 06:48",
+    //         machine:"發電機1部",
+    //         company:"Renopipe",
+    //         time:"上午",
+    //         worktype:"代工(試制)",
+    //         subcontract:"45345",
+    //         description:"測試報告",
+    //         workers:"聶國富 Nie Guofu - 什工 聶聶聶 NieNieNie - 木工",
+    //         remark:"信昌:什工1人 木工2人",
+    //         imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
+    //       },
+    //   ];
+        let itemsNotFormatted = this.dataList
+
+      var itemsFormatted = [];
+
+      // format the data
+      itemsNotFormatted.forEach((item) => {
+          itemsFormatted.push({
+                createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
+                workDate:item.workDate ?  String(item.workDate) : "N/A",
+                time:item.time ?  String(item.time)  : "N/A",
+                project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
+                siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
+                impleto:item.imple ? String(item.imple) : "N/A",
+                sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
+                DMA:item.dma ? String(item.dma) : "N/A" ,
+                EMFM:item.emfm ?  String(item.emfm)  : "N/A",
+                nature:item.region ?  String(item.region)  : "N/A",  // undefiend
+                company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
+                description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
+                machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
+                remark:String(item.remark).replace(/,/g, ''),
+                siteId:item.siteId ? String(item.siteId)  : "N/A",
+                subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
+                supvisiorName:item.cName ? String(item.cName) : "N/A",
+                workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
+                worktype: String(item.worktype).replace(/,/g, ''),
+                imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
+                
           })
-          this.$axios({
-              url: "attendence?month="+ (this.filterTime.split("-")[1] * 1) +"&filterDate=download"
-          }).then(res => {
-              console.log(res)
-              load()
-              if (res.data) {
-                    res.data.forEach(item => {
-                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        let D = new Date(item.startTimestamp*1000)
-                        let Y = D.getFullYear()
-                        let M = D.getMonth() + 1
-                        M = M<10 ? "0" + M : M
-                        let d = D.getDate()
-                        d = d<10 ? "0" + d : d
-                        item.workDate = Y + "-" + M + '-' + d
+          
+      });
+    //   itemsFormatted.forEach(item => {
+    //       for(let key in item) {
+    //           item[key] = String(item[key]) + "."
+    //       }
+    //   })
 
 
-                        this.siteList.forEach(site => {
-                            if (site.ID == item.siteId) {
-                                item.sitecode1 = site.siteCode1
-                                item.sitecode2 = site.siteCode2
-                                item.sitecode3 = site.siteCode3
-                                item.imple = site.imple
-                                item.region = site.region
-                                item.sitetoc = site.sitetoc
-                                item.dma = site.dma
-                                item.emfm = site.emfm
-                                item.siteName = site.cname
-                                item.project = site.project
-                            }
-                        })
-                        this.superList.forEach(supervisor => {
-                            if (supervisor.ID == item.supervisorId) {
-                                item.cName = supervisor.cName ? supervisor.cName : "N/A"
-                            }
-                        })
-                    })
-                    let headers = {
-                            createdAt: "創建日期",
-                            workDate: "工作日期",
-                            time: "時段",
-                            project: "項目編號",
-                            siteName: "地盤地址",
-                            impleto: "Imple To.",
-                            sitecto: "Site C To",
-                            DMA: "DMA",
-                            EMFM: "EMFM",
-                            nature: "Nature",
-                            company: "判頭",
-                            description: "工作內容",
-                            machine: "使用機械",
-                            remark: "其他公司工人",
-                            siteId: "地盤編號",
-                            subcontract: "副項目編號",
-                            supvisiorName: "創建者",
-                            workers: "Renopipe工人",
-                            worktype: "工作種類",
-                            imageUrl: "圖片",
-                    };
-
-                    
-                    let itemsNotFormatted = res.data
-
-                    var itemsFormatted = [];
-
-                    // format the data
-                    itemsNotFormatted.forEach((item) => {
-                        itemsFormatted.push({
-                                createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
-                                workDate:item.workDate ?  String(item.workDate) : "N/A",
-                                time:item.time ?  String(item.time)  : "N/A",
-                                project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
-                                siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
-                                impleto:item.imple ? String(item.imple) : "N/A",
-                                sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
-                                DMA:item.dma ? String(item.dma) : "N/A" ,
-                                EMFM:item.emfm ?  String(item.emfm)  : "N/A",
-                                nature:item.region ?  String(item.region)  : "N/A",  // undefiend
-                                company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
-                                description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
-                                machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
-                                remark:String(item.remark).replace(/,/g, ''),
-                                siteId:item.siteId ? String(item.siteId)  : "N/A",
-                                subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
-                                supvisiorName:item.cName ? String(item.cName) : "N/A",
-                                workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
-                                worktype: String(item.worktype).replace(/,/g, ''),
-                                imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
-                                
-                        })
-                        
-                    });
-
-
-
-                    let currentDate = new Date();
-                    let str = ""
-                    if (this.filterTime) {
-                        str = this.filterTime
-                    }
-                    console.log(itemsNotFormatted)
-                    var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
-                        // console.log(itemsFormatted)
-                    this.exportCSVFile(headers, itemsFormatted, fileTitle);
-                } else {
-                    this.$Message.warning("導出失敗")
-                }
-          }).catch(e => {
-              conosle.log(e)
-              load()
-              this.$Message.error("網絡錯誤,請稍後再試")
-          })
+      let currentDate = new Date();
+      let str = ""
+      if (this.filterTime) {
+          str = this.filterTime
       }
+      console.log(itemsNotFormatted)
+      var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
+        // console.log(itemsFormatted)
+      this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
     },
     downloadIMG(e){
       this.msg = "下載中...請稍候"
