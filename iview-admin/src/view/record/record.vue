@@ -566,14 +566,7 @@ export default {
         ],
         dataList: [],
         current:{
-            images:[""
-            // "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-            ],
+            images:[""],
             supervisors:[""]
         },
         absWidth:1000,
@@ -609,7 +602,7 @@ export default {
         filterTime:"",
         filterTime2:"",
         tableLoad: false,
-        showPage: true,
+        showPage: false,
         }
     },
     created () {
@@ -620,7 +613,7 @@ export default {
         } else {
             this.getSite()
         }
-        this.getCount()
+        // this.getCount()
     },
     computed: {
         siteList: {
@@ -646,7 +639,7 @@ export default {
           this.filterTime2 = "",
           this.page = 0
           this.showPage = true
-          this.getCount()
+        //   this.getCount()
           this.showTable2()
           
       },
@@ -715,11 +708,11 @@ export default {
         if (!e) {
             this.showPage = true
             this.showTable2()
-            this.getCount()
+            // this.getCount()
             return false
         }
         this.getDataByMonthAndPage()
-        this.getMonthCount()
+        // this.getMonthCount()
     },
     getMonthCount () {
         this.$axios({
@@ -1012,7 +1005,7 @@ export default {
         //     }
         // })
         if (this.dataList.length == this.allData.length) {
-            this.getCount()
+            // this.getCount()
         } else {
             this.total= this.dataList.length
         }
