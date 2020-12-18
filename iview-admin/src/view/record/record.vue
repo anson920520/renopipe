@@ -179,7 +179,7 @@
       
       <div class="ju al">
         <div style="padding-right: 10px;">
-          <DatePicker type="month" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
+          <DatePicker type="month" :clearable="false" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
         </div>
         <Button type="info" class="editBtn" @click="init">重置頁面</Button>
 
@@ -395,230 +395,228 @@ export default {
             page: 0,
             total:0,
             json_fields: {
-            "Complete name": "name",
-            City: "city",
-            Telephone: "phone.mobile",
-            "Telephone 2": {
-                field: "phone.landline",
-                callback: (value) => {
-                return `Landline Phone - ${value}`;
+                "Complete name": "name",
+                City: "city",
+                Telephone: "phone.mobile",
+                "Telephone 2": {
+                    field: "phone.landline",
+                    callback: (value) => {
+                    return `Landline Phone - ${value}`;
+                    },
                 },
-            },
-            json_data: [
-            {
-                name: "Tony Peña",
-                city: "New York",
-                country: "United States",
-                birthdate: "1978-03-15",
-                phone: {
-                mobile: "1-541-754-3010",
-                landline: "(541) 754-3010",
-                },
-            },
-            {
-                name: "Thessaloniki",
-                city: "Athens",
-                country: "Greece",
-                birthdate: "1987-11-23",
-                phone: {
-                mobile: "+1 855 275 5071",
-                landline: "(2741) 2621-244",
-                },
-            },
-            ],
-            json_meta: [
-            [
+                json_data: [
                 {
-                key: "charset",
-                value: "utf-8",
+                    name: "Tony Peña",
+                    city: "New York",
+                    country: "United States",
+                    birthdate: "1978-03-15",
+                    phone: {
+                    mobile: "1-541-754-3010",
+                    landline: "(541) 754-3010",
+                    },
                 },
-            ],
-            ],
-        },
-        //the above is for export
-        showBox: false,
-        showBig: false,
-        url:"",
-        thisSite:"",
-        msg:"下載圖片",
-        columns: [
-           // { title: "創建日期", key:"createdAt" ,sortable: true},
-            { title: "工作日期", key:"workDate" ,sortable: true},
-           //  { title: "報工記錄編號", key:"ID" ,sortable: true},
-            // { title: "圖片預覽", slot:"preview" },
-            { title: "地盤項目編號", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.project
-                    }
-                })
-                return h('div',str)
-            }
+                {
+                    name: "Thessaloniki",
+                    city: "Athens",
+                    country: "Greece",
+                    birthdate: "1987-11-23",
+                    phone: {
+                    mobile: "+1 855 275 5071",
+                    landline: "(2741) 2621-244",
+                    },
+                },
+                ],
+                json_meta: [
+                [
+                    {
+                    key: "charset",
+                    value: "utf-8",
+                    },
+                ],
+                ],
             },
-            { title: "DIS(1)", key:"siteId" ,sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.siteCode3
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "DIS(2)地盤地區", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.siteCode1
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "地盤地址", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.cname
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "Imple.", key:"siteId" ,sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.imple
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "Site C.", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.sitetoc
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "DMA", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.dma
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "EMFM", key:"siteId",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.emfm
-                    }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "Nature", key:"region",sortable: true,
-                render:(h,p) => {
-                let str = "讀取中..."
-                that.siteList.forEach(item => {
-                    if (item.ID==p.row.siteId) {
-                        str = item.region
-                    }
-                })
-                return h('div',str)
-            }
-            },
-          //   { title: "詳請", key:"description",sortable: true, },
-            { title: "工頭", key:"supervisor",sortable: true,
-            render:(h,p) => {
-                let str = "暫無"
-                that.superList.forEach(item => {
-                if (item.ID==p.row.supervisorId) {
-                    str = item.cName
-                    //console.log(str)
+            //the above is for export
+            showBox: false,
+            showBig: false,
+            url:"",
+            thisSite:"",
+            msg:"下載圖片",
+            columns: [
+                { title: "創建日期", key:"createdAt" ,sortable: true},
+                { title: "工作日期", key:"workDate" ,sortable: true},
+                { title: "報工記錄編號", key:"ID" ,sortable: true},
+                // { title: "圖片預覽", slot:"preview" },
+                { title: "地盤項目編號", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.project
+                        }
+                    })
+                    return h('div',str)
                 }
-                })
-                return h('div',str)
-            }
-            },
-            { title: "操作", slot:"operation" },
-            // "data:image/jpeg;base64,
-        ],
-        dataList: [],
-        current:{
-            images:[""
-            // "https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/1d0c56603d49db876f4d03741aa3fe61_259_194.jpg",
-            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/128591/36/5097/194298/5eeadc25E00feebca/92f40ac8b69a4a84.jpg.webp",
-            // "https://img11.360buyimg.com/mobilecms/s140x140_jfs/t1/139702/40/1124/114877/5eec6051Ee8dc932e/0f1d11fc63bd90a8.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s150x150_jfs/t1/79366/36/1115/93724/5cf5c8ffE1fd3c6c0/2358374b90d8fe87.jpg!q70.jpg.webp",
-            // "https://img12.360buyimg.com/mobilecms/s140x140_jfs/t1/116210/16/10224/98176/5ee88917E2f42fa34/62566dccc33876a6.jpg.webp",
+                },
+                { title: "DIS(1)", key:"siteId" ,sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.siteCode3
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "DIS(2)地盤地區", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.siteCode1
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "地盤地址", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.cname
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "Imple.", key:"siteId" ,sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.imple
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "Site C.", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.sitetoc
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "DMA", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.dma
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "EMFM", key:"siteId",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.emfm
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "Nature", key:"region",sortable: true,
+                    render:(h,p) => {
+                    let str = "讀取中..."
+                    that.siteList.forEach(item => {
+                        if (item.ID==p.row.siteId) {
+                            str = item.region
+                        }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "詳請", key:"description",sortable: true, },
+                { title: "工頭", key:"supervisor",sortable: true,
+                render:(h,p) => {
+                    let str = "暫無"
+                    that.superList.forEach(item => {
+                    if (item.ID==p.row.supervisorId) {
+                        str = item.cName
+                        //console.log(str)
+                    }
+                    })
+                    return h('div',str)
+                }
+                },
+                { title: "操作", slot:"operation" },
+                // "data:image/jpeg;base64,
             ],
-            supervisors:[""]
-        },
-        absWidth:1000,
-        left:0,
-        currentImg:0,
-        superList:[],
-        // siteList:[],
-        load:function(){},
-        allData:[],
-        searchVal:"",
+            dataList: [],
+            current:{
+                images:[""],
+                supervisors:[""]
+            },
+            absWidth:1000,
+            left:0,
+            currentImg:0,
+            superList:[],
+            // siteList:[],
+            load:function(){},
+            allData:[],
+            searchVal:"",
 
-        // 五个搜索框
-        proList:[],
-        disList1:[],
-        disList2:[],
-        disList3:[],
-        dma:[],
-        emfm:[],
-        SiteList:[],
-        imple:[],
-        nature:[],
-        sitetoc:[],
-        pro:"",
-        dis1:"",
-        dis2:"",
-        site:'',
-        cName:"",
-        impleVal: "",
-        dmaVal:"",
-        emfmVal:"",
-        natureVal:"",
-        sitetocVal:"",
-        filterTime:"",
-        filterTime2:"",
-        tableLoad: false,
-        showPage: true,
+            // 五个搜索框
+            proList:[],
+            disList1:[],
+            disList2:[],
+            disList3:[],
+            dma:[],
+            emfm:[],
+            SiteList:[],
+            imple:[],
+            nature:[],
+            sitetoc:[],
+            pro:"",
+            dis1:"",
+            dis2:"",
+            site:'',
+            cName:"",
+            impleVal: "",
+            dmaVal:"",
+            emfmVal:"",
+            natureVal:"",
+            sitetocVal:"",
+            filterTime:"",
+            filterTime2:"",
+            tableLoad: false,
+            showPage: false,
+            load () {},
+            source: {
+                cancel () {}
+            }
         }
     },
     created () {
         this.url = window.baseURL
-       /* this.getSuper()
-        if (this.siteList.length) {
-            this.showTable2()
-        } else {
-            this.getSite()
-        }
-        this.getCount()*/
-        this.showTable()
+        this.getSuper()
+        // if (this.siteList.length) {
+        //     this.showTable2()
+        // } else {
+        //     this.getSite()
+        // }
+        // this.getCount()
+        this.initDate ()
+        this.getDataByMonthAndPage()
     },
     computed: {
         siteList: {
@@ -626,719 +624,654 @@ export default {
             set () {}
         }
     },
-  methods:{
-      init () {
-          this.allData = this.dataList = []
-          this.filterTime = ""
-          this.pro = "",
-          this.dis1 = "",
-          this.dis2 = "",
-          this.site = '',
-          this.cName = "",
-          this.impleVal =  "",
-          this.dmaVal = "",
-          this.emfmVal = "",
-          this.natureVal = "",
-          this.sitetocVal = "",
-          this.filterTime = "",
-          this.filterTime2 = "",
-          this.page = 0
-          this.showPage = true
-          this.getCount()
-          this.showTable()
-          
-      },
-      getCount () {
-          this.$axios({
-              url: "attendence/count",
-          }).then(res => {
-              console.log(res)
-              this.total = res.data
-          })
-      },
-      changePage (e) {
-          this.page = e
-          document.getElementsByClassName("content-wrapper")[0].scrollTop = 0
-          this.showTable2()
-      },
-      changeDate2 (e) {
-          console.log(e)
-          this.filterTime2 = e
-            this.search()
-      },
-    changeDate (e) {
-      let start = e.replace("-","/").replace("-","/")
-      this.filterTime = start
-    //   this.search()
-    },
-    createSearchData () {
-      this.proList = []
-      this.disList1 = []
-      this.allData.forEach(item => {
-        // console.log(item,item.sitecode1)
-        this.proList.push(item.project)
-        this.disList1.push(item.sitecode1)
-        this.disList2.push(item.sitecode2)
-        this.disList3.push(item.sitecode3)
-        this.imple.push(item.imple)
-        this.nature.push(item.region)
-        this.sitetoc.push(item.sitetoc)
-        this.dma.push(item.dma)
-        this.emfm.push(item.emfm)
-        this.SiteList.push(item.siteName)
-      })
-      
-      this.proList = [...new Set(this.proList)].filter(item => item)
-      this.disList1 = [...new Set(this.disList1)].filter(item => item)
-      this.disList2 = [...new Set(this.disList2)].filter(item => item)
-      this.disList3 = [...new Set(this.disList3)].filter(item => item)
-      this.imple = [...new Set(this.imple)].filter(item => item)
-      this.nature = [...new Set(this.nature)].filter(item => item)
-      this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
-      this.dma = [...new Set(this.dma)].filter(item => item)
-      this.emfm = [...new Set(this.emfm)].filter(item => item)
-      this.SiteList = [...new Set(this.SiteList)].filter(item => item)
-
-
-    },
-    //過濾時間
-    filterDateData (e) {
-        
-        this.filterTime = e
-        // console.log(e)  //  yyyy-mm
-        if (!e) {
-            this.showPage = true
+    methods:{
+        initDate () {
+            let D = new Date()
+            let Y = D.getFullYear()
+            let M = D.getMonth() + 1
+            M = M<10 ? "0" + M : M
+            this.filterTime = Y + "-" + M
+        },
+        init () {
+            this.allData = this.dataList = []
+            this.initDate()
+            this.pro = "",
+            this.dis1 = "",
+            this.dis2 = "",
+            this.site = '',
+            this.cName = "",
+            this.impleVal =  "",
+            this.dmaVal = "",
+            this.emfmVal = "",
+            this.natureVal = "",
+            this.sitetocVal = "",
             this.page = 0
-            this.showTable2()
-            return false
-        }
-        this.showPage = false
-        let load = this.$Message.loading({
-            content:"加载中...",
-            duration:1000000
-        })
-        let month = e.split("-")[1] * 1
-        this.tableLoad = true
-        return new Promise((resolve,reject) => {
-            this.$axios({
-                url:"attendence?filterDate=filterDate&month=" + month,
-                method:"GET"
-            }).then(res => {
-                console.log(res)
-                this.tableLoad = false
-                load()
-                if (res.data) {
-                    res.data.forEach(item => {
-
-                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        let D = new Date(item.startTimestamp*1000)
-                        let Y = D.getFullYear()
-                        let M = D.getMonth() + 1
-                        M = M<10 ? "0" + M : M
-                        let d = D.getDate()
-                        d = d<10 ? "0" + d : d
-                        item.workDate = Y + "-" + M + '-' + d
-                        // console.log(new Date()),123
-                        this.loopData(item)
-                    })
-                    this.allData = res.data
-                    this.dataList = this.allData.slice(0)
-                    resolve()
-                } else {
-                    reject()
-                }
-            }).catch(() => {
-                load()
-                this.tableLoad = false
-                reject()
-            })
-        })
-      
-    },
-    // 第一次就有月份
-    filteredTable(){
-        this.showPage = false
-        let load = this.$Message.loading({
-            content:"加载中...",
-            duration:1000000
-        })
-        let month = e.split("-")[1] * 1
-        this.tableLoad = true
-        return new Promise((resolve,reject) => {
-            this.$axios({
-                url:"attendence?filterDate=filterDate&month=12",
-                method:"GET"
-            }).then(res => {
-                console.log(res)
-                this.tableLoad = false
-                load()
-                if (res.data) {
-                    res.data.forEach(item => {
-
-                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        let D = new Date(item.startTimestamp*1000)
-                        let Y = D.getFullYear()
-                        let M = D.getMonth() + 1
-                        M = M<10 ? "0" + M : M
-                        let d = D.getDate()
-                        d = d<10 ? "0" + d : d
-                        item.workDate = Y + "-" + M + '-' + d
-                        // console.log(new Date()),123
-                        this.loopData(item)
-                    })
-                    this.allData = res.data
-                    this.dataList = this.allData.slice(0)
-                    resolve()
-                } else {
-                    reject()
-                }
-            }).catch(() => {
-                load()
-                this.tableLoad = false
-                reject()
-            })
-        })
-    },
-    //有分页
-    showTable2 () {
-        this.tableLoad = true
-        return new Promise((resolve,reject) => {
-            this.$axios({
-                url:"attendence?action=preload&page=" + this.page,
-                method:"GET"
-            }).then(res => {
-                console.log(res)
-                this.tableLoad = false
-                if (res.data) {
-                    res.data.forEach(item => {
-
-                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        let D = new Date(item.startTimestamp*1000)
-                        let Y = D.getFullYear()
-                        let M = D.getMonth() + 1
-                        M = M<10 ? "0" + M : M
-                        let d = D.getDate()
-                        d = d<10 ? "0" + d : d
-                        item.workDate = Y + "-" + M + '-' + d
-                        // console.log(new Date()),123
-                        this.loopData(item)
-                    })
-                    this.allData = res.data
-                    this.dataList = this.allData.slice(0)
-                    resolve()
-                } else {
-                    reject()
-                }
-            }).catch(() => {
-                this.tableLoad = false
-                reject()
-            })
-        })
-      
-    },
-    showTable () {
-        let load = this.$Message.loading({
-            content:"加载中...",
-            duration:1000000
-        })
-        this.tableLoad = true
-        return new Promise((resolve,reject) => {
-            this.$axios({
-                url:"attendence?filterDate=filterDate&month=12",
-                method:"GET"
-            }).then(res => {
-                console.log(res)
-                load()
-                this.tableLoad = false
-                if (res.data) {
-                    res.data.forEach(item => {
-
-                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
-                        let D = new Date(item.startTimestamp*1000)
-                        let Y = D.getFullYear()
-                        let M = D.getMonth() + 1
-                        M = M<10 ? "0" + M : M
-                        let d = D.getDate()
-                        d = d<10 ? "0" + d : d
-                        item.workDate = Y + "-" + M + '-' + d
-                        // console.log(new Date()),123
-                        this.loopData(item)
-                    })
-                    this.allData = res.data
-                    this.dataList = this.allData.slice(0)
-                    resolve()
-                    // this.load()
-                } else {
-                    load()
-                    reject()
-                }
-            }).catch(() => {
-                this.tableLoad = false
-                reject()
-            })
-        })
-      
-    },
-    loopData (item) {
-      setTimeout(() => {
-        this.siteList.forEach(site => {
-          if (site.ID == item.siteId) {
-            item.sitecode1 = site.siteCode1
-            item.sitecode2 = site.siteCode2
-            item.sitecode3 = site.siteCode3
-            item.imple = site.imple
-            item.region = site.region
-            item.sitetoc = site.sitetoc
-            item.dma = site.dma
-            item.emfm = site.emfm
-            item.siteName = site.cname
-            item.project = site.project
-          }
-        })
-        this.superList.forEach(supervisor => {
-          if (supervisor.ID == item.supervisorId) {
-            item.cName = supervisor.cName ? supervisor.cName : "N/A"
-          }
-        })
-
-        this.createSearchData()
-
-      },200)
-    },
-    quickSearch () {
-      this.dataList = this.allData.filter((item,i) => {
-        for(let key in item) {
-          if ( typeof item[key] == "string") {
-            if (item[key].indexOf(this.searchVal) != -1) {
-              return true
-            }
-          }
-          
-        }
-      })
-    },
-
-    async search () {
-        // await this.showTable2()
-        this.dataList = this.allData.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.cName) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.site) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.dis1) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.dis2) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.pro) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.emfmVal) != -1 ) {
-                // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.dmaVal) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.impleVal) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.natureVal) != -1 ) {
-                return true
-                }
-            }
-            }
-        })
-
-
-        this.dataList = this.dataList.filter((item,i) => {
-            for(let key in item) {
-            if ( typeof item[key] == "string") {
-                if ( item[key].indexOf(this.sitetocVal) != -1) {
-                return true
-                }
-            }
-            }
-        })
-
-         this.dataList = this.dataList.filter((item,i) => {
-             for(let key in item) {
-                 if ( typeof item[key] == "string") {
-                     // console.log(item[key], this.searchVal)
-                     if ( item[key].indexOf(this.searchVal) != -1) {
-                     return true
-                     }
-                 }
-             }
-         })
-        // this.dataList = this.dataList.filter(item => {
-        //     // console.log(item.createdAt, this.filterTime)
-        //     if (item.createdAt.indexOf(this.filterTime) != -1) {
-        //     return true
-        //     }
-        // })
-        // this.dataList = this.dataList.filter(item => {
-        //     if (item.workDate.indexOf(this.filterTime2) != -1) {
-        //         return true
-        //     }
-        // })
-        if (this.dataList.length == this.allData.length) {
-            this.getCount()
-        } else {
-            this.total= this.dataList.length
-        }
-
-    },
-    //獲取所有工頭
-    getSuper (item,i) {
-      this.$axios({
-        url:"supervisor",
-        method:"GET"
-      }).then(res => {
-        // console.log(res,123)
-        if (res.data) {
-          this.superList = res.data
-          this.allData.forEach(item => {
-              this.loopData(item)
-          })
-          
-        }
-      })
-    },
-    //獲取所有site
-    getSite (item,i) {
-        this.tableLoad = true
-      this.$axios({
-        url:"site",
-        method:"GET"
-      }).then(res => {
-        // console.log(res,123)
-        if (res.data) {
-          this.siteList = res.data
-          this.showTable2()
-
-        } else {
-            this.tableLoad = false
-        }
-      }).catch(() => [
-          this.tableLoad = false
-      ])
-    },
-    showDetail(e) {
-      this.currentImg = 0
-      this.left = 0
-      this.current = e 
-      // e.images.forEach(item => {
-      //   item.base64Image = "data:image/jpeg;base64," + item.base64Image
-      // })
-      this.showBox = true
-      this.$nextTick(() => {
-        this.createImgDOM()
-      })
-      
-      console.log(e)
-
-      //show site
-      this.siteList.forEach(item => {
-         if (item.ID==e.siteId) {
-              this.thisSite = item
-           }
-       })
-    },
-    edit (item){
-      console.log(item)
-    },
-    Delete (item) {
-      console.log(item)
-      let that = this
-      that.$Modal.confirm({
-        title:"提示",
-        content: "確定刪除?",
-        onOk () {
-          that.$axios({
-            url:"attendence/" + item.ID,
-            method:"DELETE",
-            data: {
-              id: item.ID
-            }
-          }).then(res => {
-            console.log("delete",res)
-            that.$Message.success("已刪除")
-            that.showTable()
-          })
-        }
-      })
-    },
-    createImgDOM () {
-      let oAbs = document.getElementsByClassName('imgAbso');
-      if (this.current.images) {
-        this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
-      }
-      
-    },
-    preNext (boo) {
-      if (boo) {
-        //向左滑動
-        this.left += 320
-        if (this.left > 0) {
-          this.left = 0
-        }
-      } else {
-        if (this.absWidth > (Math.abs(this.left) + 320)) {
-          this.left -= 320
-        }
-      }
-    },
-    exportData () { // 不再使用
-      this.$refs.recordTable.exportCsv({
-        filename: "報工記錄"
-      });
-    },
-    convertToCSV(objArray){
-            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-            var str = '';
-
-            for (var i = 0; i < array.length; i++) {
-                var line = '';
-                for (var index in array[i]) {
-                    if (line != '') line += ','
-
-                    line += array[i][index];
-                }
-
-                str += line + '\r\n';
-            }
-
-            return str;
-    },
-    exportCSVFile(headers, items, fileTitle) {
-          if (headers) {
-              items.unshift(headers);
-          }
-            // console.log(items)
-          // Convert Object to JSON
-          var jsonObject = JSON.stringify(items);
-          var csv = this.convertToCSV(jsonObject);
-
-          var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
-
-          var blob = new Blob(["\uFEFF"+csv], {type: 'text/csv; charset=utf-18'});
-          if (navigator.msSaveBlob) { // IE 10+
-              navigator.msSaveBlob(blob, exportedFilenmae);
-          } else {
-              var link = document.createElement("a");
-              if (link.download !== undefined) { // feature detection
-                  // Browsers that support HTML5 download attribute
-                  var url = URL.createObjectURL(blob);
-                  link.setAttribute("href", url);
-                  link.setAttribute("download", exportedFilenmae);
-                  link.style.visibility = 'hidden';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-              }
-          }
-    },
-    exportData2 () { //新的導出報功記錄功能
-      //文件的title
-      let headers = {
-        //   siteName:"地盤名稱",
-        //   siteId:"地盤編號",
-        //   project:"項目編號",
-        //   EMFM:"EMFM",
-        //   DMA:"DMA",
-        //   impleto:"Imple To.",
-        //   sitecto:"Site C To",
-        //   nature:"Nature",
-        //   supvisiorName:"創建者",
-        //   createdAt:"創建日期",
-        //   machine:"使用機械",
-        //   company:"判頭",
-        //   time:"時段",
-        //   worktype:"工作種類",
-        //   subcontract:"副項目編號",
-        //   description:"工作內容",
-        //   workers:"Renopipe工人",
-        //   remark:"其他公司工人",
+            this.showPage = true
+            this.getDataByMonthAndPage()
+            //   this.getCount()
+            //   this.showTable2()
             
-
-            createdAt: "創建日期",
-            workDate: "工作日期",
-            time: "時段",
-            project: "項目編號",
-            siteName: "地盤地址",
-            impleto: "Imple To.",
-            sitecto: "Site C To",
-            DMA: "DMA",
-            EMFM: "EMFM",
-            nature: "Nature",
-            company: "判頭",
-            description: "工作內容",
-            machine: "使用機械",
-            remark: "其他公司工人",
-            siteId: "地盤編號",
-            subcontract: "副項目編號",
-            supvisiorName: "創建者",
-            workers: "Renopipe工人",
-            worktype: "工作種類",
-            imageUrl: "圖片",
-      };
-
-      //文件的內容
-      //你要在這個地方整合好資料
-    //   let itemsNotFormatted = [
-    //       {
-    //         siteName:"TTA no.2N/A",
-    //         siteId:"J1003",
-    //         project:"WPR(環保道) NA", //英文＋中文
-    //         EMFM:"NA",
-    //         DMA:"NA",
-    //         impleto:"NA",
-    //         sitecto:"NA",
-    //         nature:"EC",
-    //         supvisiorName:"吳家軒 Ng Ka Hin",
-    //         createdAt:":2020/08/27 06:48",
-    //         machine:"發電機1部",
-    //         company:"Renopipe",
-    //         time:"上午",
-    //         worktype:"代工(試制)",
-    //         subcontract:"45345",
-    //         description:"測試報告",
-    //         workers:"聶國富 Nie Guofu - 什工 聶聶聶 NieNieNie - 木工",
-    //         remark:"信昌:什工1人 木工2人",
-    //         imageUrl:"https://renopipe.co/attendence-attachment/bbf94b34eb32268ada57a3be5062fe7d/27-Aug-2020-06-48-22-picture-1.jpeg" //直接把連結放進來
-    //       },
-    //   ];
-        let itemsNotFormatted = this.dataList
-
-      var itemsFormatted = [];
-
-      // format the data
-      itemsNotFormatted.forEach((item) => {
-          itemsFormatted.push({
-                createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
-                workDate:item.workDate ?  String(item.workDate) : "N/A",
-                time:item.time ?  String(item.time)  : "N/A",
-                project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
-                siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
-                impleto:item.imple ? String(item.imple) : "N/A",
-                sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
-                DMA:item.dma ? String(item.dma) : "N/A" ,
-                EMFM:item.emfm ?  String(item.emfm)  : "N/A",
-                nature:item.region ?  String(item.region)  : "N/A",  // undefiend
-                company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
-                description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
-                machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
-                remark:String(item.remark).replace(/,/g, ''),
-                siteId:item.siteId ? String(item.siteId)  : "N/A",
-                subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
-                supvisiorName:item.cName ? String(item.cName) : "N/A",
-                workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
-                worktype: String(item.worktype).replace(/,/g, ''),
-                imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
-                
-          })
-          
-      });
-    //   itemsFormatted.forEach(item => {
-    //       for(let key in item) {
-    //           item[key] = String(item[key]) + "."
-    //       }
-    //   })
-
-
-      let currentDate = new Date();
-      let str = ""
-      if (this.filterTime) {
-          str = this.filterTime
-      }
-      console.log(itemsNotFormatted)
-      var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
-        // console.log(itemsFormatted)
-      this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
-    },
-    downloadIMG(e){
-      this.msg = "下載中...請稍候"
-       this.$axios({
-            url:"attendence/"+ e +"/image",
-            method:"GET"
-          }).then(res => {
-            console.log(res)
-            this.msg = "下載圖片"
-            window.location.href = res.request.responseURL
-            //trigger download link by open a window in background
+        },
+        getCount () {
+            this.$axios({
+                url: "attendence/count",
+            }).then(res => {
+                console.log(res)
+                this.total = res.data
+            })
+        },
+        changePage (e) {
+            this.page = e
+            document.getElementsByClassName("content-wrapper")[0].scrollTop = 0
+            this.showTable2()
+        },
+        changeDate2 (e) {
+            console.log(e)
+            this.filterTime2 = e
+                this.search()
+        },
+        changeDate (e) {
+        let start = e.replace("-","/").replace("-","/")
+        this.filterTime = start
+        //   this.search()
+        },
+        createSearchData () {
+        this.proList = []
+        this.disList1 = []
+        this.allData.forEach(item => {
+            // console.log(item,item.sitecode1)
+            this.proList.push(item.project)
+            this.disList1.push(item.sitecode1)
+            this.disList2.push(item.sitecode2)
+            this.disList3.push(item.sitecode3)
+            this.imple.push(item.imple)
+            this.nature.push(item.region)
+            this.sitetoc.push(item.sitetoc)
+            this.dma.push(item.dma)
+            this.emfm.push(item.emfm)
+            this.SiteList.push(item.siteName)
         })
-      }
+        
+        this.proList = [...new Set(this.proList)].filter(item => item)
+        this.disList1 = [...new Set(this.disList1)].filter(item => item)
+        this.disList2 = [...new Set(this.disList2)].filter(item => item)
+        this.disList3 = [...new Set(this.disList3)].filter(item => item)
+        this.imple = [...new Set(this.imple)].filter(item => item)
+        this.nature = [...new Set(this.nature)].filter(item => item)
+        this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
+        this.dma = [...new Set(this.dma)].filter(item => item)
+        this.emfm = [...new Set(this.emfm)].filter(item => item)
+        this.SiteList = [...new Set(this.SiteList)].filter(item => item)
+
+
+        },
+        //過濾時間
+        filterDateData (e) {
+            
+            this.filterTime = e
+            // console.log(e)  //  yyyy-mm
+            if (!e) {
+                this.showPage = true
+                this.page = 0
+                this.showTable2()
+                // this.getCount()
+                return false
+            }
+            this.getDataByMonthAndPage()
+            // this.getMonthCount()
+        },
+        getMonthCount () {
+            this.$axios({
+                url: "attendence/"+ (this.filterTime.split("-")[1]*1) +"/count",
+            }).then(res => {
+                console.log(res)
+                this.total = res.data
+            })
+        },
+        //過濾時間
+        getDataByMonthAndPage () {
+            this.source.cancel()
+            this.load()
+            const CancelToken = this.$axios.CancelToken;
+            this.source = CancelToken.source();
+            this.load = this.$Message.loading({
+                content:"加载中...",
+                duration:1000000
+            })
+            let month = this.filterTime.split("-")[1] * 1
+            this.tableLoad = true
+            return new Promise((resolve,reject) => {
+                this.$axios({
+                    url:"attendence?filterDate=all&month=" + month,
+                    method:"GET",
+                    cancelToken: this.source.token
+                }).then(res => {
+                    console.log(res)
+                    this.tableLoad = false
+                    this.load()
+                    if (res.data) {
+                        res.data.forEach(item => {
+
+                            item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            let D = new Date(item.startTimestamp*1000)
+                            let Y = D.getFullYear()
+                            let M = D.getMonth() + 1
+                            M = M<10 ? "0" + M : M
+                            let d = D.getDate()
+                            d = d<10 ? "0" + d : d
+                            item.workDate = Y + "-" + M + '-' + d
+                            // console.log(new Date()),123
+                            // this.loopData(item)
+                            let site = item.siteDetail
+                            item.sitecode1 = site.siteCode1
+                            item.sitecode2 = site.siteCode2
+                            item.sitecode3 = site.siteCode3
+                            item.imple = site.imple
+                            item.region = site.region
+                            item.sitetoc = site.sitetoc
+                            item.dma = site.dma
+                            item.emfm = site.emfm
+                            item.siteName = site.cname
+                            item.project = site.project
+                            if (item.supervisors) {
+                                if (item.supervisors[0]) {
+                                    item.cName = item.supervisors[0].cName
+                                }
+                            }
+                        })
+                        this.allData = res.data
+                        this.dataList = this.allData.slice(0)
+                        this.createSearchData()
+                        resolve()
+                    } else {
+                        reject()
+                    }
+                }).catch(() => {
+                    this.load()
+                    this.tableLoad = false
+                    reject()
+                })
+            })
+        
+        },
+        //有分页   ,已弃用
+        showTable2 () {
+            this.tableLoad = true
+            return new Promise((resolve,reject) => {
+                this.$axios({
+                    url:"attendence?action=preload&page=" + this.page,
+                    method:"GET"
+                }).then(res => {
+                    console.log(res)
+                    this.tableLoad = false
+                    if (res.data) {
+                        res.data.forEach(item => {
+
+                            item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            let D = new Date(item.startTimestamp*1000)
+                            let Y = D.getFullYear()
+                            let M = D.getMonth() + 1
+                            M = M<10 ? "0" + M : M
+                            let d = D.getDate()
+                            d = d<10 ? "0" + d : d
+                            item.workDate = Y + "-" + M + '-' + d
+                            // console.log(new Date()),123
+                            this.loopData(item)
+                        })
+                        this.allData = res.data
+                        this.dataList = this.allData.slice(0)
+                        resolve()
+                    } else {
+                        reject()
+                    }
+                }).catch(() => {
+                    this.tableLoad = false
+                    reject()
+                })
+            })
+        
+        },
+        //已弃用
+        showTable () {
+            let load = this.$Message.loading({
+                content:"加载中...",
+                duration:1000000
+            })
+            this.tableLoad = true
+            return new Promise((resolve,reject) => {
+                this.$axios({
+                    url:"attendence",
+                    method:"GET"
+                }).then(res => {
+                    console.log(res)
+                    load()
+                    this.tableLoad = false
+                    if (res.data) {
+                        res.data.forEach(item => {
+
+                            item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                            let D = new Date(item.startTimestamp*1000)
+                            let Y = D.getFullYear()
+                            let M = D.getMonth() + 1
+                            M = M<10 ? "0" + M : M
+                            let d = D.getDate()
+                            d = d<10 ? "0" + d : d
+                            item.workDate = Y + "-" + M + '-' + d
+                            // console.log(new Date()),123
+                            this.loopData(item)
+                        })
+                        this.allData = res.data
+                        this.dataList = this.allData.slice(0)
+                        resolve()
+                        // this.load()
+                    } else {
+                        load()
+                        reject()
+                    }
+                }).catch(() => {
+                    this.tableLoad = false
+                    reject()
+                })
+            })
+        
+        },
+        loopData (item) {
+            setTimeout(() => {
+                this.siteList.forEach(site => {
+                if (site.ID == item.siteId) {
+                    item.sitecode1 = site.siteCode1
+                    item.sitecode2 = site.siteCode2
+                    item.sitecode3 = site.siteCode3
+                    item.imple = site.imple
+                    item.region = site.region
+                    item.sitetoc = site.sitetoc
+                    item.dma = site.dma
+                    item.emfm = site.emfm
+                    item.siteName = site.cname
+                    item.project = site.project
+                }
+                })
+                this.superList.forEach(supervisor => {
+                    if (supervisor.ID == item.supervisorId) {
+                        item.cName = supervisor.cName ? supervisor.cName : "N/A"
+                    }
+                })
+
+                this.createSearchData()
+
+            },200)
+        },
+        async search () {
+            // await this.showTable2()
+            this.dataList = this.allData.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.cName) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.site) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.dis1) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.dis2) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.pro) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.emfmVal) != -1 ) {
+                    // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.dmaVal) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.impleVal) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.natureVal) != -1 ) {
+                    return true
+                    }
+                }
+                }
+            })
+
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                if ( typeof item[key] == "string") {
+                    if ( item[key].indexOf(this.sitetocVal) != -1) {
+                    return true
+                    }
+                }
+                }
+            })
+
+            // this.dataList = this.dataList.filter((item,i) => {
+            //     for(let key in item) {
+            //         if ( typeof item[key] == "string") {
+            //             // console.log(item[key], this.searchVal)
+            //             if ( item[key].indexOf(this.searchVal) != -1) {
+            //             return true
+            //             }
+            //         }
+            //     }
+            // })
+            // this.dataList = this.dataList.filter(item => {
+            //     // console.log(item.createdAt, this.filterTime)
+            //     if (item.createdAt.indexOf(this.filterTime) != -1) {
+            //     return true
+            //     }
+            // })
+            // this.dataList = this.dataList.filter(item => {
+            //     if (item.workDate.indexOf(this.filterTime2) != -1) {
+            //         return true
+            //     }
+            // })
+            if (this.dataList.length == this.allData.length) {
+                // this.getCount()
+            } else {
+                this.total= this.dataList.length
+            }
+
+        },
+        //獲取所有工頭
+        getSuper (item,i) {
+            this.$axios({
+                url:"supervisor",
+                method:"GET"
+            }).then(res => {
+                // console.log(res,123)
+                if (res.data) {
+                    this.superList = res.data            
+                }
+            })
+        },
+        //獲取所有site
+        getSite (item,i) {
+            this.tableLoad = true
+        this.$axios({
+            url:"site",
+            method:"GET"
+        }).then(res => {
+            // console.log(res,123)
+            if (res.data) {
+            this.siteList = res.data
+            this.showTable2()
+
+            } else {
+                this.tableLoad = false
+            }
+        }).catch(() => [
+            this.tableLoad = false
+        ])
+        },
+        showDetail(e) {
+        this.currentImg = 0
+        this.left = 0
+        this.current = e 
+        // e.images.forEach(item => {
+        //   item.base64Image = "data:image/jpeg;base64," + item.base64Image
+        // })
+        this.showBox = true
+        this.$nextTick(() => {
+            this.createImgDOM()
+        })
+        
+        console.log(e)
+
+        //show site
+        this.siteList.forEach(item => {
+            if (item.ID==e.siteId) {
+                this.thisSite = item
+            }
+        })
+        },
+        edit (item){
+        console.log(item)
+        },
+        Delete (item) {
+        console.log(item)
+        let that = this
+        that.$Modal.confirm({
+            title:"提示",
+            content: "確定刪除?",
+            onOk () {
+            that.$axios({
+                url:"attendence/" + item.ID,
+                method:"DELETE",
+                data: {
+                id: item.ID
+                }
+            }).then(res => {
+                console.log("delete",res)
+                that.$Message.success("已刪除")
+                that.showTable()
+            })
+            }
+        })
+        },
+        createImgDOM () {
+        let oAbs = document.getElementsByClassName('imgAbso');
+        if (this.current.images) {
+            this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
+        }
+        
+        },
+        preNext (boo) {
+        if (boo) {
+            //向左滑動
+            this.left += 320
+            if (this.left > 0) {
+            this.left = 0
+            }
+        } else {
+            if (this.absWidth > (Math.abs(this.left) + 320)) {
+            this.left -= 320
+            }
+        }
+        },
+        exportData () { // 不再使用
+        this.$refs.recordTable.exportCsv({
+            filename: "報工記錄"
+        });
+        },
+        convertToCSV(objArray){
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ','
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+
+                return str;
+        },
+        exportCSVFile(headers, items, fileTitle) {
+            if (headers) {
+                items.unshift(headers);
+            }
+                // console.log(items)
+            // Convert Object to JSON
+            var jsonObject = JSON.stringify(items);
+            var csv = this.convertToCSV(jsonObject);
+
+            var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+            var blob = new Blob(["\uFEFF"+csv], {type: 'text/csv; charset=utf-18'});
+            if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, exportedFilenmae);
+            } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) { // feature detection
+                    // Browsers that support HTML5 download attribute
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", exportedFilenmae);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+        },
+        exportData2 () { //新的導出報功記錄功能
+        //文件的title
+            if (this.allData.length == 0) {
+                this.$Message.warning("數據加載中...")
+                return false
+            }
+            let headers = {
+                    createdAt: "創建日期",
+                    workDate: "工作日期",
+                    time: "時段",
+                    project: "項目編號",
+                    siteName: "地盤地址",
+                    impleto: "Imple To.",
+                    sitecto: "Site C To",
+                    DMA: "DMA",
+                    EMFM: "EMFM",
+                    nature: "Nature",
+                    company: "判頭",
+                    description: "工作內容",
+                    machine: "使用機械",
+                    remark: "其他公司工人",
+                    siteId: "地盤編號",
+                    subcontract: "副項目編號",
+                    supvisiorName: "創建者",
+                    workers: "Renopipe工人",
+                    worktype: "工作種類",
+                    imageUrl: "圖片",
+            };
+            let itemsNotFormatted = this.allData
+            var itemsFormatted = [];
+            // format the data
+            itemsNotFormatted.forEach((item) => {
+                itemsFormatted.push({
+                        createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
+                        workDate:item.workDate ?  String(item.workDate) : "N/A",
+                        time:item.time ?  String(item.time)  : "N/A",
+                        project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
+                        siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
+                        impleto:item.imple ? String(item.imple) : "N/A",
+                        sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
+                        DMA:item.dma ? String(item.dma) : "N/A" ,
+                        EMFM:item.emfm ?  String(item.emfm)  : "N/A",
+                        nature:item.region ?  String(item.region)  : "N/A",  // undefiend
+                        company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
+                        description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
+                        machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
+                        remark:String(item.remark).replace(/,/g, ''),
+                        siteId:item.siteId ? String(item.siteId)  : "N/A",
+                        subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
+                        supvisiorName:item.cName ? String(item.cName) : "N/A",
+                        workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
+                        worktype: String(item.worktype).replace(/,/g, ''),
+                        imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
+                        
+                })
+                
+            });
+            //   itemsFormatted.forEach(item => {
+            //       for(let key in item) {
+            //           item[key] = String(item[key]) + "."
+            //       }
+            //   })
+
+
+            let currentDate = new Date();
+            let str = ""
+            if (this.filterTime) {
+                str = this.filterTime
+            }
+            console.log(itemsNotFormatted)
+            var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
+                // console.log(itemsFormatted)
+            this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+        },
+        downloadIMG(e){
+        this.msg = "下載中...請稍候"
+        this.$axios({
+                url:"attendence/"+ e +"/image",
+                method:"GET"
+            }).then(res => {
+                console.log(res)
+                this.msg = "下載圖片"
+                window.location.href = res.request.responseURL
+                //trigger download link by open a window in background
+            })
+        }
     },
 }
 </script>
