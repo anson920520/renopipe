@@ -1042,19 +1042,15 @@ export default {
         },
         //獲取所有工頭
         getSuper (item,i) {
-        this.$axios({
-            url:"supervisor",
-            method:"GET"
-        }).then(res => {
-            // console.log(res,123)
-            if (res.data) {
-            this.superList = res.data
-            this.allData.forEach(item => {
-                this.loopData(item)
+            this.$axios({
+                url:"supervisor",
+                method:"GET"
+            }).then(res => {
+                // console.log(res,123)
+                if (res.data) {
+                    this.superList = res.data            
+                }
             })
-            
-            }
-        })
         },
         //獲取所有site
         getSite (item,i) {
