@@ -183,12 +183,12 @@
         </div>
         <Button type="info" class="editBtn" @click="init">重置頁面</Button>
 
-        <!-- <div style="padding-right: 10px;">
+       <!--<div style="padding-right: 10px;">
           <DatePicker type="date" @on-change="changeDate2" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
-        </div>
+        </div>!-->
 
-        <Input type="text" @on-enter="search" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
-        <Button @click="search"  type="info">搜索</Button> -->
+       <!-- <Input type="text" @on-enter="quickSearch" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
+        <Button @click="quickSearch"  type="info">搜索</Button>!-->
       </div>
 
       <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button>
@@ -292,9 +292,9 @@
 
     </Table>
     <br>
-    <div style="text-align:right" v-if="showPage">
+   <!-- <div style="text-align:right" v-if="showPage">
        <Page :page="page" :page-size="20" :total='total' @on-change="changePage" show-total></Page> 
-    </div>
+    </div>!-->
     
 
     <!-- 顯示詳細 -->
@@ -442,9 +442,9 @@ export default {
         thisSite:"",
         msg:"下載圖片",
         columns: [
-            { title: "創建日期", key:"createdAt" ,sortable: true},
+           // { title: "創建日期", key:"createdAt" ,sortable: true},
             { title: "工作日期", key:"workDate" ,sortable: true},
-            { title: "報工記錄編號", key:"ID" ,sortable: true},
+           //  { title: "報工記錄編號", key:"ID" ,sortable: true},
             // { title: "圖片預覽", slot:"preview" },
             { title: "地盤項目編號", key:"siteId",sortable: true,
                 render:(h,p) => {
@@ -545,7 +545,7 @@ export default {
                 return h('div',str)
             }
             },
-            { title: "詳請", key:"description",sortable: true, },
+          //   { title: "詳請", key:"description",sortable: true, },
             { title: "工頭", key:"supervisor",sortable: true,
             render:(h,p) => {
                 let str = "暫無"
@@ -611,13 +611,14 @@ export default {
     },
     created () {
         this.url = window.baseURL
-        this.getSuper()
+       /* this.getSuper()
         if (this.siteList.length) {
             this.showTable2()
         } else {
             this.getSite()
         }
-        this.getCount()
+        this.getCount()*/
+        this.showTable()
     },
     computed: {
         siteList: {
@@ -644,7 +645,7 @@ export default {
           this.page = 0
           this.showPage = true
           this.getCount()
-          this.showTable2()
+          this.showTable()
           
       },
       getCount () {
@@ -756,6 +757,52 @@ export default {
         })
       
     },
+    // 第一次就有月份
+    filteredTable(){
+        this.showPage = false
+        let load = this.$Message.loading({
+            content:"加载中...",
+            duration:1000000
+        })
+        let month = e.split("-")[1] * 1
+        this.tableLoad = true
+        return new Promise((resolve,reject) => {
+            this.$axios({
+                url:"attendence?filterDate=filterDate&month=12",
+                method:"GET"
+            }).then(res => {
+                console.log(res)
+                this.tableLoad = false
+                load()
+                if (res.data) {
+                    res.data.forEach(item => {
+
+                        item.createdAt = item.createdAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.startedAt = item.startedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        item.endedAt = item.endedAt.slice(0,16).replace("T"," ").split("-").join("/")
+                        let D = new Date(item.startTimestamp*1000)
+                        let Y = D.getFullYear()
+                        let M = D.getMonth() + 1
+                        M = M<10 ? "0" + M : M
+                        let d = D.getDate()
+                        d = d<10 ? "0" + d : d
+                        item.workDate = Y + "-" + M + '-' + d
+                        // console.log(new Date()),123
+                        this.loopData(item)
+                    })
+                    this.allData = res.data
+                    this.dataList = this.allData.slice(0)
+                    resolve()
+                } else {
+                    reject()
+                }
+            }).catch(() => {
+                load()
+                this.tableLoad = false
+                reject()
+            })
+        })
+    },
     //有分页
     showTable2 () {
         this.tableLoad = true
@@ -803,7 +850,7 @@ export default {
         this.tableLoad = true
         return new Promise((resolve,reject) => {
             this.$axios({
-                url:"attendence",
+                url:"attendence?filterDate=filterDate&month=12",
                 method:"GET"
             }).then(res => {
                 console.log(res)
@@ -866,6 +913,19 @@ export default {
 
       },200)
     },
+    quickSearch () {
+      this.dataList = this.allData.filter((item,i) => {
+        for(let key in item) {
+          if ( typeof item[key] == "string") {
+            if (item[key].indexOf(this.searchVal) != -1) {
+              return true
+            }
+          }
+          
+        }
+      })
+    },
+
     async search () {
         // await this.showTable2()
         this.dataList = this.allData.filter((item,i) => {
@@ -971,16 +1031,16 @@ export default {
             }
         })
 
-        // this.dataList = this.dataList.filter((item,i) => {
-        //     for(let key in item) {
-        //         if ( typeof item[key] == "string") {
-        //             // console.log(item[key], this.searchVal)
-        //             if ( item[key].indexOf(this.searchVal) != -1) {
-        //             return true
-        //             }
-        //         }
-        //     }
-        // })
+         this.dataList = this.dataList.filter((item,i) => {
+             for(let key in item) {
+                 if ( typeof item[key] == "string") {
+                     // console.log(item[key], this.searchVal)
+                     if ( item[key].indexOf(this.searchVal) != -1) {
+                     return true
+                     }
+                 }
+             }
+         })
         // this.dataList = this.dataList.filter(item => {
         //     // console.log(item.createdAt, this.filterTime)
         //     if (item.createdAt.indexOf(this.filterTime) != -1) {
