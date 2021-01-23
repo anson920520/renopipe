@@ -658,7 +658,7 @@
 				console.log(totalWorkers);
 
 				var raw = JSON.stringify({
-					"groupId":groupId,
+					"groupId":"1611035434",
 					"phone":"85292631429",
 					"message":
 						"[報工記錄更新: 記錄編號 - " + this.attendenceData.ID + "]"+

@@ -431,23 +431,37 @@
 			let Y = D.getFullYear()
 			let M = D.getMonth();
 			let d = D.getDate()
-			let str;
+			let Mstr;
+			let Dstr;
 			
-			if(d >= 10){
-				str =  Y + "-" + (M+1)+ "-" + d
+			//Month
+			if(M < 10){
+				Mstr =  "-0" + (M+1)
 			}
 			else{
-				str =  Y + "-" + (M+1) + "-0" + d
+				Mstr =  "-" + (M+1)
 			}
 			
-			this.start.name = str
-			this.start.timesamp = new Date(str).getTime()/1000
+			//day 
+			if(d >= 10){
+				Dstr =  "-" + d
+			}
+			else{
+				Dstr =  "-0" + d
+			}
+			
+			let formatedDate = Y + Mstr + Dstr//Y + "-" + (M+1) + "-0" + d
+			
+			
+			this.start.name = formatedDate
+			this.start.timesamp = new Date(formatedDate).getTime()/1000
 			
 			let D1 = new Date(Date.now() + 2592000000)
 			let Y1 = D1.getFullYear()
 			let M1 = D1.getMonth();
 			let d1 = D1.getDate()
-			let str1 = Y1 + "-" + (M1+1) + "-" + d1
+			let str1 = formatedDate //use startdate 
+			console.log(str1)
 			this.end.name = str1
 			this.end.timesamp = new Date(str1).getTime()/1000
 		},
@@ -752,10 +766,15 @@
 					groupId = "1598237673";
 				}else if(pjid == "J1009"){
 					groupId = "1598237699";
+				}else if(pjid =="J1010"){
+					groupId = "1611035498";
+				}else if(pjid =="J1011"){
+					groupId = "1611035613";
 				}else{
 					groupId = "not found";
 				}
 				
+				//text 1611035434
 				//console.log(groupId)
 				
 				//data

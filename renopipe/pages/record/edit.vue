@@ -462,17 +462,37 @@
 			let Y = D.getFullYear()
 			let M = D.getMonth();
 			let d = D.getDate()
-			let str = Y + "-" + (M+1) + "-" + d
-			this.start.name = str
-			this.start.timesamp = new Date(str).getTime()/1000
+			let Mstr;
+			let Dstr;
+			
+			//Month
+			if(M < 10){
+				Mstr =  "-0" + (M+1)
+			}
+			else{
+				Mstr =  "-" + (M+1)
+			}
+			
+			//day 
+			if(d >= 10){
+				Dstr =  "-" + d
+			}
+			else{
+				Dstr =  "-0" + d
+			}
+			
+			let formatedDate = Y + Mstr + Dstr
+			
+			this.start.name = formatedDate
+			this.start.timesamp = new Date(formatedDate).getTime()/1000
 			
 			let D1 = new Date(Date.now() + 2592000000)
 			let Y1 = D1.getFullYear()
 			let M1 = D1.getMonth();
 			let d1 = D1.getDate()
-			let str1 = Y1 + "-" + (M1+1) + "-" + d1
-			this.end.name = str1
-			this.end.timesamp = new Date(str1).getTime()/1000
+			let str1 = formatedDate
+			this.end.name = formatedDate
+			this.end.timesamp = new Date(formatedDate).getTime()/1000
 		},
 		computed: {
 			baseURL () { return this.$store.state.baseURL }
@@ -691,12 +711,20 @@
 							that.attendenceData = res.data[0]
 							let dd= new Date(res.data[0].startTimestamp * 1000);
 							let day = "";
+							let month = "";
+							if((dd.getMonth()+1) > 9){
+								month = (dd.getMonth()+1)
+							}
+							else{
+								month = "0"+(dd.getMonth()+1)
+							}
+							
 							if(dd.getDate() > 9){
 								day = dd.getDate()
 							}else{
 								day = "0"+dd.getDate()
 							}
-							that.workingTime = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+day
+							that.workingTime = dd.getFullYear()+"-"+month+"-"+day
 							console.log(dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+day)
 							//init timepciker
 							
