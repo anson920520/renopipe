@@ -676,32 +676,32 @@ export default {
         //   this.search()
         },
         createSearchData () {
-        this.proList = []
-        this.disList1 = []
-        this.allData.forEach(item => {
-            // console.log(item,item.sitecode1)
-            this.proList.push(item.project)
-            this.disList1.push(item.sitecode1)
-            this.disList2.push(item.sitecode2)
-            this.disList3.push(item.sitecode3)
-            this.imple.push(item.imple)
-            this.nature.push(item.region)
-            this.sitetoc.push(item.sitetoc)
-            this.dma.push(item.dma)
-            this.emfm.push(item.emfm)
-            this.SiteList.push(item.siteName)
-        })
-        
-        this.proList = [...new Set(this.proList)].filter(item => item)
-        this.disList1 = [...new Set(this.disList1)].filter(item => item)
-        this.disList2 = [...new Set(this.disList2)].filter(item => item)
-        this.disList3 = [...new Set(this.disList3)].filter(item => item)
-        this.imple = [...new Set(this.imple)].filter(item => item)
-        this.nature = [...new Set(this.nature)].filter(item => item)
-        this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
-        this.dma = [...new Set(this.dma)].filter(item => item)
-        this.emfm = [...new Set(this.emfm)].filter(item => item)
-        this.SiteList = [...new Set(this.SiteList)].filter(item => item)
+			this.proList = []
+			this.disList1 = []
+			this.allData.forEach(item => {
+				// console.log(item,item.sitecode1)
+				this.proList.push(item.project)
+				this.disList1.push(item.sitecode1)
+				this.disList2.push(item.sitecode2)
+				this.disList3.push(item.sitecode3)
+				this.imple.push(item.imple)
+				this.nature.push(item.region)
+				this.sitetoc.push(item.sitetoc)
+				this.dma.push(item.dma)
+				this.emfm.push(item.emfm)
+				this.SiteList.push(item.siteName)
+			})
+			
+			this.proList = [...new Set(this.proList)].filter(item => item)
+			this.disList1 = [...new Set(this.disList1)].filter(item => item)
+			this.disList2 = [...new Set(this.disList2)].filter(item => item)
+			this.disList3 = [...new Set(this.disList3)].filter(item => item)
+			this.imple = [...new Set(this.imple)].filter(item => item)
+			this.nature = [...new Set(this.nature)].filter(item => item)
+			this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
+			this.dma = [...new Set(this.dma)].filter(item => item)
+			this.emfm = [...new Set(this.emfm)].filter(item => item)
+			this.SiteList = [...new Set(this.SiteList)].filter(item => item)
 
 
         },
@@ -1072,91 +1072,92 @@ export default {
         ])
         },
         showDetail(e) {
-        this.currentImg = 0
-        this.left = 0
-        this.current = e 
-        // e.images.forEach(item => {
-        //   item.base64Image = "data:image/jpeg;base64," + item.base64Image
-        // })
-        this.showBox = true
-        this.$nextTick(() => {
-            this.createImgDOM()
-        })
-        
-        console.log(e)
+			this.currentImg = 0
+			this.left = 0
+			this.current = e 
+			// e.images.forEach(item => {
+			//   item.base64Image = "data:image/jpeg;base64," + item.base64Image
+			// })
+			this.showBox = true
+			this.showBig = false
+			this.$nextTick(() => {
+				this.createImgDOM()
+			})
+			
+			console.log(e)
 
-        //show site
-        this.siteList.forEach(item => {
-            if (item.ID==e.siteId) {
-                this.thisSite = item
-            }
-        })
+			//show site
+			this.siteList.forEach(item => {
+				if (item.ID==e.siteId) {
+					this.thisSite = item
+				}
+			})
         },
         edit (item){
-        console.log(item)
+        	console.log(item)
         },
         Delete (item) {
-        console.log(item)
-        let that = this
-        that.$Modal.confirm({
-            title:"提示",
-            content: "確定刪除?",
-            onOk () {
-            that.$axios({
-                url:"attendence/" + item.ID,
-                method:"DELETE",
-                data: {
-                id: item.ID
-                }
-            }).then(res => {
-                console.log("delete",res)
-                that.$Message.success("已刪除")
-                that.showTable()
-            })
-            }
-        })
+			console.log(item)
+			let that = this
+			that.$Modal.confirm({
+				title:"提示",
+				content: "確定刪除?",
+				onOk () {
+				that.$axios({
+					url:"attendence/" + item.ID,
+					method:"DELETE",
+					data: {
+					id: item.ID
+					}
+				}).then(res => {
+					console.log("delete",res)
+					that.$Message.success("已刪除")
+					that.showTable()
+				})
+				}
+			})
         },
         createImgDOM () {
-        let oAbs = document.getElementsByClassName('imgAbso');
-        if (this.current.images) {
-            this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
-        }
-        
-        },
-        preNext (boo) {
-        if (boo) {
-            //向左滑動
-            this.left += 320
-            if (this.left > 0) {
-            this.left = 0
-            }
-        } else {
-            if (this.absWidth > (Math.abs(this.left) + 320)) {
-            this.left -= 320
-            }
-        }
+			let oAbs = document.getElementsByClassName('imgAbso');
+			if (this.current.images) {
+				this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
+			}
+			
+			},
+			preNext (boo) {
+			if (boo) {
+				//向左滑動
+				this.left += 320
+				if (this.left > 0) {
+				this.left = 0
+				}
+			} else {
+				if (this.absWidth > (Math.abs(this.left) + 320)) {
+				this.left -= 320
+				}
+			}
         },
         exportData () { // 不再使用
-        this.$refs.recordTable.exportCsv({
-            filename: "報工記錄"
-        });
+			this.$refs.recordTable.exportCsv({
+				filename: "報工記錄"
+			});
         },
         convertToCSV(objArray){
-                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-                var str = '';
+			var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+			var str = '';
 
-                for (var i = 0; i < array.length; i++) {
-                    var line = '';
-                    for (var index in array[i]) {
-                        if (line != '') line += ','
+			for (var i = 0; i < array.length; i++) {
+				var line = '';
+				for (var index in array[i]) {
+					if (line != '') line += ','
 
-                        line += array[i][index];
-                    }
+					line += array[i][index];
+				}
 
-                    str += line + '\r\n';
-                }
+				str += line + '\r\n';
+			}
 
-                return str;
+			return str;
         },
         exportCSVFile(headers, items, fileTitle) {
             if (headers) {
@@ -1261,8 +1262,8 @@ export default {
             this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
         },
         downloadIMG(e){
-        this.msg = "下載中...請稍候"
-        this.$axios({
+			this.msg = "下載中...請稍候"
+			this.$axios({
                 url:"attendence/"+ e +"/image",
                 method:"GET"
             }).then(res => {
