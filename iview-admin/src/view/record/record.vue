@@ -160,13 +160,25 @@
 
 .section{
   width:100%;
-  display:flex;
+  &::after {
+	  display: block;
+	  content:"";
+	  clear: both;
+  }
 }
 
 .selectBox{
   padding:20px 20px 10px 20px;
+  float: left;
+  width: 150px;
+  >input,select{
+	  width: 100%;
+  }
 }
-
+.searchInp {
+	width: 70%;
+	margin-right: 10px;
+}
 
 
 </style>
@@ -181,14 +193,17 @@
         <div style="padding-right: 10px;">
           <DatePicker type="month" :clearable="false" :value="filterTime" @on-change="filterDateData" placeholder="搜索日期" style="width: 200px"></DatePicker>
         </div>
+
+
+
+
         <Button type="info" class="editBtn" @click="init">重置頁面</Button>
 
        <!--<div style="padding-right: 10px;">
           <DatePicker type="date" @on-change="changeDate2" placeholder="搜索工作日期" style="width: 200px"></DatePicker>
         </div>!-->
 
-       <!-- <Input type="text" @on-enter="quickSearch" v-model="searchVal"  placeholder="輸入關鍵字搜索"/>
-        <Button @click="quickSearch"  type="info">搜索</Button>!-->
+       	
       </div>
 
       <Button type="info" class="editBtn" @click="exportData2">導出CSV</Button>
@@ -201,77 +216,98 @@
       <div class="section ">
           <div class="selectBox">
             <label>項目編號</label>
-            <select @change="search" v-model="pro">
+            <select  v-model="pro">
               <option value="">全部</option>
               <option v-for="(item,i) in proList" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
           <div class="selectBox">
             <label>DIS(1)</label>
-            <select @change="search" v-model="dis1">
+            <select  v-model="dis1">
               <option value="">全部</option>
               <option v-for="(item,i) in disList3" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
           <div class="selectBox">
               <label>DIS(2)</label>
-              <select @change="search" v-model="dis2">
+              <select  v-model="dis2">
                 <option value="">全部</option>
                 <option v-for="(item,i) in disList1" :key="i" :value="item">{{item}}</option>
               </select>
          </div>
           <div class="selectBox">
             <label> 地盤</label>
-            <select @change="search" v-model="site">
+            <select  v-model="site">
               <option value="">全部</option>
               <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
            <div class="selectBox">
             <label>Imple TO.</label>
-            <select @change="search" v-model="impleVal">
+            <select  v-model="impleVal">
               <option value="">全部</option>
               <option v-for="(item,i) in imple" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
             <div class="selectBox">
             <label>Site C To.</label>
-            <select @change="search" v-model="sitetocVal">
+            <select  v-model="sitetocVal">
               <option value="">全部</option>
               <option v-for="(item,i) in sitetoc" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
             <div class="selectBox">
             <label>DMA</label>
-            <select @change="search" v-model="dmaVal">
+            <select  v-model="dmaVal">
               <option value="">全部</option>
               <option v-for="(item,i) in dma" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
              <div class="selectBox">
             <label>EMFM</label>
-            <select @change="search" v-model="emfmVal">
+            <select  v-model="emfmVal">
               <option value="">全部</option>
               <option v-for="(item,i) in emfm" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
           <div class="selectBox">
             <label>Nature</label>
-            <select @change="search" v-model="natureVal">
+            <select  v-model="natureVal">
               <option value="">全部</option>
               <option v-for="(item,i) in nature" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
-            <div class="selectBox">
+          <div class="selectBox">
             <label>工頭</label>
-              <select @change="search"  v-model="cName">
+              <select   v-model="cName">
                 <option  value="">全部</option>
               <option v-for="(item,i) in superList" :key="i" :value="item.cName">{{item.cName}}</option>
             </select>
           </div>
+
+		  <div class="selectBox" style="width: 100px;">
+            	<label> </label>
+				<div style="margin-top: 1px;"><Button @click="search" type="info">搜索</Button></div>
+				
+          </div>
+
+		  
+
+
+
       </div>
+
+	  <div class="" style="width:335px;padding: 0 20px;">
+			<label> </label>
+			<div class="al">
+				<Input type="text" v-model="searchVal"  placeholder="輸入關鍵字搜索" class="searchInp" />
+				<Button @click="search2"  type="info">搜索</Button>
+			</div>
+		</div>
+
+
       <small style="color: #E50000;">* 過濾器只過濾本頁的內容，並非全部記錄。</small>
-        <!--<Button @change="search"  type="info">搜索</Button>!-->
+        <!--<Button   type="info">搜索</Button>!-->
     </div>
      <br/>
       <br/>
@@ -439,7 +475,7 @@ export default {
             showBox: false,
             showBig: false,
             url:"",
-            thisSite:"",
+            thisSite: {},
             msg:"下載圖片",
             columns: [
                 { title: "創建日期", key:"createdAt" ,sortable: true},
@@ -645,6 +681,7 @@ export default {
             this.emfmVal = "",
             this.natureVal = "",
             this.sitetocVal = "",
+			this.searchVal = ''
             this.page = 0
             this.showPage = true
             this.getDataByMonthAndPage()
@@ -911,117 +948,108 @@ export default {
             // await this.showTable2()
             this.dataList = this.allData.filter((item,i) => {
                 for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.cName) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.site) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.dis1) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.dis2) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.pro) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.emfmVal) != -1 ) {
-                    // console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.dmaVal) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.impleVal) != -1 ) {
-                    return true
-                    }
-                }
-                }
-            })
-
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.natureVal) != -1 ) {
-                    return true
-                    }
-                }
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.cName) != -1 ) {
+						return true
+						}
+					}
                 }
             })
 
 
             this.dataList = this.dataList.filter((item,i) => {
                 for(let key in item) {
-                if ( typeof item[key] == "string") {
-                    if ( item[key].indexOf(this.sitetocVal) != -1) {
-                    return true
-                    }
-                }
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.site) != -1 ) {
+						return true
+						}
+					}
                 }
             })
 
-            // this.dataList = this.dataList.filter((item,i) => {
-            //     for(let key in item) {
-            //         if ( typeof item[key] == "string") {
-            //             // console.log(item[key], this.searchVal)
-            //             if ( item[key].indexOf(this.searchVal) != -1) {
-            //             return true
-            //             }
-            //         }
-            //     }
-            // })
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.dis1) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.dis2) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.pro) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.emfmVal) != -1 ) {
+						// console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.dmaVal) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.impleVal) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+					if ( typeof item[key] == "string") {
+						if ( item[key].indexOf(this.natureVal) != -1 ) {
+						return true
+						}
+					}
+                }
+            })
+
+
+            this.dataList = this.dataList.filter((item,i) => {
+                for(let key in item) {
+                    if ( typeof item[key] == "string") {
+                        if ( item[key].indexOf(this.sitetocVal) != -1) {
+                        return true
+                        }
+                    }
+                }
+            })
+
+            
             // this.dataList = this.dataList.filter(item => {
             //     // console.log(item.createdAt, this.filterTime)
             //     if (item.createdAt.indexOf(this.filterTime) != -1) {
@@ -1040,6 +1068,16 @@ export default {
             }
 
         },
+		search2 () {
+			this.dataList = this.allData.filter((item,i) => {
+                for(let key in item) {
+					// console.log(item[key], this.searchVal)
+					if ( String(item[key]).indexOf(this.searchVal) != -1) {
+						return true
+					}
+                }
+            })
+		},
         //獲取所有工頭
         getSuper (item,i) {
             this.$axios({
