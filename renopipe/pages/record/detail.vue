@@ -750,6 +750,10 @@
 							groupId = "1598237673";
 						}else if(pjid == "J1009"){
 							groupId = "1598237699";
+						}else if(pjid =="J1010"){
+							groupId = "1611035498";
+						}else if(pjid =="J1011"){
+							groupId = "1611035613";
 						}else{
 							groupId = "not found";
 						}
