@@ -179,7 +179,11 @@
 	width: 70%;
 	margin-right: 10px;
 }
-
+.initBtn {
+	background: #C4C4C4 !important;
+	border: solid #C4C4C4 1px !important;
+	margin-left: 10px;
+}
 
 </style>
 
@@ -302,6 +306,7 @@
 			<div class="al">
 				<Input type="text" v-model="searchVal"  placeholder="輸入關鍵字搜索" class="searchInp" />
 				<Button @click="search2"  type="info">搜索</Button>
+				<Button type="info" class="initBtn" @click="init">重置</Button>
 			</div>
 		</div>
 
@@ -670,7 +675,7 @@ export default {
         },
         init () {
             this.allData = this.dataList = []
-            this.initDate()
+            // this.initDate()
             this.pro = "",
             this.dis1 = "",
             this.dis2 = "",
