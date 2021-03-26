@@ -37,7 +37,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="工人中文名" prop="cName" style="display:none">
+        <FormItem label="工人中文名" prop="cName" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="addForm.cName" placeholder="請輸入中文名" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -176,7 +176,7 @@
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
 
-        <FormItem label="工人中文名" prop="cName" style="display:none">
+        <FormItem label="工人中文名" prop="cName" style="display:block">
           <Input type="text" @on-keyup.enter="keydown" style="width: 200px;" v-model="editForm.cName" placeholder="請輸入中文名" />
           <small style="display:block;">*必須填寫，如果沒有資料請填寫NA</small>
         </FormItem>
@@ -393,7 +393,7 @@ export default {
               "role": that.addForm.role,
               "fullname": that.addForm.fullname,
               "idNo": randomSerial,
-              "cName": that.addForm.fullname,
+              "cName": that.addForm.cName,
               "nickname": that.addForm.fullname,
               "position": that.addForm.position,
               "dob":randomSerial,//that.addForm.dob,
