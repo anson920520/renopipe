@@ -347,17 +347,18 @@
             <img @click="showBig=!showBig" :class="['bigImg',{ showBig: showBig }]" :src="url + current.images[currentImg].filePath" >
           </div>
           <div class="recordSmallImgWrap al ju">
-            <Icon @click="preNext(true)" v-show="current.images.length>10" class="lefttopIcon" type="ios-arrow-back" size="30" />
+            <Icon @click="preNext(true)" class="lefttopIcon" type="ios-arrow-back" size="30" />
             <div :class="['imgRela']">
               <div :class="['imgAbso']" :style="{width:absWidth+'px',left:left+'px'}">
-                <div @mouseover="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i">
+                <div @click="currentImg=i" :class="['smallImgWrap', 'ju', 'al',{imgAct:currentImg==i}]" v-for="(item,i) in current.images" :key="i">
                   <img :src="url + item.filePath" >
                 </div>
 
               </div>
             </div>
-            <Icon @click="preNext(false)" v-show="current.images.length>4" class="lefttopIcon" size="30" type="ios-arrow-forward" />
+            <Icon @click="preNext(false)"  class="lefttopIcon" size="30" type="ios-arrow-forward" />
           </div>
+          <small style="color: #E50000; padding-left: 40px;">* 點擊小圖片查看大圖</small>
 <!-- 
           <div class="recordSmallImgWrap al ju">
             <Icon @click="preNext(true)" v-show="current.images.length>4" class="lefttopIcon" type="ios-arrow-back" size="30" />
@@ -650,13 +651,12 @@ export default {
     created () {
         this.url = window.baseURL
         this.getSuper()
-        // if (this.siteList.length) {
-        //     this.showTable2()
-        // } else {
-        //     this.getSite()
-        // }
-        // this.getCount()
         this.initDate ()
+        let dataList = localStorage.getItem("dataList")
+        if (dataList) {
+            this.dataList= JSON.parse(dataList)
+            return false
+        }
         this.getDataByMonthAndPage()
     },
     computed: {
@@ -825,6 +825,7 @@ export default {
                         })
                         this.allData = res.data
                         this.dataList = this.allData.slice(0)
+                        localStorage.setItem("dataList", JSON.stringify(res.data))
                         this.createSearchData()
                         resolve()
                     } else {
@@ -1166,19 +1167,19 @@ export default {
 				this.absWidth = Math.ceil(this.current.images.length / 2) *64 + 10
 			}
 			
-			},
-			preNext (boo) {
-			if (boo) {
-				//向左滑動
-				this.left += 320
-				if (this.left > 0) {
-				this.left = 0
-				}
-			} else {
-				if (this.absWidth > (Math.abs(this.left) + 320)) {
-				this.left -= 320
-				}
-			}
+		},
+        preNext (boo) {
+            if (boo) {
+                //向左滑動
+                this.left += 320
+                if (this.left > 0) {
+                    this.left = 0
+                }
+            } else {
+                if (this.absWidth > (Math.abs(this.left) + 320)) {
+                    this.left -= 320
+                }
+            }
         },
         exportData () { // 不再使用
 			this.$refs.recordTable.exportCsv({
