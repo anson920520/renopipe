@@ -674,7 +674,7 @@
 						"\n\n" + `DIS(1)  :` + this.site.siteCode1 +
 						"\n\n" + `DIS(2)  :` + this.site.siteCode3 +
 						"\n\n" + `Loc. Name(Chi) 地盤地址: ` + this.site.cname + " " + this.site.name +
-						"\n\n" + `副項目編號: ` + this.attendenceData.subcontract +
+						"\n\n" + `判頭: ` + this.attendenceData.subcontract +
 						"\n\n" + `創建者 : ` + this.attendenceData.supervisors[0].cName +
 						"\n\n" + `*Renopipe工人總數：` + this.attendenceData.workers.length + `*`+
 						"\n" + `Renopipe工人：`+ workerArr +
