@@ -652,11 +652,11 @@ export default {
         this.url = window.baseURL
         this.getSuper()
         this.initDate ()
-        let dataList = localStorage.getItem("dataList")
-        if (dataList) {
-            this.dataList= JSON.parse(dataList)
-            return false
-        }
+        // let dataList = localStorage.getItem("dataList")
+        // if (dataList) {
+        //     this.dataList= JSON.parse(dataList)
+        //     return false
+        // }
         this.getDataByMonthAndPage()
     },
     computed: {
