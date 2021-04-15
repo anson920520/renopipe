@@ -651,10 +651,11 @@ export default {
     created () {
         this.url = window.baseURL
         this.getSuper()
-        this.initDate ()
-        // let dataList = localStorage.getItem("dataList")
+        this.initDate()
+        let dataList = localStorage.getItem("dataList")
         // if (dataList) {
-        //     this.dataList= JSON.parse(dataList)
+        //     this.allData = this.dataList= JSON.parse(dataList)
+        //     this.createSearchData()
         //     return false
         // }
         this.getDataByMonthAndPage()
@@ -720,6 +721,7 @@ export default {
         createSearchData () {
 			this.proList = []
 			this.disList1 = []
+            // console.log(this.allData, this.dataList)
 			this.allData.forEach(item => {
 				// console.log(item,item.sitecode1)
 				this.proList.push(item.project)
@@ -825,13 +827,23 @@ export default {
                         })
                         this.allData = res.data
                         this.dataList = this.allData.slice(0)
-                        localStorage.setItem("dataList", JSON.stringify(res.data))
+                        try {
+                            // console.log(res.data)
+                            // console.log(JSON.stringify(res.data))
+                            let arr = JSON.stringify(res.data)
+                            localStorage.setItem("dataList", arr)
+                        } catch {
+                            // console.log("error", res.data)
+                            // console.log(JSON.stringify(res.data))
+                        }
+                        
                         this.createSearchData()
                         resolve()
                     } else {
                         reject()
                     }
-                }).catch(() => {
+                }).catch((e) => {
+                    console.log("error",e)
                     this.load()
                     this.tableLoad = false
                     reject()
@@ -964,13 +976,16 @@ export default {
 
 
             this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-					if ( typeof item[key] == "string") {
-						if ( item[key].indexOf(this.site) != -1 ) {
-						return true
-						}
-					}
-                }
+                // console.log(this.site, item.siteDetail.cname, item)
+
+                return item.siteDetail.cname.includes(this.site) 
+                // for(let key in item) {
+				// 	if ( typeof item[key] == "string") {
+				// 		if ( item[key].indexOf(this.site) != -1 ) {
+				// 		return true
+				// 		}
+				// 	}
+                // }
             })
 
             this.dataList = this.dataList.filter((item,i) => {
@@ -1237,6 +1252,19 @@ export default {
                 this.$Message.warning("數據加載中...")
                 return false
             }
+            // 选出图片最多的数据
+            let max = 0
+            // let maxItem = {}
+            this.allData.forEach(item => {
+                if (item.images) {
+                    if (item.images.length > max) {
+                        max = item.images.length
+                        maxItem = item
+                    }
+                }
+                
+            })
+            // console.log(max, maxItem)
             let headers = {
                     createdAt: "創建日期",
                     workDate: "工作日期",
@@ -1257,50 +1285,53 @@ export default {
                     supvisiorName: "創建者",
                     workers: "Renopipe工人",
                     worktype: "工作種類",
-                    imageUrl: "圖片",
+                    // imageUrl: "圖片",
             };
+            for (let i = 0; i< max; i++) {
+                headers['img' + (i+1)] = '圖片' + (i+1)
+            }
             let itemsNotFormatted = this.allData
             var itemsFormatted = [];
             // format the data
             itemsNotFormatted.forEach((item) => {
-                itemsFormatted.push({
-                        createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
-                        workDate:item.workDate ?  String(item.workDate) : "N/A",
-                        time:item.time ?  String(item.time)  : "N/A",
-                        project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
-                        siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
-                        impleto:item.imple ? String(item.imple) : "N/A",
-                        sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
-                        DMA:item.dma ? String(item.dma) : "N/A" ,
-                        EMFM:item.emfm ?  String(item.emfm)  : "N/A",
-                        nature:item.region ?  String(item.region)  : "N/A",  // undefiend
-                        company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
-                        description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
-                        machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
-                        remark:String(item.remark).replace(/,/g, ''),
-                        siteId:item.siteId ? String(item.siteId)  : "N/A",
-                        subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
-                        supvisiorName:item.cName ? String(item.cName) : "N/A",
-                        workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
-                        worktype: String(item.worktype).replace(/,/g, ''),
-                        imageUrl:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
-                        
-                })
-                
+                let obj = {
+                    createdAt:item.createdAt ?  String(item.createdAt)  : "N/A",
+                    workDate:item.workDate ?  String(item.workDate) : "N/A",
+                    time:item.time ?  String(item.time)  : "N/A",
+                    project:item.project ? String(item.project).replace(/,/g, '') : "N/A",
+                    siteName:item.siteName ? String(item.siteName).replace(/,/g, '') : "N/A",
+                    impleto:item.imple ? String(item.imple) : "N/A",
+                    sitecto:item.sitetoc ?  String(item.sitetoc)  : "N/A",
+                    DMA:item.dma ? String(item.dma) : "N/A" ,
+                    EMFM:item.emfm ?  String(item.emfm)  : "N/A",
+                    nature:item.region ?  String(item.region)  : "N/A",  // undefiend
+                    company:item.rporsubCRP ? String(item.rporsubCRP) : "N/A",
+                    description:String(item.description).replace(/,/g,"-").replace(/，/g,"-").replace(/\n/g,"-"),
+                    machine:item.machine? String(item.machine).replace(/,/g, '') : "N/A",
+                    remark:String(item.remark).replace(/,/g, ''),
+                    siteId:item.siteId ? String(item.siteId)  : "N/A",
+                    subcontract:item.subcontract ?  String(item.subcontract)  : "N/A",
+                    supvisiorName:item.cName ? String(item.cName) : "N/A",
+                    workers:(item.workers.map(item => item.cName + "(" + item.position + ")")).join("-"),
+                    worktype: String(item.worktype).replace(/,/g, ''),
+                    images:item.images ? (item.images.map(item => this.url + item.filePath)).join(";") : "",
+                }
+                if (obj.images) {
+                    obj.images.split(";").forEach((img, i) => {
+                        obj['img' + (i+1)] = img
+                    })
+                    delete obj.images
+                }
+                itemsFormatted.push(obj)
             });
-            //   itemsFormatted.forEach(item => {
-            //       for(let key in item) {
-            //           item[key] = String(item[key]) + "."
-            //       }
-            //   })
+            // console.log(headers, itemsFormatted)
+            // return false
 
-
-            let currentDate = new Date();
             let str = ""
             if (this.filterTime) {
                 str = this.filterTime
             }
-            console.log(itemsNotFormatted)
+            // console.log(itemsNotFormatted)
             var fileTitle = 'Renopipe報工記錄' + str; // or 'my-unique-title'
                 // console.log(itemsFormatted)
             this.exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
