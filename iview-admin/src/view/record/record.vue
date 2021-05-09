@@ -1254,17 +1254,24 @@ export default {
             }
             // 选出图片最多的数据
             let max = 0
-            // let maxItem = {}
+            
+            let maxItem;
             this.allData.forEach(item => {
                 if (item.images) {
                     if (item.images.length > max) {
+                        console.log(item.images.length)
                         max = item.images.length
-                        maxItem = item
+                        maxItem = item.images.length
+                    }else{
+                        console.log("no image?")
+                        maxItem = 0;
                     }
+                }else{
+                  maxItem = 0;
                 }
                 
             })
-            // console.log(max, maxItem)
+           
             let headers = {
                     createdAt: "創建日期",
                     workDate: "工作日期",
