@@ -1259,7 +1259,7 @@ export default {
                 if (item.images) {
                     if (item.images.length > max) {
                         max = item.images.length
-                        maxItem = item
+                        // maxItem = item
                     }
                 }
                 
