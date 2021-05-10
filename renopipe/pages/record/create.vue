@@ -169,7 +169,7 @@
 				<view class="body-padding">
 					<div class="">
 						<p class="title">工人列表</p>
-						<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>
+						<u>請選擇今天有上班的工人，如果找不到工人請致電Nicholas Wong (68132366)。</u>
 					</div>
 				</view>
 				<view class="body-padding mt20">
@@ -248,7 +248,7 @@
 			<view class="body-padding">
 				<div class="">
 					<p class="title">使用機械列表</p>
-					<u>請選擇今天有上使用的機械，如果找不到機械請致電Tesla Chong(60814693)。</u>
+					<u>請選擇今天有上使用的機械，如果找不到機械請致電Nicholas Wong (68132366)。</u>
 				</div>
 			</view>
 			<view>
