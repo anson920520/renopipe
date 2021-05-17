@@ -1,5 +1,30 @@
 <style lang="less">
-  @import './login.less';
+    @import './login.less';
+    .mask-1 {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+    }
+    .m-main {
+        width: 250px;
+        padding: 30px 50px;
+        background: #FFF;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align:center;
+        font-size: 18px;
+        font-weight: bold;
+        border: solid #3A75BB;
+    }
+    .man-img {
+        width: 100%;
+    }
 </style>
 
 <template>
@@ -13,6 +38,18 @@
         </div>
       </Card>
     </div> 
+
+    <div class="mask-1" v-if="modal">
+        <div class="m-main">
+            <img class="man-img" src="@/assets/images/man.png" alt="">
+            <p>試用期已過</p>
+            <p>需要更新</p>
+            <p>請盡快聯繫</p>
+            <p>ALOFT TECH LTD</p>
+        </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -30,7 +67,8 @@ export default {
   data(){
     return{
       alertcontent:false,
-      num: 0
+      num: 0,
+      modal: false
     }
   },
   methods: {
@@ -39,6 +77,8 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
+        // this.modal = true
+        // return false
       // console.log('login',this.$axios)
       let load = this.$Message.loading({
         content: "登录中...",

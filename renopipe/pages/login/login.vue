@@ -68,6 +68,34 @@
 		display: flex;
 		justify-content: center;
 	}
+	
+	.mask-1 {
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0,0,0,0.5);
+		position: fixed;
+		left: 0;
+		top: 0;
+	}
+	.m-main {
+		width: 60vw;
+		padding: 5vw 10vw;
+		background: #FFF;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		text-align:center;
+		font-size: 38upx;
+		font-weight: bold;
+		border: solid #3A75BB;
+	}
+	.man-img {
+		width: 100%;
+	}
+	.size35 {
+		font-size: 50upx;
+	}
 </style>
 
 <template>
@@ -92,8 +120,19 @@
 				<text class="showPwd" @click="showPwd=!showPwd">顯示密碼</text>
 			</view>
 			<view class="logBtn op" @click="toHome">登陸</view>
+			<!-- <view class="logBtn op" @click="demoWarning">登陸</view> -->
 		</view>
 		<view class="btmBorder">©RenoPipe Construction Co. Ltd. Copyright © 2020</view>
+		
+		<view class="mask-1" v-if="modal">
+			<view class="m-main">
+				<image class="man-img" src="../../static/img/man.png" mode="widthFix" alt=""></image>
+				<view class="size35">試用期已過</view>
+				<view class="size35">需要更新</view>
+				<view class="size35">請盡快聯繫</view>
+				<view class="size35">ALOFT TECH LTD</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -105,9 +144,13 @@
 				password: "",
 				showPwd: false,
 				focus: -1,
+				modal: false
 			};
 		},
 		methods:{
+			demoWarning () {
+				this.modal = true
+			},
 			toHome () {
 				let that = this
 				if (!this.username.trim() || !this.password.trim()) {
