@@ -285,7 +285,7 @@
             <label>工頭</label>
               <select   v-model="cName">
                 <option  value="">全部</option>
-              <option v-for="(item,i) in superList" :key="i" :value="item.cName">{{item.cName}}</option>
+              <option v-for="(item,i) in superList" :key="i" :value="item.cName" v-show="supervisorIds.indexOf(item.ID) > -1">{{item.cName}}</option>
             </select>
           </div>
 
@@ -645,7 +645,8 @@ export default {
             load () {},
             source: {
                 cancel () {}
-            }
+            },
+            supervisorIds: []
         }
     },
     created () {
@@ -687,7 +688,7 @@ export default {
             this.emfmVal = "",
             this.natureVal = "",
             this.sitetocVal = "",
-			this.searchVal = ''
+		      	this.searchVal = ''
             this.page = 0
             this.showPage = true
             this.getDataByMonthAndPage()
@@ -719,33 +720,38 @@ export default {
         //   this.search()
         },
         createSearchData () {
-			this.proList = []
-			this.disList1 = []
-            // console.log(this.allData, this.dataList)
-			this.allData.forEach(item => {
-				// console.log(item,item.sitecode1)
-				this.proList.push(item.project)
-				this.disList1.push(item.sitecode1)
-				this.disList2.push(item.sitecode2)
-				this.disList3.push(item.sitecode3)
-				this.imple.push(item.imple)
-				this.nature.push(item.region)
-				this.sitetoc.push(item.sitetoc)
-				this.dma.push(item.dma)
-				this.emfm.push(item.emfm)
-				this.SiteList.push(item.siteName)
-			})
-			
-			this.proList = [...new Set(this.proList)].filter(item => item)
-			this.disList1 = [...new Set(this.disList1)].filter(item => item)
-			this.disList2 = [...new Set(this.disList2)].filter(item => item)
-			this.disList3 = [...new Set(this.disList3)].filter(item => item)
-			this.imple = [...new Set(this.imple)].filter(item => item)
-			this.nature = [...new Set(this.nature)].filter(item => item)
-			this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
-			this.dma = [...new Set(this.dma)].filter(item => item)
-			this.emfm = [...new Set(this.emfm)].filter(item => item)
-			this.SiteList = [...new Set(this.SiteList)].filter(item => item)
+          this.proList = []
+          this.disList1 = []
+          this.disList2 = []
+          this.disList3 = []
+          this.supervisorIds = []
+                // console.log(this.allData, this.dataList)
+          this.allData.forEach(item => {
+            // console.log(item,item.sitecode1)
+            this.proList.push(item.project)
+            this.disList1.push(item.sitecode1)
+            this.disList2.push(item.sitecode2)
+            this.disList3.push(item.sitecode3)
+            this.imple.push(item.imple)
+            this.nature.push(item.region)
+            this.sitetoc.push(item.sitetoc)
+            this.dma.push(item.dma)
+            this.emfm.push(item.emfm)
+            this.SiteList.push(item.siteName)
+            this.supervisorIds.push(item.supervisorId)
+          })
+          
+          this.proList = [...new Set(this.proList)].filter(item => item)
+          this.disList1 = [...new Set(this.disList1)].filter(item => item)
+          this.disList2 = [...new Set(this.disList2)].filter(item => item)
+          this.disList3 = [...new Set(this.disList3)].filter(item => item)
+          this.imple = [...new Set(this.imple)].filter(item => item)
+          this.nature = [...new Set(this.nature)].filter(item => item)
+          this.sitetoc = [...new Set(this.sitetoc)].filter(item => item)
+          this.dma = [...new Set(this.dma)].filter(item => item)
+          this.emfm = [...new Set(this.emfm)].filter(item => item)
+          this.SiteList = [...new Set(this.SiteList)].filter(item => item)
+          this.supervisorIds = [...new Set(this.supervisorIds)].filter(item => item)
 
 
         },
