@@ -246,41 +246,41 @@
               <option v-for="(item,i) in SiteList" :key="i" :value="item">{{item}}</option>
             </select>
           </div>
-           <div class="selectBox">
+           <!-- <div class="selectBox">
             <label>Imple TO.</label>
             <select  v-model="impleVal">
               <option value="">全部</option>
               <option v-for="(item,i) in imple" :key="i" :value="item">{{item}}</option>
             </select>
-          </div>
-            <div class="selectBox">
+          </div> -->
+            <!-- <div class="selectBox">
             <label>Site C To.</label>
             <select  v-model="sitetocVal">
               <option value="">全部</option>
               <option v-for="(item,i) in sitetoc" :key="i" :value="item">{{item}}</option>
             </select>
-          </div>
-            <div class="selectBox">
+          </div> -->
+            <!-- <div class="selectBox">
             <label>DMA</label>
             <select  v-model="dmaVal">
               <option value="">全部</option>
               <option v-for="(item,i) in dma" :key="i" :value="item">{{item}}</option>
             </select>
-          </div>
-             <div class="selectBox">
+          </div> -->
+             <!-- <div class="selectBox">
             <label>EMFM</label>
             <select  v-model="emfmVal">
               <option value="">全部</option>
               <option v-for="(item,i) in emfm" :key="i" :value="item">{{item}}</option>
             </select>
-          </div>
-          <div class="selectBox">
+          </div> -->
+          <!-- <div class="selectBox">
             <label>Nature</label>
             <select  v-model="natureVal">
               <option value="">全部</option>
               <option v-for="(item,i) in nature" :key="i" :value="item">{{item}}</option>
             </select>
-          </div>
+          </div> -->
           <div class="selectBox">
             <label>工頭</label>
               <select   v-model="cName">
@@ -329,6 +329,48 @@
         <div class="previewWrap ju al">
           <img :src="row.preview" class="previewImg">
         </div>
+      </template>
+
+      <template slot="project" slot-scope="{row}">
+        <div>{{row.siteDetail.project}}</div>
+      </template>
+
+      <template slot="cname" slot-scope="{row}">
+        <div>{{row.siteDetail.cname}}</div>
+      </template>
+
+      <template slot="siteCode3" slot-scope="{row}">
+        <div>{{row.siteDetail.siteCode3}}</div>
+      </template>
+
+      <template slot="siteCode1" slot-scope="{row}">
+        <div>{{row.siteDetail.siteCode1}}</div>
+      </template>
+
+      <template slot="imple" slot-scope="{row}">
+        <div>{{row.siteDetail.imple}}</div>
+      </template>
+
+      <template slot="sitetoc" slot-scope="{row}">
+        <div>{{row.siteDetail.sitetoc}}</div>
+      </template>
+
+      <template slot="dma" slot-scope="{row}">
+        <div>{{row.siteDetail.dma}}</div>
+      </template>
+
+      <template slot="emfm" slot-scope="{row}">
+        <div>{{row.siteDetail.emfm}}</div>
+      </template>
+      <template slot="region" slot-scope="{row}">
+        <div>{{row.siteDetail.region}}</div>
+      </template>
+
+      <template slot="supervisor" slot-scope="{row}">
+        <div>{{
+          superList.find(s => s.ID == row.supervisorId) ?   
+          superList.find(s => s.ID == row.supervisorId).cName : ''   
+        }}</div>
       </template>
 
     </Table>
@@ -488,118 +530,29 @@ export default {
                 { title: "工作日期", key:"workDate" ,sortable: true},
                 { title: "報工記錄編號", key:"ID" ,sortable: true},
                 // { title: "圖片預覽", slot:"preview" },
-                { title: "地盤項目編號", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.project
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "DIS(1)", key:"siteId" ,sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.siteCode3
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "DIS(2)地盤地區", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.siteCode1
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "地盤地址", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.cname
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "Imple.", key:"siteId" ,sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.imple
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "Site C.", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.sitetoc
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "DMA", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.dma
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "EMFM", key:"siteId",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.emfm
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
-                { title: "Nature", key:"region",sortable: true,
-                    render:(h,p) => {
-                    let str = "讀取中..."
-                    that.siteList.forEach(item => {
-                        if (item.ID==p.row.siteId) {
-                            str = item.region
-                        }
-                    })
-                    return h('div',str)
-                }
-                },
+                { title: "地盤項目編號", slot:"project" ,sortable: true},
+                { title: "底盤地址", slot:"cname" ,sortable: true},
+                { title: "DIS(1)", slot:"siteCode3" ,sortable: true},
+                { title: "DIS(2)", slot:"siteCode1" ,sortable: true},
+                // { title: "Imple", slot:"imple" ,sortable: true},
+                // { title: "Site C.", slot:"sitetoc" ,sortable: true},
+                // { title: "DMA", slot:"dma" ,sortable: true},
+                // { title: "EMFM", slot:"emfm" ,sortable: true},
+                // { title: "Nature", slot:"region" ,sortable: true},
                 { title: "詳請", key:"description",sortable: true, },
-                { title: "工頭", key:"supervisor",sortable: true,
-                render:(h,p) => {
-                    let str = "暫無"
-                    that.superList.forEach(item => {
-                    if (item.ID==p.row.supervisorId) {
-                        str = item.cName
-                        //console.log(str)
-                    }
-                    })
-                    return h('div',str)
-                }
-                },
+                { title: "工頭", slot:"supervisor",sortable: true, },
+                // { title: "工頭", key:"supervisor",sortable: true,
+                //   render:(h,p) => {
+                //       let str = "暫無"
+                //       that.superList.forEach(item => {
+                //       if (item.ID==p.row.supervisorId) {
+                //           str = item.cName
+                //           //console.log(str)
+                //       }
+                //       })
+                //       return h('div',str)
+                //   }
+                // },
                 { title: "操作", slot:"operation" },
                 // "data:image/jpeg;base64,
             ],
@@ -1024,36 +977,36 @@ export default {
                 }
             })
 
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-					if ( typeof item[key] == "string") {
-						if ( item[key].indexOf(this.emfmVal) != -1 ) {
-						// console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
-						return true
-						}
-					}
-                }
-            })
+          //   this.dataList = this.dataList.filter((item,i) => {
+          //       for(let key in item) {
+					// if ( typeof item[key] == "string") {
+					// 	if ( item[key].indexOf(this.emfmVal) != -1 ) {
+					// 	// console.log(item[key], this.emfmVal, item[key].indexOf(this.emfmVal))
+					// 	return true
+					// 	}
+					// }
+          //       }
+          //   })
 
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-					if ( typeof item[key] == "string") {
-						if ( item[key].indexOf(this.dmaVal) != -1 ) {
-						return true
-						}
-					}
-                }
-            })
+          //   this.dataList = this.dataList.filter((item,i) => {
+          //       for(let key in item) {
+					// if ( typeof item[key] == "string") {
+					// 	if ( item[key].indexOf(this.dmaVal) != -1 ) {
+					// 	return true
+					// 	}
+					// }
+          //       }
+          //   })
 
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-					if ( typeof item[key] == "string") {
-						if ( item[key].indexOf(this.impleVal) != -1 ) {
-						return true
-						}
-					}
-                }
-            })
+          //   this.dataList = this.dataList.filter((item,i) => {
+          //       for(let key in item) {
+					// if ( typeof item[key] == "string") {
+					// 	if ( item[key].indexOf(this.impleVal) != -1 ) {
+					// 	return true
+					// 	}
+					// }
+          //       }
+          //   })
 
             this.dataList = this.dataList.filter((item,i) => {
                 for(let key in item) {
@@ -1066,15 +1019,15 @@ export default {
             })
 
 
-            this.dataList = this.dataList.filter((item,i) => {
-                for(let key in item) {
-                    if ( typeof item[key] == "string") {
-                        if ( item[key].indexOf(this.sitetocVal) != -1) {
-                        return true
-                        }
-                    }
-                }
-            })
+            // this.dataList = this.dataList.filter((item,i) => {
+            //     for(let key in item) {
+            //         if ( typeof item[key] == "string") {
+            //             if ( item[key].indexOf(this.sitetocVal) != -1) {
+            //             return true
+            //             }
+            //         }
+            //     }
+            // })
 
             
             // this.dataList = this.dataList.filter(item => {

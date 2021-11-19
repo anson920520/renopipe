@@ -103,7 +103,7 @@
 			<view class="body-padding">
 				<div class="">
 					<p  v-if="attendenceData.workers.length > 0" class="title">Renopipe當值工人: {{attendenceData.workers.length}} 人</p>
-					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Tesla Chong(60814693)。</u>!-->
+					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Nicholas Wong (68132366)。</u>!-->
 				</div>
 				<hr class="hr-line"/><br/>
 			</view>			
