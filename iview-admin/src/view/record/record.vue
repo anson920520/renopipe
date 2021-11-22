@@ -747,6 +747,9 @@ export default {
                 this.$axios({
                     url:"attendence?filterDate=all&month=" + month,
                     method:"GET",
+                    params: {
+                      year: this.filterTime.split("-")[0] * 1
+                    },
                     cancelToken: this.source.token
                 }).then(res => {
                     console.log(res)
