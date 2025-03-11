@@ -57,9 +57,9 @@
 			</view>
 
 			<view class="body-padding">
-				判頭: <span class=""><!--Renopipe!-->
+				判頭: <span class=""><!Aloft!-->
 					 <select @change="onChangeHead()" v-model="head" style="padding:0rem!important;width:100%;border: solid 1px lightgray;font-size: 22px;">
-							<option id="1" value="Renopipe">Renopipe</option>
+							<option id="1" value="Aloft">Aloft Tech</option>
 							<option id="2" value="Others">外判</option>
 						</select> 
 					</span>
@@ -73,19 +73,19 @@
 			</div>
 
 			<!--worker-list!-->
-			<view class="body-padding" v-if="head=='Renopipe'">
+			<view class="body-padding" v-if="head=='Aloft'">
 				<div class="">
 					<p class="title">工人列表</p>
-					<u>請選擇今天有上班的工人，如果找不到工人請致電Nicholas Wong (68132366)。</u>
+					<u>請選擇今天有上班的工人，如果找不到工人請致電Alva  (68132366)。</u>
 				</div>
 			</view>
 			
-			<view class="body-padding mt20" v-if="head=='Renopipe'">
+			<view class="body-padding mt20" v-if="head=='Aloft'">
 				<view class="sb al">
 					<div class="tagpad">
 						<div class="jobTag">選擇工人</div>
 					</div>
-					<picker v-if="head=='Renopipe'" mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
+					<picker v-if="head=='Aloft'" mode="selector" :range="allPosition" range-key="position" @change="choosePosition">
 						<view class="selectPosition sb" v-if="allPosition.length">
 							<view class="whiteColor">{{allPosition[currentPositionIndex].position}}</view>
 							<view class="positionIcon"></view>
@@ -96,7 +96,7 @@
 					<input type="text" class="input" @input="searchWorker" placeholder="搜索工人" />
 				</view>
 				
-				<view class="border box scoll" v-if="head=='Renopipe'">
+				<view class="border box scoll" v-if="head=='Aloft'">
 					<!--only need one worker-main when for loop!-->
 					<div class="worker-main al" v-for="(item,i) in workerList" :key="i" v-show="!item.hide">
 						<img class="worker-icon" src="@/static/img/Users-Worker-icon.png"/>
@@ -356,7 +356,7 @@
 				username: uni.getStorageSync('username'),
 				supervisorId: uni.getStorageSync('userid'),
 				selected: '',
-				head:'Renopipe', //pre select Renopipe
+				head:'Aloft', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				allworktypeOption:[ //工作種類 worktype
 					{name:"代工(試制)",check:false},

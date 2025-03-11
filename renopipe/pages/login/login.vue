@@ -102,7 +102,7 @@
 	<view class="loginWrap sb al" >
 		<view class="logoBox"></view>
 		<view class="formBox">
-			<view class="formTitle">Renopipe 匯報工作系統</view>
+			<view class="formTitle">ALOFT TECH匯報工作系統</view>
 			<input @focus="focus=0" @blur="focus=-1" 
 				:class="['loginInput',{'focus':focus==0}]" 
 				placeholder="輸入用戶名"
@@ -120,9 +120,10 @@
 				<text class="showPwd" @click="showPwd=!showPwd">顯示密碼</text>
 			</view>
 			<view class="logBtn op" @click="toHome">登陸</view>
+			<view class="logBtn op">業主登錄</view>
 			<!-- <view class="logBtn op" @click="demoWarning">登陸</view> -->
 		</view>
-		<view class="btmBorder">©RenoPipe Construction Co. Ltd. Copyright © 2020</view>
+		<view class="btmBorder">©Alot Tech Ltd. Copyright © 2020</view>
 		
 		<view class="mask-1" v-if="modal">
 			<view class="m-main">

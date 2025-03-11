@@ -102,7 +102,7 @@
 			<!--worker-list!-->
 			<view class="body-padding">
 				<div class="">
-					<p  v-if="attendenceData.workers.length > 0" class="title">Renopipe當值工人: {{attendenceData.workers.length}} 人</p>
+					<p  v-if="attendenceData.workers.length > 0" class="title">Aloft當值工人: {{attendenceData.workers.length}} 人</p>
 					<!--<u>請選擇今天有上班的工人，如果找不到工人請致電Nicholas Wong (68132366)。</u>!-->
 				</div>
 				<hr class="hr-line"/><br/>
@@ -238,7 +238,7 @@
 				username: uni.getStorageSync('username'),
 				supervisorId: uni.getStorageSync('userid'),
 				selected: '',
-				head:'Renopipe', //pre select Renopipe
+				head:'Aloft', //pre select Renopipe
 				timeRange:'上午', //pre select 上午
 				worktypeOption:[ //工作種類 worktype
 					{name:"打路面",check:false},
